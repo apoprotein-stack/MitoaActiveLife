@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MitoActiveLife | 細胞管理與時間美學</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --jp-white: #FAF9F6;
+            --jp-ink: #1A1C1E;
+            --jp-gold: #9E7A3D;
+            --jp-gray-bg: #F2F0EB;
+            --jp-silhouette: rgba(158, 122, 61, 0.05); /* 剪影專用色 */
+        }
 
+        body {
+            font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+            background-color: var(--jp-white);
+            color: var(--jp-ink);
+            line-height: 1.85;
+            letter-spacing: 0.04em;
+            overflow-x: hidden;
+        }
+
+        .serif {
+            font-family: 'Noto Serif TC', 'Noto Serif JP', serif;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* 剪影裝飾物通用樣式 */
+        .silhouette-decor {
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.08; /* 確保不干擾文字 */
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .soft-shadow {
+            box-shadow: 0 15px 45px rgba(0,0,0,0.05);
+        }
+
+        .lang-active {
+            color: var(--jp-gold);
+            font-weight: 700;
+            border-bottom: 2px solid var(--jp-gold);
+        }
+
+        nav.scrolled {
+            background-color: rgba(250, 249, 246, 0.98);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
+        }
+
+        /* 自定義 SVG 剪影動畫 */
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(10px, -10px) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        .float-anim { animation: float 10s ease-in-out infinite; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 導覽列 -->
+    <nav id="main-nav" class="fixed w-full z-50 py-8 px-10 flex justify-between items-end transition-all duration-500">
+        <div class="flex items-end">
+            <span class="text-2xl font-light tracking-[0.2em] uppercase text-slate-900">Mito<span class="font-bold">ActiveLife</span></span>
+        </div>
+        <div class="hidden md:flex space-x-10 text-[13px] tracking-[0.15em] font-medium items-center text-slate-800">
+            <a href="#vision" class="hover:text-amber-800 transition" data-t="nav_vision">世界觀</a>
+            <a href="#science" class="hover:text-amber-800 transition" data-t="nav_science">科學論證</a>
+            <a href="#programs" class="hover:text-amber-800 transition" data-t="nav_programs">管理計畫</a>
+            <div class="flex space-x-4 ml-6 border-l border-slate-300 pl-6 text-slate-500">
+                <button onclick="changeLang('zh')" id="btn-zh" class="lang-active hover:text-amber-700 transition">繁</button>
+                <button onclick="changeLang('jp')" id="btn-jp" class="hover:text-amber-700 transition">日</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 第一屏 (Hero Section) -->
+    <section id="vision" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- 剪影背景: 松樹 (Silhouette 1) -->
+        <svg class="silhouette-decor top-20 -left-20 w-[600px] h-auto float-anim" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M40,160 Q60,140 80,160 T120,160 M30,140 Q50,120 70,140 T110,140 M50,110 L50,180 M20,130 Q50,100 80,130 M100,100 Q130,70 160,100" stroke="#9E7A3D" stroke-width="0.5" fill="none"/>
+            <circle cx="150" cy="50" r="20" fill="none" stroke="#9E7A3D" stroke-width="0.2"/>
+        </svg>
+
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-5"></div>
+        
+        <div class="absolute right-12 top-40 vertical-text text-slate-300 text-6xl serif hidden lg:block select-none pointer-events-none" data-t="hero_vertical">
+            細胞の時間を、美しく。
+        </div>
+
+        <div class="max-w-5xl px-10 text-center z-10">
+            <div class="reveal active">
+                <p class="text-amber-800 tracking-[0.4em] mb-8 text-xs font-bold uppercase">Evidence-Informed Science</p>
+                <h1 class="text-4xl md:text-6xl font-medium leading-[1.7] mb-10 text-slate-900 serif" data-t="hero_title">
+                    老化不是數字，<br>是細胞呈現的<span class="text-amber-800 font-semibold">風景</span>。
+                </h1>
+                <p class="text-slate-700 leading-loose max-w-2xl mx-auto font-normal text-lg" data-t="hero_desc">
+                    當細胞能量與修復機制處於和諧狀態，時間便不再是威脅。<br>我們致力於讓每一顆細胞，都擁有抵禦時間的力量。
+                </p>
+                <div class="mt-12">
+                    <a href="#programs" class="inline-block px-12 py-4 bg-slate-900 text-white text-xs tracking-widest font-bold uppercase hover:bg-amber-800 transition duration-500 rounded-sm shadow-xl">探索管理計畫</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 科學啟示 (Science Section) -->
+    <section id="science" class="relative py-36 px-10 bg-[#E9E5DE] overflow-hidden">
+        <!-- 剪影背景: 波紋/山脈 (Silhouette 2) -->
+        <svg class="silhouette-decor -bottom-10 -right-20 w-[800px] opacity-[0.04]" viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,150 Q150,50 300,150 T600,150 T900,150 L1000,200 L0,200 Z" fill="#9E7A3D"/>
+            <path d="M0,170 Q200,100 400,170 T800,170 L1000,200 L0,200 Z" fill="#9E7A3D" opacity="0.5"/>
+        </svg>
+
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-24 relative z-10">
+            <div class="w-full md:w-1/2 reveal">
+                <div class="inline-block px-3 py-1 border border-amber-800/30 text-[10px] text-amber-900 font-bold mb-6 tracking-widest uppercase">Nobel Prize Legacy</div>
+                <h3 class="text-3xl md:text-4xl serif text-slate-900 mb-10 leading-tight" data-t="science_title">源自 2009 年的<br>科學啟示</h3>
+                <p class="text-slate-800 mb-8 leading-loose font-normal text-md" data-t="science_desc_1">
+                    諾貝爾獎揭示了「端粒與端粒酶」的機制，正式開啟了人類與老化對話的新篇章。這不僅是生物學的突破，更是掌握生命長度的密碼。
+                </p>
+                <p class="text-slate-800 leading-loose font-normal text-md" data-t="science_desc_2">
+                    MitoActiveLife 站在這份遺產之上，將目光投向更深處的連結：端粒的修復需要龐大能量，而能量的源頭就在「粒線體」。
+                </p>
+            </div>
+            <div class="w-full md:w-1/2 reveal">
+                <div class="bg-white p-14 soft-shadow text-center relative border border-white/50 backdrop-blur-sm">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-amber-800"></div>
+                    <!-- 卡片內剪影: 圓形紋理 -->
+                    <div class="absolute inset-0 opacity-[0.03] overflow-hidden pointer-events-none">
+                        <svg viewBox="0 0 100 100" class="w-full h-full"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="0.1" stroke-dasharray="1 2"/></svg>
+                    </div>
+                    <h4 class="text-2xl md:text-3xl serif mb-8 italic text-slate-900 leading-relaxed relative z-10" data-t="science_quote">「端粒是時鐘，<br>粒線體是電池。」</h4>
+                    <p class="text-sm text-slate-500 font-medium tracking-wide relative z-10" data-t="science_framework">
+                        端粒防護 ‧ 粒線體供能 ‧ 腸道微生態
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 管理計畫 (Programs Section) -->
+    <section id="programs" class="relative py-36 px-10 bg-[#FAF9F6] overflow-hidden">
+        <!-- 剪影背景: 竹林感線條 (Silhouette 3) -->
+        <div class="silhouette-decor top-0 left-10 h-full w-[1px] bg-amber-800/20"></div>
+        <div class="silhouette-decor top-0 left-14 h-full w-[1px] bg-amber-800/10"></div>
+        <div class="silhouette-decor top-0 left-24 h-full w-[1px] bg-amber-800/5"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-24 reveal">
+                <h3 class="text-4xl serif mb-6 text-slate-900" data-t="plan_annual_title_main">生命管理計畫</h3>
+                <div class="w-16 h-[2px] bg-amber-800 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- 年計畫 -->
+                <div class="bg-white p-16 border border-slate-100 soft-shadow reveal flex flex-col justify-between hover:border-amber-800/30 transition duration-500 group">
+                    <div>
+                        <div class="flex justify-between items-start mb-12">
+                            <div>
+                                <h4 class="text-3xl serif mb-3 text-slate-900" data-t="plan_annual_title">極緻生命計畫</h4>
+                                <p class="text-[11px] text-amber-800 font-bold tracking-[0.2em] uppercase">Annual Longevity</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-5 text-[15px] text-slate-700 font-normal mb-12">
+                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 全系列高效能配方 (12月份)</li>
+                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 兩次端粒生物時鐘精準檢測</li>
+                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 專屬健康管理師季度追蹤</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-light text-slate-900 mb-10 tracking-tight">NT$ 29,800</div>
+                        <button class="w-full py-5 bg-slate-900 text-white text-xs tracking-[0.2em] font-bold uppercase hover:bg-amber-800 transition duration-500" data-t="btn_annual">立即預約年度管理</button>
+                    </div>
+                </div>
+
+                <!-- 季度計畫 -->
+                <div class="bg-white p-16 border border-slate-100 soft-shadow reveal flex flex-col justify-between hover:border-amber-800/30 transition duration-500 group">
+                    <div>
+                        <div class="flex justify-between items-start mb-12">
+                            <div>
+                                <h4 class="text-3xl serif mb-3 text-slate-900" data-t="plan_90_title">平衡啟動計畫</h4>
+                                <p class="text-[11px] text-amber-800 font-bold tracking-[0.2em] uppercase">90-Day Reset</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-5 text-[15px] text-slate-700 font-normal mb-12">
+                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> Mito Core 能量基石 (3月份)</li>
+                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 細胞能量修復外用精華</li>
+                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 初階細胞老化技術指南</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-light text-slate-900 mb-10 tracking-tight">NT$ 8,800</div>
+                        <button class="w-full py-5 btn-outline text-xs tracking-[0.2em] font-bold uppercase" data-t="btn_90">開始季度重塑</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-24 px-10 bg-slate-900 text-white relative overflow-hidden">
+        <!-- 頁尾剪影: 富士山感山影 -->
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-amber-800/10 clip-mountain opacity-20"></div>
+        
+        <div class="max-w-6xl mx-auto flex flex-col items-center relative z-10">
+            <div class="text-2xl font-light tracking-[0.3em] uppercase mb-12">Mito<span class="font-bold text-amber-500">ActiveLife</span></div>
+            <div class="text-xs text-slate-400 max-w-2xl text-center leading-loose mb-12" data-t="footer_legal">
+                本品牌所有敘事基於現有生物科學研究框架。我們尊重科學證據的邊界，產品旨在支持健康管理，不具備醫療效能，無法替代醫師專業診斷。
+            </div>
+            <div class="text-[10px] tracking-widest text-slate-500 uppercase">
+                &copy; 2026 MitoActiveLife. Scientific Excellence.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const i18n = {
+            zh: {
+                nav_vision: "世界觀",
+                nav_science: "科學論證",
+                nav_programs: "管理計畫",
+                hero_vertical: "細胞の時間を、美しく。",
+                hero_title: "老化不是數字，<br>是細胞呈現的<span class='text-amber-800 font-semibold'>風景</span>。",
+                hero_desc: "當細胞能量與修復機制處於和諧狀態，時間便不再是威脅。<br>我們致力於讓每一顆細胞，都擁有抵禦時間的力量。",
+                science_title: "源自 2009 年的<br>科學啟示",
+                science_desc_1: "諾貝爾獎揭示了「端粒與端粒酶」的機制，正式開啟了人類與老化對話的新篇章。這不僅是生物學的突破，更是掌握生命長度的密碼。",
+                science_desc_2: "MitoActiveLife 站在這份遺產之上，將目光投向更深處的連結：端粒的修復需要龐大能量，而能量的源頭就在「粒線體」。",
+                science_quote: "「端粒是時鐘，<br>粒線體是電池。」",
+                science_framework: "端粒防護 ‧ 粒線體供能 ‧ 腸道微生態",
+                plan_annual_title_main: "生命管理計畫",
+                plan_annual_title: "極緻生命計畫",
+                plan_90_title: "平衡啟動計畫",
+                btn_annual: "立即預約年度管理",
+                btn_90: "開始季度重塑",
+                footer_legal: "本品牌所有敘事基於現有生物科學研究框架。我們尊重科學證據的邊界，產品旨在支持健康管理，不具備醫療效能，無法替代醫師專業診斷。"
+            },
+            jp: {
+                nav_vision: "世界観",
+                nav_science: "科学的根拠",
+                nav_programs: "プログラム",
+                hero_vertical: "細胞の時間を、美しく。",
+                hero_title: "老化は数字ではなく、<br>細胞が描く<span class='text-amber-800 font-semibold'>風景</span>である。",
+                hero_desc: "細胞のエネルギーと修復機能が調和した時、時間はもはや脅威ではありません。<br>私たちは、すべての細胞に時の流れに抗う力を与えます。",
+                science_title: "2009年のノーベル賞に<br>基づく科学的示唆",
+                science_desc_1: "ノーベル生理学・医学賞は「テロメアとテロメラーゼ」の仕組みを解明し、老化管理の新たな扉を開きました。これは単なる発見ではなく、寿命の暗号を解く鍵です。",
+                science_desc_2: "MitoActiveLifeは、テロメア保護に不可欠な能量の源泉である「ミトコンドリア」に着目し、その機能を最適化します。",
+                science_quote: "「テロメアは時計であり、<br>ミトコンドリアは電池である。」",
+                science_framework: "テロメア保護 ‧ ミトコンドリア管理 ‧ 腸内フローラ",
+                plan_annual_title_main: "ライフマネジメント",
+                plan_annual_title: "究極の生命プログラム",
+                plan_90_title: "バランス起動プログラム",
+                btn_annual: "年間管理を予約する",
+                btn_90: "クォータープランを開始",
+                footer_legal: "当ブランドの叙述は、現在の生物科学研究に基づいています。科学的根拠を尊重し、製品は健康維持を目的としており、医療行為に代わるものではありません。"
+            }
+        };
+
+        function changeLang(lang) {
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+            document.getElementById('btn-zh').classList.toggle('lang-active', lang === 'zh');
+            document.getElementById('btn-jp').classList.toggle('lang-active', lang === 'jp');
+            document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'ja';
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            
+            // 輕微的視差效果
+            const scrolled = window.pageYOffset;
+            document.querySelectorAll('.silhouette-decor').forEach(el => {
+                const speed = 0.05;
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
