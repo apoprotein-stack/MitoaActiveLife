@@ -1,320 +1,1061 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MitoActiveLife | 細胞管理與時間美學</title>
+    <title>MitoActiveLife 活「粒」生活 - 頂級生醫企業網站</title>
+    <!-- 引入 Tailwind CSS 運行時 -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- 引入 React, ReactDOM 運行時 -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- 引入 Babel 用於瀏覽器中編譯 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 引入 Lucide 圖標 CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
-        
-        :root {
-            --jp-white: #FAF9F6;
-            --jp-ink: #1A1C1E;
-            --jp-gold: #9E7A3D;
-            --jp-gray-bg: #F2F0EB;
-            --jp-silhouette: rgba(158, 122, 61, 0.05); /* 剪影專用色 */
-        }
-
-        body {
-            font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
-            background-color: var(--jp-white);
-            color: var(--jp-ink);
-            line-height: 1.85;
-            letter-spacing: 0.04em;
-            overflow-x: hidden;
-        }
-
-        .serif {
-            font-family: 'Noto Serif TC', 'Noto Serif JP', serif;
-        }
-
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-        }
-
-        /* 剪影裝飾物通用樣式 */
-        .silhouette-decor {
-            position: absolute;
-            z-index: 0;
-            pointer-events: none;
-            user-select: none;
-            opacity: 0.08; /* 確保不干擾文字 */
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .soft-shadow {
-            box-shadow: 0 15px 45px rgba(0,0,0,0.05);
-        }
-
-        .lang-active {
-            color: var(--jp-gold);
-            font-weight: 700;
-            border-bottom: 2px solid var(--jp-gold);
-        }
-
-        nav.scrolled {
-            background-color: rgba(250, 249, 246, 0.98);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            padding-top: 1.25rem;
-            padding-bottom: 1.25rem;
-        }
-
-        /* 自定義 SVG 剪影動畫 */
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(10px, -10px) rotate(1deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-        .float-anim { animation: float 10s ease-in-out infinite; }
+        /* 滾動條美化 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-slate-950 text-slate-100 overflow-x-hidden">
+    <div id="root"></div>
 
-    <!-- 導覽列 -->
-    <nav id="main-nav" class="fixed w-full z-50 py-8 px-10 flex justify-between items-end transition-all duration-500">
-        <div class="flex items-end">
-            <span class="text-2xl font-light tracking-[0.2em] uppercase text-slate-900">Mito<span class="font-bold">ActiveLife</span></span>
-        </div>
-        <div class="hidden md:flex space-x-10 text-[13px] tracking-[0.15em] font-medium items-center text-slate-800">
-            <a href="#vision" class="hover:text-amber-800 transition" data-t="nav_vision">世界觀</a>
-            <a href="#science" class="hover:text-amber-800 transition" data-t="nav_science">科學論證</a>
-            <a href="#programs" class="hover:text-amber-800 transition" data-t="nav_programs">管理計畫</a>
-            <div class="flex space-x-4 ml-6 border-l border-slate-300 pl-6 text-slate-500">
-                <button onclick="changeLang('zh')" id="btn-zh" class="lang-active hover:text-amber-700 transition">繁</button>
-                <button onclick="changeLang('jp')" id="btn-jp" class="hover:text-amber-700 transition">日</button>
-            </div>
-        </div>
-    </nav>
+    <!-- 載入我們編寫的 React 元件代碼 -->
+    <script type="text/babel">
+        // 將 Lucide 圖標解構至全域方便使用
+        const { 
+          Users, Dna, Activity, ChevronRight, Linkedin, Mail, X, Zap, 
+          ShieldCheck, Heart, Sparkles, ArrowUpRight, TrendingUp, Sliders, 
+          CheckCircle2, Atom, Globe, Award, BookOpen, MessageSquare, Copy, 
+          Check, Smartphone, Flame, Shield, HelpCircle, UserCheck
+        } = lucide;
 
-    <!-- 第一屏 (Hero Section) -->
-    <section id="vision" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- 剪影背景: 松樹 (Silhouette 1) -->
-        <svg class="silhouette-decor top-20 -left-20 w-[600px] h-auto float-anim" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path fill="currentColor" d="M40,160 Q60,140 80,160 T120,160 M30,140 Q50,120 70,140 T110,140 M50,110 L50,180 M20,130 Q50,100 80,130 M100,100 Q130,70 160,100" stroke="#9E7A3D" stroke-width="0.5" fill="none"/>
-            <circle cx="150" cy="50" r="20" fill="none" stroke="#9E7A3D" stroke-width="0.2"/>
-        </svg>
+        // 這裡放入您的 React App 代碼
+        function App() {
+          const [activeTab, setActiveTab] = React.useState('all');
+          const [selectedLeader, setSelectedLeader] = React.useState(null);
+          const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+          const [academyTab, setAcademyTab] = React.useState('manifesto');
+          const [selectedEmotion, setSelectedEmotion] = React.useState('fatigue');
+          const [flippedObjection, setFlippedObjection] = React.useState(null);
+          const [copiedText, setCopiedText] = React.useState('');
 
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-5"></div>
-        
-        <div class="absolute right-12 top-40 vertical-text text-slate-300 text-6xl serif hidden lg:block select-none pointer-events-none" data-t="hero_vertical">
-            細胞の時間を、美しく。
-        </div>
+          const [calciumLevel, setCalciumLevel] = React.useState(50);
+          const [qumaLevel, setQumaLevel] = React.useState(50);
+          const [mdsnvLevel, setMdsnvLevel] = React.useState(50);
+          const [lifestyleActive, setLifestyleActive] = React.useState(true);
+          
+          const [mcuActive, setMcuActive] = React.useState(false);
+          const [atpScore, setAtpScore] = React.useState(50);
+          const [protectionRate, setProtectionRate] = React.useState(50);
+          const [cellularAgingRate, setCellularAgingRate] = React.useState(1.5);
 
-        <div class="max-w-5xl px-10 text-center z-10">
-            <div class="reveal active">
-                <p class="text-amber-800 tracking-[0.4em] mb-8 text-xs font-bold uppercase">Evidence-Informed Science</p>
-                <h1 class="text-4xl md:text-6xl font-medium leading-[1.7] mb-10 text-slate-900 serif" data-t="hero_title">
-                    老化不是數字，<br>是細胞呈現的<span class="text-amber-800 font-semibold">風景</span>。
-                </h1>
-                <p class="text-slate-700 leading-loose max-w-2xl mx-auto font-normal text-lg" data-t="hero_desc">
-                    當細胞能量與修復機制處於和諧狀態，時間便不再是威脅。<br>我們致力於讓每一顆細胞，都擁有抵禦時間的力量。
-                </p>
-                <div class="mt-12">
-                    <a href="#programs" class="inline-block px-12 py-4 bg-slate-900 text-white text-xs tracking-widest font-bold uppercase hover:bg-amber-800 transition duration-500 rounded-sm shadow-xl">探索管理計畫</a>
-                </div>
-            </div>
-        </div>
-    </section>
+          React.useEffect(() => {
+            const isMcuIgnited = calciumLevel > 40;
+            setMcuActive(isMcuIgnited);
+            const rawAtp = (qumaLevel * 0.8) + (lifestyleActive ? 20 : 0);
+            const finalAtp = isMcuIgnited ? Math.min(100, rawAtp * 1.2) : rawAtp * 0.6;
+            setAtpScore(Math.round(finalAtp));
+            const finalProtection = Math.round((mdsnvLevel * 0.9) + (isMcuIgnited ? 10 : 0));
+            setProtectionRate(finalProtection);
+            let baseRate = 2.4;
+            baseRate -= (finalAtp / 100) * 1.0;
+            baseRate -= (finalProtection / 100) * 0.8;
+            setCellularAgingRate(parseFloat(Math.max(0.4, baseRate).toFixed(1)));
+          }, [calciumLevel, qumaLevel, mdsnvLevel, lifestyleActive]);
 
-    <!-- 科學啟示 (Science Section) -->
-    <section id="science" class="relative py-36 px-10 bg-[#E9E5DE] overflow-hidden">
-        <!-- 剪影背景: 波紋/山脈 (Silhouette 2) -->
-        <svg class="silhouette-decor -bottom-10 -right-20 w-[800px] opacity-[0.04]" viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,150 Q150,50 300,150 T600,150 T900,150 L1000,200 L0,200 Z" fill="#9E7A3D"/>
-            <path d="M0,170 Q200,100 400,170 T800,170 L1000,200 L0,200 Z" fill="#9E7A3D" opacity="0.5"/>
-        </svg>
+          React.useEffect(() => {
+            // 在 React 渲染完成後初始化 Lucide 圖標
+            lucide.createIcons();
+          }, []);
 
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-24 relative z-10">
-            <div class="w-full md:w-1/2 reveal">
-                <div class="inline-block px-3 py-1 border border-amber-800/30 text-[10px] text-amber-900 font-bold mb-6 tracking-widest uppercase">Nobel Prize Legacy</div>
-                <h3 class="text-3xl md:text-4xl serif text-slate-900 mb-10 leading-tight" data-t="science_title">源自 2009 年的<br>科學啟示</h3>
-                <p class="text-slate-800 mb-8 leading-loose font-normal text-md" data-t="science_desc_1">
-                    諾貝爾獎揭示了「端粒與端粒酶」的機制，正式開啟了人類與老化對話的新篇章。這不僅是生物學的突破，更是掌握生命長度的密碼。
-                </p>
-                <p class="text-slate-800 leading-loose font-normal text-md" data-t="science_desc_2">
-                    MitoActiveLife 站在這份遺產之上，將目光投向更深處的連結：端粒的修復需要龐大能量，而能量的源頭就在「粒線體」。
-                </p>
-            </div>
-            <div class="w-full md:w-1/2 reveal">
-                <div class="bg-white p-14 soft-shadow text-center relative border border-white/50 backdrop-blur-sm">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-amber-800"></div>
-                    <!-- 卡片內剪影: 圓形紋理 -->
-                    <div class="absolute inset-0 opacity-[0.03] overflow-hidden pointer-events-none">
-                        <svg viewBox="0 0 100 100" class="w-full h-full"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="0.1" stroke-dasharray="1 2"/></svg>
-                    </div>
-                    <h4 class="text-2xl md:text-3xl serif mb-8 italic text-slate-900 leading-relaxed relative z-10" data-t="science_quote">「端粒是時鐘，<br>粒線體是電池。」</h4>
-                    <p class="text-sm text-slate-500 font-medium tracking-wide relative z-10" data-t="science_framework">
-                        端粒防護 ‧ 粒線體供能 ‧ 腸道微生態
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+          React.useEffect(() => {
+            // 每次頁簽或狀態切換，需要重新初始化動態生成的圖標
+            lucide.createIcons();
+          }, [academyTab, selectedEmotion, flippedObjection, selectedLeader, activeTab]);
 
-    <!-- 管理計畫 (Programs Section) -->
-    <section id="programs" class="relative py-36 px-10 bg-[#FAF9F6] overflow-hidden">
-        <!-- 剪影背景: 竹林感線條 (Silhouette 3) -->
-        <div class="silhouette-decor top-0 left-10 h-full w-[1px] bg-amber-800/20"></div>
-        <div class="silhouette-decor top-0 left-14 h-full w-[1px] bg-amber-800/10"></div>
-        <div class="silhouette-decor top-0 left-24 h-full w-[1px] bg-amber-800/5"></div>
+          const handleCopy = (text, id) => {
+            navigator.clipboard.writeText(text);
+            setCopiedText(id);
+            setTimeout(() => setCopiedText(''), 2000);
+          };
 
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="text-center mb-24 reveal">
-                <h3 class="text-4xl serif mb-6 text-slate-900" data-t="plan_annual_title_main">生命管理計畫</h3>
-                <div class="w-16 h-[2px] bg-amber-800 mx-auto"></div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-10">
-                <!-- 年計畫 -->
-                <div class="bg-white p-16 border border-slate-100 soft-shadow reveal flex flex-col justify-between hover:border-amber-800/30 transition duration-500 group">
-                    <div>
-                        <div class="flex justify-between items-start mb-12">
-                            <div>
-                                <h4 class="text-3xl serif mb-3 text-slate-900" data-t="plan_annual_title">極緻生命計畫</h4>
-                                <p class="text-[11px] text-amber-800 font-bold tracking-[0.2em] uppercase">Annual Longevity</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-5 text-[15px] text-slate-700 font-normal mb-12">
-                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 全系列高效能配方 (12月份)</li>
-                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 兩次端粒生物時鐘精準檢測</li>
-                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 專屬健康管理師季度追蹤</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-light text-slate-900 mb-10 tracking-tight">NT$ 29,800</div>
-                        <button class="w-full py-5 bg-slate-900 text-white text-xs tracking-[0.2em] font-bold uppercase hover:bg-amber-800 transition duration-500" data-t="btn_annual">立即預約年度管理</button>
-                    </div>
-                </div>
-
-                <!-- 季度計畫 -->
-                <div class="bg-white p-16 border border-slate-100 soft-shadow reveal flex flex-col justify-between hover:border-amber-800/30 transition duration-500 group">
-                    <div>
-                        <div class="flex justify-between items-start mb-12">
-                            <div>
-                                <h4 class="text-3xl serif mb-3 text-slate-900" data-t="plan_90_title">平衡啟動計畫</h4>
-                                <p class="text-[11px] text-amber-800 font-bold tracking-[0.2em] uppercase">90-Day Reset</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-5 text-[15px] text-slate-700 font-normal mb-12">
-                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> Mito Core 能量基石 (3月份)</li>
-                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 細胞能量修復外用精華</li>
-                            <li class="flex items-start"><span class="mr-3 text-amber-800">◆</span> 初階細胞老化技術指南</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-light text-slate-900 mb-10 tracking-tight">NT$ 8,800</div>
-                        <button class="w-full py-5 btn-outline text-xs tracking-[0.2em] font-bold uppercase" data-t="btn_90">開始季度重塑</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-24 px-10 bg-slate-900 text-white relative overflow-hidden">
-        <!-- 頁尾剪影: 富士山感山影 -->
-        <div class="absolute bottom-0 left-0 w-full h-32 bg-amber-800/10 clip-mountain opacity-20"></div>
-        
-        <div class="max-w-6xl mx-auto flex flex-col items-center relative z-10">
-            <div class="text-2xl font-light tracking-[0.3em] uppercase mb-12">Mito<span class="font-bold text-amber-500">ActiveLife</span></div>
-            <div class="text-xs text-slate-400 max-w-2xl text-center leading-loose mb-12" data-t="footer_legal">
-                本品牌所有敘事基於現有生物科學研究框架。我們尊重科學證據的邊界，產品旨在支持健康管理，不具備醫療效能，無法替代醫師專業診斷。
-            </div>
-            <div class="text-[10px] tracking-widest text-slate-500 uppercase">
-                &copy; 2026 MitoActiveLife. Scientific Excellence.
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        const i18n = {
-            zh: {
-                nav_vision: "世界觀",
-                nav_science: "科學論證",
-                nav_programs: "管理計畫",
-                hero_vertical: "細胞の時間を、美しく。",
-                hero_title: "老化不是數字，<br>是細胞呈現的<span class='text-amber-800 font-semibold'>風景</span>。",
-                hero_desc: "當細胞能量與修復機制處於和諧狀態，時間便不再是威脅。<br>我們致力於讓每一顆細胞，都擁有抵禦時間的力量。",
-                science_title: "源自 2009 年的<br>科學啟示",
-                science_desc_1: "諾貝爾獎揭示了「端粒與端粒酶」的機制，正式開啟了人類與老化對話的新篇章。這不僅是生物學的突破，更是掌握生命長度的密碼。",
-                science_desc_2: "MitoActiveLife 站在這份遺產之上，將目光投向更深處的連結：端粒的修復需要龐大能量，而能量的源頭就在「粒線體」。",
-                science_quote: "「端粒是時鐘，<br>粒線體是電池。」",
-                science_framework: "端粒防護 ‧ 粒線體供能 ‧ 腸道微生態",
-                plan_annual_title_main: "生命管理計畫",
-                plan_annual_title: "極緻生命計畫",
-                plan_90_title: "平衡啟動計畫",
-                btn_annual: "立即預約年度管理",
-                btn_90: "開始季度重塑",
-                footer_legal: "本品牌所有敘事基於現有生物科學研究框架。我們尊重科學證據的邊界，產品旨在支持健康管理，不具備醫療效能，無法替代醫師專業診斷。"
+          const leaders = [
+            {
+              id: 'l1',
+              category: 'exec',
+              name: 'Dr. Evelyn Carter',
+              title: '聯合創始人 兼 首席執行官 (CEO)',
+              role: 'Executive Leader',
+              education: '哈佛大學生醫工程博士',
+              experience: '20 年以上生技醫療跨國企業管理經驗，致力於抗衰老與線粒體科學的產業化應用。',
+              quote: '我們不只是在延續生命的時間，更是在為每分每秒注入飽滿的細胞生命力。',
+              skills: ['企業戰略', '臨床研發管理', '生醫創投'],
+              avatarBg: 'bg-gradient-to-br from-slate-800 to-indigo-900'
             },
-            jp: {
-                nav_vision: "世界観",
-                nav_science: "科学的根拠",
-                nav_programs: "プログラム",
-                hero_vertical: "細胞の時間を、美しく。",
-                hero_title: "老化は数字ではなく、<br>細胞が描く<span class='text-amber-800 font-semibold'>風景</span>である。",
-                hero_desc: "細胞のエネルギーと修復機能が調和した時、時間はもはや脅威ではありません。<br>私たちは、すべての細胞に時の流れに抗う力を与えます。",
-                science_title: "2009年のノーベル賞に<br>基づく科学的示唆",
-                science_desc_1: "ノーベル生理学・医学賞は「テロメアとテロメラーゼ」の仕組みを解明し、老化管理の新たな扉を開きました。これは単なる発見ではなく、寿命の暗号を解く鍵です。",
-                science_desc_2: "MitoActiveLifeは、テロメア保護に不可欠な能量の源泉である「ミトコンドリア」に着目し、その機能を最適化します。",
-                science_quote: "「テロメアは時計であり、<br>ミトコンドリアは電池である。」",
-                science_framework: "テロメア保護 ‧ ミトコンドリア管理 ‧ 腸内フローラ",
-                plan_annual_title_main: "ライフマネジメント",
-                plan_annual_title: "究極の生命プログラム",
-                plan_90_title: "バランス起動プログラム",
-                btn_annual: "年間管理を予約する",
-                btn_90: "クォータープランを開始",
-                footer_legal: "当ブランドの叙述は、現在の生物科学研究に基づいています。科学的根拠を尊重し、製品は健康維持を目的としており、医療行為に代わるものではありません。"
+            {
+              id: 'l2',
+              category: 'science',
+              name: 'Prof. Marcus Vance',
+              title: '首席科學家 兼 科學顧問委員會主席',
+              role: 'Scientific Advisor',
+              education: '史丹佛大學細胞生物學教授',
+              experience: '發表超過 80 篇關於線粒體自噬與 ATP 偶聯反應的頂級期刊學術論文。',
+              quote: '解開線粒體的功能編碼，就是掌握了人體生理時鐘的最終密鑰。',
+              skills: ['線粒體醫學', '細胞老化學', '基因編輯'],
+              avatarBg: 'bg-gradient-to-br from-slate-800 to-emerald-900'
+            },
+            {
+              id: 'l3',
+              category: 'exec',
+              name: 'Robert Chen',
+              title: '首席營運官 (COO)',
+              role: 'Executive Leader',
+              education: '沃頓商學院 MBA',
+              experience: '曾任多家知名百萬級大健康品牌全球供應鏈與國際市場拓展負責人。',
+              quote: '將前沿的實驗室科學，無縫轉化為全球消費者日常生活中觸手可及的健康方案。',
+              skills: ['全球供應鏈', '市場滲透', '營運優化'],
+              avatarBg: 'bg-gradient-to-br from-slate-800 to-cyan-900'
+            },
+            {
+              id: 'l4',
+              category: 'science',
+              name: 'Dr. Sarah Lin',
+              title: '研發副總裁 兼 高級配方科學家',
+              role: 'Scientific Advisor',
+              education: '劍橋大學分子醫學博士',
+              experience: '專攻細胞級營養素協同吸收機制，MitoActive 專利配方的核心發明人。',
+              quote: '完美的配方在於天然分子與精準生物可利用率之間的黃金平衡。',
+              skills: ['配方動力學', '微靶向傳遞', '天然產物提取'],
+              avatarBg: 'bg-gradient-to-br from-slate-800 to-teal-900'
             }
-        };
+          ];
 
-        function changeLang(lang) {
-            document.querySelectorAll('[data-t]').forEach(el => {
-                const key = el.getAttribute('data-t');
-                if (i18n[lang][key]) {
-                    el.innerHTML = i18n[lang][key];
-                }
-            });
-            document.getElementById('btn-zh').classList.toggle('lang-active', lang === 'zh');
-            document.getElementById('btn-jp').classList.toggle('lang-active', lang === 'jp');
-            document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'ja';
+          const filteredLeaders = activeTab === 'all' 
+            ? leaders 
+            : leaders.filter(l => l.category === activeTab);
+
+          return (
+            <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 overflow-x-hidden">
+              
+              {/* Navbar */}
+              <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-900/60 transition-all">
+                <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                  <a href="#" className="flex items-center gap-3 group">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/10 group-hover:scale-105 transition-transform">
+                      <i data-lucide="dna" className="w-5.5 h-5.5 text-slate-950 font-bold"></i>
+                    </div>
+                    <div>
+                      <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-emerald-400 bg-clip-text text-transparent">
+                        MitoActiveLife
+                      </span>
+                      <span className="block text-[10px] uppercase tracking-widest text-slate-500 font-medium leading-none mt-0.5">
+                        活「粒」生活 · 2026 INTERNAL
+                      </span>
+                    </div>
+                  </a>
+
+                  <nav className="hidden md:flex items-center gap-8">
+                    <a href="#science" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">技術三柱</a>
+                    <a href="#lab" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">細胞互動實驗室</a>
+                    <a href="#academy" className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+                      <i data-lucide="book-open" className="w-4 h-4"></i>
+                      智能銷售賦能中心
+                    </a>
+                    <a href="#team" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">領袖團隊</a>
+                    <a href="#solutions" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">複合系統</a>
+                    <a href="#contact" className="px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 hover:border-transparent transition-all duration-300">
+                      專用諮詢
+                    </a>
+                  </nav>
+
+                  <button 
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+                    className="md:hidden p-2 text-slate-400 hover:text-white"
+                  >
+                    {mobileMenuOpen ? <i data-lucide="x" className="w-6 h-6"></i> : <i data-lucide="activity" className="w-6 h-6 text-emerald-400 animate-pulse"></i>}
+                  </button>
+                </div>
+              </header>
+
+              {/* Mobile Menu */}
+              {mobileMenuOpen && (
+                <div className="fixed inset-0 z-35 bg-slate-950 pt-24 px-6 flex flex-col gap-6 md:hidden">
+                  <a href="#science" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">技術三柱</a>
+                  <a href="#lab" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">細胞互動實驗室</a>
+                  <a href="#academy" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 text-emerald-400 flex items-center gap-2">
+                    <i data-lucide="book-open" className="w-5 h-5"></i> 智能銷售賦能中心
+                  </a>
+                  <a href="#team" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">領袖團隊</a>
+                  <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">複合系統</a>
+                  <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full py-4 rounded-xl bg-emerald-500 text-slate-950 text-center font-bold">業務專用諮詢</a>
+                </div>
+              )}
+
+              {/* Hero Section */}
+              <section className="relative py-20 lg:py-32 overflow-hidden border-b border-slate-900/60">
+                <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                  <div className="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div className="lg:col-span-7 space-y-8">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-emerald-400 font-semibold tracking-wide">
+                        <i data-lucide="flame" className="w-3.5 h-3.5 text-amber-500 animate-pulse"></i>
+                        <span>MitoActiveLife 活「粒」生活 · 業務技術文稿輔助系統</span>
+                      </div>
+                      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
+                        你老不是因為歲月， <br />
+                        <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+                          是因為你的粒線體放棄了
+                        </span>
+                      </h1>
+                      <p className="text-slate-400 text-base sm:text-lg max-w-xl leading-relaxed">
+                        結合「螯合鈣點火機制」×「QuMA 粒線體產能」×「MDSNV 燕窩酸奈米遞送」，讓 37 兆細胞重新燃起青春電力。這不只是一瓶保健品，而是全套細胞級「充電系統」。
+                      </p>
+                      
+                      <div className="flex flex-wrap gap-4 pt-2">
+                        <a href="#academy" className="px-8 py-4 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+                          <i data-lucide="book-open" className="w-5 h-5"></i> 進入智能銷售賦能中心
+                        </a>
+                        <a href="#lab" className="px-8 py-4 rounded-xl text-sm font-bold bg-slate-900 hover:bg-slate-850 text-white border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
+                          細胞互動實驗室 <i data-lucide="activity" className="w-4.5 h-4.5 text-emerald-400"></i>
+                        </a>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-900">
+                        <div>
+                          <span className="block text-2xl sm:text-3xl font-extrabold text-white">QuMA</span>
+                          <span className="text-xs text-slate-500">粒線體高效發電</span>
+                        </div>
+                        <div>
+                          <span className="block text-2xl sm:text-3xl font-extrabold text-white">MDSNV</span>
+                          <span className="text-xs text-slate-500">乳源奈米運輸載體</span>
+                        </div>
+                        <div>
+                          <span className="block text-2xl sm:text-3xl font-extrabold text-white">螯合鈣</span>
+                          <span className="text-xs text-slate-500">MCU 啟動點火開關</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-5 flex justify-center items-center">
+                      <div className="relative w-80 h-80 sm:w-96 sm:h-96 bg-slate-900/20 rounded-3xl border border-slate-900 p-8 flex flex-col justify-between overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-cyan-500/5 pointer-events-none" />
+                        
+                        <div className="relative flex-1 flex items-center justify-center">
+                          <div className="absolute w-56 h-56 rounded-full border border-emerald-500/10 animate-[spin_40s_linear_infinite]" />
+                          <div className="absolute w-44 h-44 rounded-full border border-dashed border-cyan-500/20 animate-[spin_20s_linear_infinite_reverse]" />
+                          
+                          <svg viewBox="0 0 100 100" className="w-32 h-32 text-emerald-400 animate-[pulse_3s_ease-in-out_infinite]">
+                            <path d="M 50 15 C 75 15, 85 30, 85 50 C 85 70, 75 85, 50 85 C 25 85, 15 70, 15 50 C 15 30, 25 15, 50 15 Z" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-30" />
+                            <path d="M 50 18 Q 65 25, 50 32 T 50 46 T 50 60 T 50 74 T 50 82" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                            <circle cx="28" cy="30" r="3" className="fill-amber-400 animate-ping" />
+                            <circle cx="72" cy="45" r="2.5" className="fill-cyan-400 animate-pulse" />
+                            <circle cx="48" cy="68" r="3.5" className="fill-emerald-400 animate-bounce" />
+                          </svg>
+
+                          <div className="absolute top-2 right-4 text-[10px] text-amber-400 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 flex items-center gap-1 animate-[bounce_4s_infinite]">
+                            <i data-lucide="zap" className="w-2.5 h-2.5"></i> MCU 啟動點火
+                          </div>
+                          <div className="absolute bottom-2 left-4 text-[10px] text-cyan-400 font-bold bg-cyan-400/10 px-2 py-0.5 rounded border border-cyan-400/20 flex items-center gap-1">
+                            <i data-lucide="shield" className="w-2.5 h-2.5"></i> MDSNV 奈米防護
+                          </div>
+                        </div>
+
+                        <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                            <span className="font-bold text-slate-200">活「粒」生活口嚼片</span>
+                          </div>
+                          <span className="text-emerald-400 font-medium">99.7% 生物利用率</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+
+              {/* Science Section */}
+              <section id="science" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+                <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                  <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">TECHNOLOGY TRIPLE PILLARS</span>
+                  <h2 className="text-3xl sm:text-4xl font-bold text-white">技術三柱 — 業務員的「技術武器庫」</h2>
+                  <p className="text-slate-400">當客戶問「這跟別人的有什麼不同」時，你能用最簡單的話回答，而且精準點出我們的頂級科技力量。</p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="p-8 rounded-3xl bg-slate-900/30 hover:bg-slate-900/60 border border-slate-900 hover:border-emerald-500/30 transition-all group flex flex-col justify-between">
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" className="w-6 h-6"></i>
+                      </div>
+                      <span className="text-xs text-emerald-400 font-bold block mb-2 uppercase tracking-wider">PILLAR 01 · 燃料效能恢復</span>
+                      <h3 className="text-xl font-bold text-white mb-4">QuMA 粒線體的充電站</h3>
+                      <blockquote className="border-l-2 border-emerald-500/40 pl-3 italic text-sm text-slate-400 mb-4">「QuMA 是讓粒線體重新開始做事的開關。」</blockquote>
+                      <p className="text-xs text-slate-400 leading-relaxed">以輔酶 Q10 的進化形態搭配 NMN 前驅物質。大多數保健品補的是「原料」，QuMA 補的是「產能」，直接進入細胞發電廠，將舊機器翻新。</p>
+                    </div>
+                    <div className="mt-6 pt-4 border-t border-slate-800/60 bg-emerald-950/20 p-3 rounded-xl border border-emerald-500/10">
+                      <span className="text-[10px] text-emerald-400 uppercase font-bold block mb-1">話術武器</span>
+                      <p className="text-[11px] text-slate-300">「普通 Q10 進到腸道大部分被擋在外面。QuMA 讓成分能真正進入細胞工作——你之前吃的是門外的，我們讓你進門了。」</p>
+                    </div>
+                  </div>
+
+                  <div className="p-8 rounded-3xl bg-slate-900/30 hover:bg-slate-900/60 border border-slate-900 hover:border-cyan-500/30 transition-all group flex flex-col justify-between">
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="dna" className="w-6 h-6"></i>
+                      </div>
+                      <span className="text-xs text-cyan-400 font-bold block mb-2 uppercase tracking-wider">PILLAR 02 · 燕窩酸精準遞送</span>
+                      <h3 className="text-xl font-bold text-white mb-4">MDSNV 燕窩酸奈米運輸車</h3>
+                      <blockquote className="border-l-2 border-cyan-500/40 pl-3 italic text-sm text-slate-400 mb-4">「燕窩酸不是新成分，MDSNV 是讓它真正到達目的地的新方法。」</blockquote>
+                      <p className="text-xs text-slate-400 leading-relaxed">燕窩酸極易被胃酸破壞。MDSNV（乳源驅動燕窩酸奈米載體）用天然奈米囊泡將其包裹，如同母乳傳遞營養給嬰兒的方式，穿過消化道直達需要它的地方。</p>
+                    </div>
+                    <div className="mt-6 pt-4 border-t border-slate-800/60 bg-cyan-950/20 p-3 rounded-xl border border-cyan-500/10">
+                      <span className="text-[10px] text-cyan-400 uppercase font-bold block mb-1">話術武器</span>
+                      <p className="text-[11px] text-slate-300">「傳統燕窩吸收率很低。MDSNV 是把燕窩酸裝進奈米等級運輸艙，讓身體真正用到它——等於你買了燕窩，終於讓它發揮效果了。」</p>
+                    </div>
+                  </div>
+
+                  <div className="p-8 rounded-3xl bg-slate-900/30 hover:bg-slate-900/60 border border-slate-900 hover:border-amber-500/30 transition-all group flex flex-col justify-between">
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="flame" className="w-6 h-6"></i>
+                      </div>
+                      <span className="text-xs text-amber-400 font-bold block mb-2 uppercase tracking-wider">PILLAR 03 · MCU 點火啟動</span>
+                      <h3 className="text-xl font-bold text-white mb-4">螯合鈣 × 粒線體點火</h3>
+                      <blockquote className="border-l-2 border-amber-500/40 pl-3 italic text-sm text-slate-400 mb-4">「鈣不只是補骨頭的，它是讓粒線體啟動發電的鑰匙。」</blockquote>
+                      <p className="text-xs text-slate-400 leading-relaxed">鈣離子通過 MCU 直接刺激 ATP 合成酶。鈣離子不足發電系統就無法運轉。我們採用螯合鈣，吸收率高碳酸鈣 40–50%，精準引爆細胞能量。</p>
+                    </div>
+                    <div className="mt-6 pt-4 border-t border-slate-800/60 bg-amber-950/20 p-3 rounded-xl border border-amber-500/10">
+                      <span className="text-[10px] text-amber-400 uppercase font-bold block mb-1">話術武器</span>
+                      <p className="text-[11px] text-slate-300">「別人的鈣是補骨頭的，我們的鈣是幫細胞充電點火的。而且我們用螯合鈣，吸收率比一般鈣高將近一半，進得去才有用。」</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Lab Section */}
+              <section id="lab" className="py-20 bg-slate-950 border-b border-slate-900/60 relative">
+                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="max-w-7xl mx-auto px-6">
+                  <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-bold text-emerald-400 inline-block">LAB & SIMULATOR</span>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white">MitoActive 細胞能量互動實驗室 v1.0</h2>
+                    <p className="text-slate-400">調動技術三柱的關鍵變數，親自體驗「螯合鈣點火 ➔ QuMA 發電 ➔ MDSNV 保護」三者如何交織出最強的細胞長壽能量。</p>
+                  </div>
+
+                  <div className="grid lg:grid-cols-12 gap-8 bg-slate-900/40 p-6 sm:p-10 rounded-3xl border border-slate-900">
+                    <div className="lg:col-span-5 space-y-8">
+                      <div className="flex items-center gap-2 pb-2 border-b border-slate-800/60">
+                        <i data-lucide="sliders" className="w-5 h-5 text-emerald-400"></i>
+                        <h3 className="text-lg font-bold text-white">調節技術柱與生活變數</h3>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs">
+                          <span className="font-bold text-slate-200 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                            螯合鈣濃度 (MCU 點火開關)
+                          </span>
+                          <span className={`font-bold ${mcuActive ? 'text-amber-400' : 'text-slate-500'}`}>
+                            {mcuActive ? '⚡ 粒線體點火已開啟' : '❌ 未達點火閾值 (MCU 關閉)'}
+                          </span>
+                        </div>
+                        <input 
+                          type="range" min="0" max="100" value={calciumLevel}
+                          onChange={(e) => setCalciumLevel(Number(e.target.value))}
+                          className="w-full accent-amber-400 bg-slate-800 rounded-lg appearance-none h-2 cursor-pointer"
+                        />
+                        <p className="text-[11px] text-slate-500">當數值超過 40%，MCU 點火通道開啟，將顯著加成 QuMA 的發電效率。</p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs">
+                          <span className="font-bold text-slate-200 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            QuMA 輔酶/NMN 電子流 (發電原料)
+                          </span>
+                          <span className="font-bold text-emerald-400">{qumaLevel}%</span>
+                        </div>
+                        <input 
+                          type="range" min="0" max="100" value={qumaLevel}
+                          onChange={(e) => setQumaLevel(Number(e.target.value))}
+                          className="w-full accent-emerald-400 bg-slate-800 rounded-lg appearance-none h-2 cursor-pointer"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs">
+                          <span className="font-bold text-slate-200 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                            MDSNV 燕窩酸防禦力 (保護屏障)
+                          </span>
+                          <span className="font-bold text-cyan-400">{mdsnvLevel}%</span>
+                        </div>
+                        <input 
+                          type="range" min="0" max="100" value={mdsnvLevel}
+                          onChange={(e) => setMdsnvLevel(Number(e.target.value))}
+                          className="w-full accent-cyan-400 bg-slate-800 rounded-lg appearance-none h-2 cursor-pointer"
+                        />
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                        <div className="space-y-1">
+                          <span className="font-bold text-sm text-slate-100 block">規律有氧運動 & 黃金睡眠</span>
+                          <p className="text-xs text-slate-400">刺激全新肌肉線粒體合成，掃除代謝廢物</p>
+                        </div>
+                        <button 
+                          onClick={() => setLifestyleActive(!lifestyleActive)}
+                          className={`w-14 h-8 rounded-full transition-colors relative flex items-center px-1 ${lifestyleActive ? 'bg-emerald-500' : 'bg-slate-800'}`}
+                        >
+                          <div className={`w-6 h-6 rounded-full bg-white transition-transform ${lifestyleActive ? 'translate-x-6' : 'translate-x-0'} shadow-md`} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-4 bg-slate-950/60 rounded-2xl border border-slate-800 p-6 flex flex-col items-center justify-center min-h-[350px]">
+                      <span className="text-xs text-slate-500 uppercase tracking-widest font-semibold mb-4">Mito 模擬器活化狀態</span>
+                      <div className="relative w-48 h-48 flex items-center justify-center">
+                        <div className={`absolute w-44 h-44 rounded-full border border-dashed transition-all duration-1000 ${atpScore > 80 ? 'border-emerald-500/40 animate-[spin_10s_linear_infinite]' : 'border-slate-800 animate-[spin_30s_linear_infinite]'}`} />
+                        <div className={`absolute w-36 h-36 rounded-full border border-dashed transition-all duration-1000 ${protectionRate > 60 ? 'border-cyan-500/30 animate-[spin_15s_linear_infinite_reverse]' : 'border-slate-800 animate-[spin_40s_linear_infinite_reverse]'}`} />
+
+                        <svg viewBox="0 0 100 100" className={`w-28 h-28 transition-all duration-700 ${mcuActive ? 'text-amber-400' : atpScore > 50 ? 'text-emerald-400' : 'text-slate-500'}`}>
+                          <path d="M 50 15 C 75 15, 85 30, 85 50 C 85 70, 75 85, 50 85 C 25 85, 15 70, 15 50 C 15 30, 25 15, 50 15 Z" fill="none" stroke="currentColor" strokeWidth="2" />
+                          <path d="M 50 20 Q 65 27, 50 34 T 50 48 T 50 62 T 50 76 T 50 80" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className={`${atpScore > 60 ? 'animate-pulse' : ''}`} />
+                        </svg>
+
+                        {mcuActive && (
+                          <div className="absolute inset-0 pointer-events-none">
+                            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-2 h-2 bg-amber-400 rounded-full animate-ping" />
+                            <div className="absolute bottom-6 left-12 w-2.5 h-2.5 bg-yellow-400 rounded-full animate-bounce" />
+                            <div className="absolute top-20 right-8 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mt-4 text-center space-y-1">
+                        <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">三柱協同動態</span>
+                        <p className={`text-sm font-bold ${atpScore > 80 ? 'text-emerald-400' : atpScore > 40 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                          {atpScore > 80 ? '🚀 三柱協同·全速發電中' : atpScore > 40 ? '⚡ 設備就緒·引擎等待點火' : '⚠️ 起步功率偏低·細胞沒電'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-3 flex flex-col justify-between gap-6">
+                      <div className="space-y-6">
+                        <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                          <span className="text-xs text-slate-500 block">整體細胞 ATP 能量</span>
+                          <div className="flex items-baseline gap-1 mt-1">
+                            <span className="text-3xl font-extrabold text-white">{atpScore}</span>
+                            <span className="text-xs text-emerald-400 font-semibold">%</span>
+                          </div>
+                          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
+                            <div className="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full rounded-full transition-all duration-1000" style={{ width: `${atpScore}%` }} />
+                          </div>
+                        </div>
+
+                        <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                          <span className="text-xs text-slate-500 block">MDSNV 奈米防禦厚度</span>
+                          <div className="flex items-baseline gap-1 mt-1">
+                            <span className="text-3xl font-extrabold text-white">{protectionRate}</span>
+                            <span className="text-xs text-cyan-400 font-semibold">%</span>
+                          </div>
+                          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
+                            <div className="bg-gradient-to-r from-cyan-500 to-indigo-400 h-full rounded-full transition-all duration-1000" style={{ width: `${protectionRate}%` }} />
+                          </div>
+                        </div>
+
+                        <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-slate-500 block">預估細胞衰老速率</span>
+                            <i data-lucide="trending-up" className="w-4 h-4 text-rose-500 animate-pulse"></i>
+                          </div>
+                          <div className="flex items-baseline gap-1 mt-1">
+                            <span className="text-3xl font-extrabold text-white">{cellularAgingRate}</span>
+                            <span className="text-xs text-rose-400 font-semibold">x 基底</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
+                        <span className="text-slate-200 font-bold block mb-1">💡 專家提示</span>
+                        鈣離子濃度未達點火標籤（&lt;40%），即使 QuMA 再高發電效率也只有 60%。這就是螯合鈣作為 MCU 發電開關的重要之處。
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Academy Section */}
+              <section id="academy" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+                <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
+                  <div className="space-y-4 max-w-2xl">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400 font-bold">
+                      <i data-lucide="book-open" className="w-3.5 h-3.5"></i>
+                      <span>活「粒」生活 智能銷售賦能中心 v1.0</span>
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white">MitoActive 業務實戰沙盒</h2>
+                    <p className="text-slate-400">本章節供 MitoActive 內部業務人員教育訓練與實戰對答查詢。請點選下方分頁，調閱話術武器、反對解碼與情緒地圖。</p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
+                    <button onClick={() => setAcademyTab('manifesto')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'manifesto' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                      <i data-lucide="sparkles" className="w-4 h-4"></i>品牌信仰
+                    </button>
+                    <button onClick={() => setAcademyTab('emotions')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'emotions' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                      <i data-lucide="heart" className="w-4 h-4"></i>情緒地圖
+                    </button>
+                    <button onClick={() => setAcademyTab('scripts')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'scripts' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                      <i data-lucide="message-square" className="w-4 h-4"></i>黃金話術
+                    </button>
+                    <button onClick={() => setAcademyTab('objections')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'objections' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                      <i data-lucide="alert-triangle" className="w-4 h-4"></i>反對解碼
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900/30 rounded-3xl border border-slate-900 p-6 sm:p-10">
+                  {academyTab === 'manifesto' && (
+                    <div className="grid md:grid-cols-12 gap-8 items-center">
+                      <div className="md:col-span-7 space-y-6">
+                        <span className="text-xs text-emerald-400 font-bold uppercase tracking-widest block">SECTION 01 · BRAND MANIFESTO</span>
+                        <h3 className="text-2xl font-black text-white">「粒線體就是你的青春引擎」</h3>
+                        <p className="text-sm text-slate-300 leading-relaxed">你知道人為什麼會變老嗎？不是因為時間，時間只是個計數器。</p>
+                        <p className="text-sm text-slate-400 leading-relaxed font-light">
+                          真正讓你變老的，是你體內 <span className="text-white font-bold">37 兆個細胞</span>，開始「懶得做事」了。細胞為什麼懶？因為它沒電。每一個細胞裡，有幾百到幾千個叫做粒線體的小東西。
+                        </p>
+                        <div className="grid sm:grid-cols-2 gap-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                          <div className="text-xs text-slate-400">
+                            <span className="text-emerald-400 font-bold block mb-1">⚡ 朝氣能量起源</span>
+                            你早上起床有沒有力氣、皮膚膠原蛋白補不補得回來，全看粒線體產能。
+                          </div>
+                          <div className="text-xs text-slate-400">
+                            <span className="text-emerald-400 font-bold block mb-1">📉 30 歲後的警訊</span>
+                            30 歲之後，粒線體的效能每十年下降 10%。到了 50 歲，產能只剩年輕時的一半不到。
+                          </div>
+                        </div>
+                        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-400 italic">
+                          「你老不是因為歲月，是因為你的粒線體放棄了。我們讓它重新燃起來。」
+                        </div>
+                      </div>
+                      <div className="md:col-span-5 bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <span className="text-[11px] uppercase tracking-widest text-slate-500 font-black block">業務員心態校準</span>
+                        <p className="text-xs text-slate-400 leading-relaxed">「你必須先相信它，客戶才會相信你。客戶買的不是產品，買的是你說這件事時，眼神裡有沒有那個確定感。」</p>
+                        <div className="flex items-center gap-3 pt-2">
+                          <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                            <i data-lucide="user-check" className="w-5 h-5"></i>
+                          </div>
+                          <div>
+                            <span className="text-xs font-bold text-slate-200 block">非單純推銷</span>
+                            <span className="text-[10px] text-slate-500">你是告訴他們，疲憊背後有個真正的原因。</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {academyTab === 'emotions' && (
+                    <div className="grid md:grid-cols-12 gap-8">
+                      <div className="md:col-span-4 space-y-3">
+                        <span className="text-xs text-cyan-400 font-bold uppercase tracking-widest block mb-4">5大情緒切入點</span>
+                        {[
+                          { id: 'fatigue', label: '入口一：【累】', subtitle: '睡再飽起來也還是累' },
+                          { id: 'noEffect', label: '入口二：【補了沒感覺】', subtitle: '吃了好幾種，不知道有沒有用' },
+                          { id: 'skin', label: '入口三：【皮膚、頭髮與狀態】', subtitle: '最近照鏡子覺得整個人暗掉了' },
+                          { id: 'fog', label: '入口四：【記憶、反應、腦霧】', subtitle: '剛才想說什麼，轉頭就忘記了' },
+                          { id: 'family', label: '入口五：【給家人的理由】', subtitle: '想買給爸媽，又怕他們嫌老' }
+                        ].map(emo => (
+                          <button
+                            key={emo.id} onClick={() => setSelectedEmotion(emo.id)}
+                            className={`w-full text-left p-4 rounded-xl border transition-all ${selectedEmotion === emo.id ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-md' : 'bg-slate-950/40 border-slate-900 text-slate-400 hover:border-slate-800'}`}
+                          >
+                            <span className="block text-xs font-bold">{emo.label}</span>
+                            <span className="block text-[11px] text-slate-500 mt-0.5">{emo.subtitle}</span>
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="md:col-span-8 bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        {selectedEmotion === 'fatigue' && (
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
+                              <i data-lucide="heart" className="w-5 h-5 text-cyan-400 animate-pulse"></i>
+                              <h4 className="text-lg font-bold text-white">入口一：客戶常說的【累】</h4>
+                            </div>
+                            <div className="space-y-1">
+                              <span className="text-[10px] text-slate-500 font-bold uppercase">客戶內心深層感受</span>
+                              <p className="text-sm text-slate-300 italic">「我睡了八小時，起來還是累。以前三更半夜還可以加班，現在下午三點就不行了。」</p>
+                            </div>
+                            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                              <span className="text-[10px] text-cyan-400 font-bold uppercase">你該這樣說 (破冰台詞)</span>
+                              <p className="text-sm text-slate-200">「你有沒想過，那個累不是因為你懶，是因為你的細胞真的沒電了？粒線體的產能下降，不是靠睡覺可以補回來的——它需要的是讓它重新發電的材料。」</p>
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              <span className="text-slate-400 font-bold">🧠 情緒說服邏輯：</span>
+                              把「自己體力變差」這個自我批評，轉化成「細胞能量不足」這個能被物理科學解決的問題。他們感覺被理解了，而不是被評判。
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedEmotion === 'noEffect' && (
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
+                              <i data-lucide="heart" className="w-5 h-5 text-cyan-400 animate-pulse"></i>
+                              <h4 className="text-lg font-bold text-white">入口二：針對【補了沒感覺】的客群</h4>
+                            </div>
+                            <div className="space-y-1">
+                              <span className="text-[10px] text-slate-500 font-bold uppercase">客戶內心深層感受</span>
+                              <p className="text-sm text-slate-300 italic">「吃了好幾種保健品，花了不少錢，說真的，不知道有沒有用。」</p>
+                            </div>
+                            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                              <span className="text-[10px] text-cyan-400 font-bold uppercase">你該這樣說 (破冰台詞)</span>
+                              <p className="text-sm text-slate-200">「很多保健品的問題，不是成分不好，是根本沒辦法進到細胞裡工作。你喝的燕窩、吃的Q10，大部分在消化道就被消耗掉了，真正到達粒線體的少之又少。MitoActiveLife 解決的，就是這個問題——讓成分真的到達它該去的地方。」</p>
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              <span className="text-slate-400 font-bold">🧠 情緒說服邏輯：</span>
+                              不否定他們過去的選擇，而是幫他們找到「沒效果」的原因。他們感覺自己被保護與釋疑了，而不是被當成冤大頭。
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedEmotion === 'skin' && (
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
+                              <i data-lucide="heart" className="w-5 h-5 text-cyan-400 animate-pulse"></i>
+                              <h4 className="text-lg font-bold text-white">入口三：愛美男女的【狀態暗沉】</h4>
+                            </div>
+                            <div className="space-y-1">
+                              <span className="text-[10px] text-slate-500 font-bold uppercase">客戶內心深層感受</span>
+                              <p className="text-sm text-slate-300 italic">「最近照鏡子，覺得整個人暗掉了。皮膚補水補了很多，就是沒以前那種光。」</p>
+                            </div>
+                            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                              <span className="text-[10px] text-cyan-400 font-bold uppercase">你該這樣說 (破冰台詞)</span>
+                              <p className="text-sm text-slate-200">「皮膚的光澤，不是靠外面塗的。它需要細胞自己有能力修復、更新。而細胞要修復，需要能量——粒線體要有電，它才有力氣工作。你現在補的是外面，我們補的是讓它從裡面亮起來的那個源頭。」</p>
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              <span className="text-slate-400 font-bold">🧠 情緒說服邏輯：</span>
+                              將外在狀態的改變，連結到細胞能量的核心邏輯。他們想要的是「找回那個光」，你給的是「找回那個光的真正原因」。
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedEmotion === 'fog' && (
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
+                              <i data-lucide="heart" className="w-5 h-5 text-cyan-400 animate-pulse"></i>
+                              <h4 className="text-lg font-bold text-white">入口四：銀髮前期的【記憶反應慢】</h4>
+                            </div>
+                            <div className="space-y-1">
+                              <span className="text-[10px] text-slate-500 font-bold uppercase">客戶內心深層感受</span>
+                              <p className="text-sm text-slate-300 italic">「最近有點忘東忘西，剛才想說什麼，轉個頭就不記得了。」</p>
+                            </div>
+                            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                              <span className="text-[10px] text-cyan-400 font-bold uppercase">你該這樣說 (破冰台詞)</span>
+                              <p className="text-sm text-slate-200">「大腦是全身耗能最高的器官，粒線體一旦沒力，第一個受影響的就是它。這不是失智的前兆，這是細胞電力不夠了的訊號。」</p>
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              <span className="text-slate-400 font-bold">🧠 情緒說服邏輯：</span>
+                              解除客戶對於衰退的心理恐懼，給出可積極行動的方向。他們能從「我是不是病了」轉移到「我知道該怎麼幫大腦充電了」。
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedEmotion === 'family' && (
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
+                              <i data-lucide="heart" className="w-5 h-5 text-cyan-400 animate-pulse"></i>
+                              <h4 className="text-lg font-bold text-white">入口五：孝順子女的【送禮顧忌】</h4>
+                            </div>
+                            <div className="space-y-1">
+                              <span className="text-[10px] text-slate-500 font-bold uppercase">客戶內心深層感受</span>
+                              <p className="text-sm text-slate-300 italic">「我想買給我媽/我爸，但又不知道怎麼跟他們說，怕他們覺得我在嫌他們老。」</p>
+                            </div>
+                            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                              <span className="text-[10px] text-cyan-400 font-bold uppercase">你該這樣說 (破冰台詞)</span>
+                              <p className="text-sm text-slate-200">「你可以這樣說——『這是補能量的，不是補老人的。我自己也在吃。』因為 MitoActiveLife 本來就不是老人保健品，是給所有細胞在努力工作的人補電的。」</p>
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              <span className="text-slate-400 font-bold">🧠 情緒說服邏輯：</span>
+                              幫業務員同時解決客戶的購買阻力，以及轉贈家人的社交阻力。一句簡單的定位轉換，打開兩個出口。
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="mt-4 pt-4 border-t border-slate-800 text-[11px] text-slate-500">
+                          ⚠️ <span className="text-amber-500 font-bold">黃金心法：</span> 不要跟客戶一味聊「粒線體學術」，要跟客戶聊「感覺」。科學讓你有說話的底氣。情感讓他們決定掏錢包。
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {academyTab === 'scripts' && (
+                    <div className="space-y-8">
+                      <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <i data-lucide="sparkles" className="w-5 h-5 text-emerald-400"></i>
+                            <h4 className="text-base font-bold text-white">黃金三分鐘破冰 (陌生人/聚會/LINE)</h4>
+                          </div>
+                          <button 
+                            onClick={() => handleCopy(`「你有沒有這樣的感覺——補了很多東西，吃了很多保健品，但就是那個有活力的狀態回不來？或者睡再多還是累，皮膚保養做再多就是沒光澤？\n很多人的問題，不是補錯東西，是補的東西根本沒辦法進到細胞裡工作。你的細胞裡有個叫粒線體的東西，它是你全身能量的來源。45 歲之後，它的產能每年都在下降。你感覺到的那個累、那個暗、那個反應慢，其實是你的細胞沒電了的訊號。\nMitoActiveLife 做的事，是讓粒線體重新發電。我們有三個核心技術：QuMA 幫粒線體升級產電效能，MDSNV 用奈米技術讓燕窩酸真正進到細胞裡，螯合鈣啟動粒線體的發電開關。三個加在一起，是一個讓細胞重新充電的系統——不是補材料，是補產能。\n很多客人吃了兩週之後說，早上起床有感覺到不一樣。你有有沒有興趣試試看？我可以讓你先了解一下。」`, 'standard3m')}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-semibold text-slate-300 hover:text-white"
+                          >
+                            {copiedText === 'standard3m' ? <i data-lucide="check" className="w-3.5 h-3.5 text-emerald-400"></i> : <i data-lucide="copy" className="w-3.5 h-3.5"></i>}
+                            {copiedText === 'standard3m' ? '已複製' : '一鍵複製話術'}
+                          </button>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-4 text-xs">
+                          <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/40">
+                            <span className="text-emerald-400 font-bold block mb-1">第一分鐘：共鳴</span>
+                            「你有沒有這種感覺...睡再多還是累，皮膚擦再多還是沒光亮？」
+                          </div>
+                          <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/40">
+                            <span className="text-emerald-400 font-bold block mb-1">第二分鐘：原因解密</span>
+                            「這不是因為你懶，是細胞粒線體沒電了。45歲後它的效能每年都在大退步。」
+                          </div>
+                          <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/40">
+                            <span className="text-emerald-400 font-bold block mb-1">第三分鐘：系統行動</span>
+                            「MitoActive 三合一系統：鈣點火、QuMA發電、MDSNV保護。要不要試試看？」
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                          <span className="text-[10px] text-cyan-400 font-bold block uppercase">場景一：對方說「我已經在吃 Q10 了」</span>
+                          <p className="text-xs text-slate-400">
+                            「Q10 這個成分沒問題，問題是市面上大多數的 Q10，吸收率非常低——脂溶性的結構在腸道裡很難被有效吸收。你吃了多久了？有感覺到差別嗎？」
+                          </p>
+                          <p className="text-xs text-slate-200">
+                            「QuMA 做的是 Q10 的進化版本，解決的就是這個進得去進不去的問題。而且我們不是單打職鬥，是三個系統同時進行——就像你修車，不能只換一個零件，要讓整台車都恢復效能，才感覺得到差別。」
+                          </p>
+                        </div>
+
+                        <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] text-cyan-400 font-bold block uppercase flex items-center gap-1">
+                              <i data-lucide="smartphone" className="w-3.5 h-3.5"></i> LINE 專用發送訊息 (短版)
+                            </span>
+                            <button 
+                              onClick={() => handleCopy(`最近有一個產品，專門針對 45 歲後細胞能量下降的問題——不是一般的補充品，是讓粒線體重新發電的系統設計。有朋友吃了兩週說狀態很不一樣。你最近有在用什麼保養保健品嗎？有機會跟你分享一下。`, 'lineShort')}
+                              className="text-[11px] text-slate-400 hover:text-white flex items-center gap-1"
+                            >
+                              {copiedText === 'lineShort' ? <i data-lucide="check" className="w-3.5 h-3.5 text-emerald-400"></i> : <i data-lucide="copy" className="w-3 h-3"></i>}
+                              複製文字
+                            </button>
+                          </div>
+                          <div className="p-3 rounded-lg bg-slate-900 text-xs font-mono text-slate-300 leading-relaxed">
+                            「最近有一個產品，專門針對 45 歲後細胞能量下降的問題——不是一般的補充品，是讓粒線體重新發電的系統設計。有朋友吃了兩週說狀態很不一樣。你最近有在用什麼保養保健品嗎？有機會跟你分享一下。」
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {academyTab === 'objections' && (
+                    <div className="space-y-6">
+                      <span className="text-xs text-amber-400 font-bold uppercase tracking-widest block">客戶拒絕的四個標準處理 (點選翻開卡片解讀)</span>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[
+                          { id: 'o1', client: '「我再想想」', truth: '還沒有足夠的購買理由與安全感。', response: '問他哪個地方還不夠清楚，重新回到「累」或「補了沒感覺」情緒入口。' },
+                          { id: 'o2', client: '「這太貴了」', truth: '還沒感受到這份技術能帶給他的具體價值。', response: '使用「進得去 vs 進不去」建立價值對比：普通燕窩被胃酸破壞，我們的奈米車是買路費，保證送達細胞。' },
+                          { id: 'o3', client: '「我不吃保健品」', truth: '曾經買過一堆無感保健品，失去了信任感。', response: '從「補了沒感覺」的痛點切入，先認同他的經驗：「對！吃一堆進不去細胞的化學品，不吃也罷。我們的三柱是生物利用率吸收革命。」' },
+                          { id: 'o4', client: '「我身體還好」', truth: '沒有感受到衰退與老化的緊迫性。', response: '從「主動式防禦」框架切入：「現在外觀精神還好，不代表細胞內部的粒線體沒有在每天被氧化耗損。提前充飽電，是為了不起皺、不走下坡。」' }
+                        ].map(obj => (
+                          <div 
+                            key={obj.id} onClick={() => setFlippedObjection(flippedObjection === obj.id ? null : obj.id)}
+                            className={`p-6 rounded-2xl border transition-all cursor-pointer min-h-[180px] flex flex-col justify-between ${flippedObjection === obj.id ? 'bg-amber-950/30 border-amber-500/40 text-slate-100' : 'bg-slate-950 border-slate-900 hover:border-slate-800'}`}
+                          >
+                            <div>
+                              <span className="text-[10px] text-slate-500 font-bold block mb-1">客戶表面的話</span>
+                              <h4 className="text-base font-bold text-white mb-2">{obj.client}</h4>
+                            </div>
+                            {flippedObjection === obj.id ? (
+                              <div className="space-y-2 text-xs pt-2 border-t border-amber-500/20">
+                                <span className="text-rose-400 font-bold block">🎯 內心真意：{obj.truth}</span>
+                                <span className="text-slate-300 block"><strong className="text-emerald-400">應對方向：</strong>{obj.response}</span>
+                              </div>
+                            ) : (
+                              <span className="text-[11px] text-amber-400 font-bold flex items-center gap-1 mt-4">
+                                <i data-lucide="help-circle" className="w-3.5 h-3.5"></i> 點擊翻牌，解構拆招方向
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+
+              {/* Solutions Section */}
+              <section id="solutions" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+                <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                  <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">PRODUCT DESIGN & SYNERGY</span>
+                  <h2 className="text-3xl sm:text-4xl font-bold text-white">MitoActiveLife 活「粒」生活口嚼片</h2>
+                  <p className="text-slate-400">點火（螯合鈣）➔ 發電（QuMA）➔ 保護（MDSNV）。這不是單一補充品，而是一套為 45 歲以上設計的細胞發電系統。</p>
+                </div>
+
+                <div className="grid lg:grid-cols-12 gap-12 items-center bg-slate-900/20 p-8 sm:p-12 rounded-3xl border border-slate-900">
+                  <div className="lg:col-span-7 space-y-8">
+                    <span className="text-xs text-emerald-400 font-bold block uppercase">SYNERGY CYCLE</span>
+                    <h3 className="text-2xl font-black text-white">「三層協同」不是加法，是高效循環</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed">普通的保健品是把好東西堆疊在一起。而活「粒」生活的三種技術，在身體內部是一個閉環的增益系統：</p>
+
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold shrink-0 text-xs">1</div>
+                        <div>
+                          <h4 className="text-sm font-bold text-slate-100">點火 (螯合鈣 - MCU 機制)</h4>
+                          <p className="text-xs text-slate-400 mt-1">吸收率提高 50% 的螯合鈣，是粒線體產能引擎的鑰匙。如果沒有它按開關，粒線體就沒有啟動發電信號。</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold shrink-0 text-xs">2</div>
+                        <div>
+                          <h4 className="text-sm font-bold text-slate-100">發電 (QuMA 粒線體機能複合體)</h4>
+                          <p className="text-xs text-slate-400 mt-1">以輔酶 Q10 的進化形態為主力，直接修護與支援電子傳遞鏈（ETC），提升細胞的產能功率。</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-bold shrink-0 text-xs">3</div>
+                        <div>
+                          <h4 className="text-sm font-bold text-slate-100">保護 (MDSNV 燕窩酸奈米載體)</h4>
+                          <p className="text-xs text-slate-400 mt-1">保護大腦神經與細胞膜，同時免受自由基（ROS）侵擾。發電系統更穩定，鈣的點火信號就更有效率，形成自我增幅。</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-5 bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+                    <span className="text-xs text-slate-500 font-bold block uppercase">劑型物理考量 — 口嚼片設計</span>
+                    
+                    <div className="relative flex justify-center py-4">
+                      <svg viewBox="0 0 100 100" className="w-24 h-24 text-emerald-400 animate-[spin_30s_linear_infinite]">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray="10 4 2 4" />
+                        <circle cx="50" cy="50" r="28" className="fill-slate-900 stroke-slate-800" strokeWidth="2" />
+                      </svg>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-850">
+                        <span className="text-xs font-bold text-slate-200 block">第一、吸收起點提前</span>
+                        <span className="text-[11px] text-slate-500 block mt-1">從口腔黏膜開始進行吸收，繞過部分腸道首關效應，讓消化退化的 45 歲以上族群吸收更快。</span>
+                      </div>
+
+                      <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-850">
+                        <span className="text-xs font-bold text-slate-200 block">第二、服用依從性高</span>
+                        <span className="text-[11px] text-slate-500 block mt-1">不需要配水吞，可隨時放入口中咀嚼，提升「順手吃」的頻率，有效降低忘記服用的痛點。</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Team Section */}
+              <section id="team" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+                <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
+                  <div className="space-y-4 max-w-2xl">
+                    <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">OUR LEADERSHIP</span>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white">科研智慧與企業運營的完美結合</h2>
+                    <p className="text-slate-400">MitoActiveLife 匯集了全球頂尖的細胞生物學家、抗衰老臨床醫學領袖與具備數十年跨國生技運作經驗的商業精英。</p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {['all', 'exec', 'science'].map(tabId => (
+                      <button
+                        key={tabId} onClick={() => setActiveTab(tabId)}
+                        className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${activeTab === tabId ? 'bg-emerald-500 text-slate-950' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
+                      >
+                        {tabId === 'all' ? '全體團隊成員' : tabId === 'exec' ? '執行領袖' : '科學顧問'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {filteredLeaders.map(leader => (
+                    <div 
+                      key={leader.id} onClick={() => setSelectedLeader(leader)}
+                      className="group bg-slate-900/40 rounded-2xl border border-slate-900 hover:border-slate-850 overflow-hidden transition-all duration-300 cursor-pointer flex flex-col justify-between hover:scale-[1.01] hover:shadow-xl hover:shadow-emerald-500/[0.02]"
+                    >
+                      <div>
+                        <div className={`h-48 ${leader.avatarBg} relative flex items-center justify-center p-6 overflow-hidden`}>
+                          <div className="absolute w-32 h-32 rounded-full bg-white/5 border border-white/10 animate-pulse" />
+                          <div className="relative z-10 w-20 h-20 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-center text-emerald-400">
+                            <i data-lucide="atom" className="w-8 h-8 animate-[spin_20s_linear_infinite]"></i>
+                          </div>
+                          <span className="absolute top-3 right-3 bg-slate-950/70 border border-slate-800 text-[9px] px-2.5 py-0.5 rounded-full text-emerald-400 font-bold tracking-wide uppercase">
+                            {leader.role}
+                          </span>
+                        </div>
+                        <div className="p-5 space-y-2">
+                          <h3 className="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">{leader.name}</h3>
+                          <p className="text-xs text-slate-400 font-medium leading-tight">{leader.title}</p>
+                          <p className="text-[11px] text-slate-500 line-clamp-2 mt-2 leading-relaxed">{leader.experience}</p>
+                        </div>
+                      </div>
+                      <div className="p-5 pt-0 border-t border-slate-900/60 mt-3 flex items-center justify-between text-[11px] text-emerald-400 font-bold">
+                        <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">閱讀完整履歷與願景 <i data-lucide="chevron-right" className="w-3.5 h-3.5"></i></span>
+                        <span className="w-7 h-7 rounded-full bg-slate-950/60 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+                          <i data-lucide="linkedin" className="w-3.5 h-3.5"></i>
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Modal */}
+              {selectedLeader && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+                  <div onClick={() => setSelectedLeader(null)} className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" />
+                  <div className="relative z-10 w-full max-w-2xl bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
+                    <button onClick={() => setSelectedLeader(null)} className="absolute top-6 right-6 p-2 rounded-full bg-slate-950/50 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
+                      <i data-lucide="x" className="w-5 h-5"></i>
+                    </button>
+                    <div className="grid md:grid-cols-12">
+                      <div className={`md:col-span-5 ${selectedLeader.avatarBg} p-8 flex flex-col justify-between min-h-[250px] md:min-h-full`}>
+                        <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-800 inline-self-start self-start">
+                          <i data-lucide="dna" className="w-5 h-5 text-emerald-400 animate-pulse"></i>
+                        </div>
+                        <div className="space-y-2">
+                          <span className="text-[9px] tracking-widest uppercase font-extrabold text-emerald-400 bg-slate-950/80 px-2.5 py-0.5 rounded-full border border-slate-800 inline-block">{selectedLeader.role}</span>
+                          <h3 className="text-xl font-black text-white">{selectedLeader.name}</h3>
+                          <p className="text-xs text-slate-300 font-semibold">{selectedLeader.education}</p>
+                        </div>
+                      </div>
+                      <div className="md:col-span-7 p-8 space-y-5">
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1">官方職掌 / Role</h4>
+                          <p className="text-base font-bold text-white">{selectedLeader.title}</p>
+                        </div>
+                        <div className="bg-slate-950/50 p-3.5 rounded-xl border-l-2 border-emerald-500 italic text-xs text-slate-300 leading-relaxed">"{selectedLeader.quote}"</div>
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1">專業背景 & 研發歷程</h4>
+                          <p className="text-xs text-slate-400 leading-relaxed">{selectedLeader.experience}</p>
+                        </div>
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-2">核心管理與學術專長</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {selectedLeader.skills.map((skill, index) => (
+                              <span key={index} className="px-2.5 py-1 rounded bg-slate-950 text-slate-300 text-[10px] font-semibold border border-slate-800">{skill}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Contact Section */}
+              <section id="contact" className="py-20 max-w-7xl mx-auto px-6">
+                <div className="grid lg:grid-cols-12 gap-12 bg-slate-900/40 p-8 sm:p-12 rounded-3xl border border-slate-900 relative overflow-hidden">
+                  <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+                  <div className="lg:col-span-5 space-y-6">
+                    <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">INTERNAL USE ONLY</span>
+                    <h2 className="text-3xl font-bold text-white">開啟您的細胞活化之旅</h2>
+                    <p className="text-slate-400 text-sm leading-relaxed">對活「粒」生活專利成分、螯合鈣MCU發電通路，或是如何運用文稿話術進行客戶破冰有進一步疑問？歡迎遞交內部支援諮詢。</p>
+                    <div className="space-y-4 pt-4">
+                      <div className="flex items-center gap-4 text-sm text-slate-350">
+                        <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-emerald-400"><i data-lucide="globe" className="w-5 h-5"></i></div>
+                        <div>
+                          <span className="block text-xs text-slate-500">全球營運總部</span>
+                          <span className="font-semibold text-white">美國德克薩斯州達拉斯 (Dallas, TX)</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-slate-350">
+                        <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-emerald-400"><i data-lucide="award" className="w-5 h-5"></i></div>
+                        <div>
+                          <span className="block text-xs text-slate-500">科學實驗研發中心</span>
+                          <span className="font-semibold text-white">瑞士巴塞爾 (Basel, Switzerland)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-7 bg-slate-950/40 p-6 sm:p-8 rounded-2xl border border-slate-850">
+                    <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); }}>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-400 mb-2">姓名</label>
+                          <input type="text" placeholder="例如：林業務" className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-white focus:outline-none transition-colors" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-slate-400 mb-2">內部聯絡電子郵件</label>
+                          <input type="email" placeholder="name@mitoactivelife.com" className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-white focus:outline-none transition-colors" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-400 mb-2">諮詢範疇</label>
+                        <select className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-slate-300 focus:outline-none transition-colors">
+                          <option>技術三柱科學細節索取</option>
+                          <option>MDSNV 與 QuMA 吸收率臨床白皮書</option>
+                          <option>經銷通路合作培訓支援</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-400 mb-2">備註詳情</label>
+                        <textarea rows={4} placeholder="請輸入您希望得到的內部培訓支援或學術文獻需求..." className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-white focus:outline-none transition-colors" />
+                      </div>
+                      <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-sm font-bold shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all hover:scale-[1.01] active:scale-95">遞交內部協助申請</button>
+                    </form>
+                  </div>
+                </div>
+              </section>
+
+              {/* Footer */}
+              <footer className="bg-slate-950 border-t border-slate-900/60 py-12">
+                <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center"><i data-lucide="dna" className="w-4 h-4 text-slate-950"></i></div>
+                      <span className="text-lg font-bold text-white">MitoActiveLife</span>
+                    </div>
+                    <p className="text-xs text-slate-500 leading-relaxed">MitoActiveLife 活「粒」生活 螯合鈣 × QuMA 粒線體機能 × MDSNV 燕窩酸奈米遞送。內部業務用途，請勿外流，2026 年 5 月版。</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">技術三柱架構</h4>
+                    <ul className="space-y-2 text-xs text-slate-500">
+                      <li>螯合鈣點火 (MCU通道)</li>
+                      <li>QuMA 粒線體發電機能</li>
+                      <li>MDSNV 燕窩酸奈米載體</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">業務員武器庫</h4>
+                    <ul className="space-y-2 text-xs text-slate-500">
+                      <li>三分鐘破冰標準版</li>
+                      <li>5大消費者情緒痛點</li>
+                      <li>反對阻力解碼應對</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">法規聲明</h4>
+                    <p className="text-[10px] text-slate-600 leading-relaxed">* 業務技術文稿 v1.0。僅供內部培訓使用。</p>
+                    <div className="flex gap-4 mt-4"><span className="text-xs text-slate-500">© 2026 MitoActiveLife.</span></div>
+                  </div>
+                </div>
+              </footer>
+
+            </div>
+          );
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('main-nav');
-            if (window.scrollY > 20) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-            
-            // 輕微的視差效果
-            const scrolled = window.pageYOffset;
-            document.querySelectorAll('.silhouette-decor').forEach(el => {
-                const speed = 0.05;
-                el.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
+        // 渲染 App 組件
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
