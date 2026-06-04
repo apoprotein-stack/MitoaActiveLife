@@ -16,17 +16,25 @@
     <style>
         /* 滾動條美化 */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+        
+        /* 漸變發光動畫 */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.35; transform: scale(1) translate(-50%, -50%); }
+            50% { opacity: 0.5; transform: scale(1.1) translate(-48%, -48%); }
+        }
+        .bg-glow-emerald {
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 overflow-x-hidden">
     <div id="root"></div>
 
     <!-- 載入我們編寫的 React 元件代碼 -->
     <script type="text/babel">
-        // 將 Lucide 圖標解構至全域方便使用
         const { 
           Users, Dna, Activity, ChevronRight, Linkedin, Mail, X, Zap, 
           ShieldCheck, Heart, Sparkles, ArrowUpRight, TrendingUp, Sliders, 
@@ -34,7 +42,6 @@
           Check, Smartphone, Flame, Shield, HelpCircle, UserCheck
         } = lucide;
 
-        // 多語言翻譯字典
         const translations = {
           'zh-TW': {
             langName: "繁體中文",
@@ -60,8 +67,8 @@
             bio_rate: "99.7% 生物利用率",
             
             sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "技術三柱 — 業務員的「技術武器庫」",
-            sci_desc: "當客戶問「這跟別人的有什麼不同」時，你能用最簡單的話回答，而且精準點出我們的頂級科技力量。",
+            sci_title: "保持年輕科技術三柱 — 保持健康的「技術武器庫」",
+            sci_desc: "告訴你一個秘密 精準點出頂級科技力量。",
             sci_p1_sub: "PILLAR 01 · 燃料效能恢復",
             sci_p1_title: "QuMA 粒線體的充電站",
             sci_p1_quote: "「QuMA 是讓粒線體重新開始做事的開關。」",
@@ -184,8 +191,8 @@
             bio_rate: "99.7% Bioavailability",
             
             sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "Three Pillars — Technical Weaponry",
-            sci_desc: "When customers ask 'How is this different from others', give them the simplest, most scientifically accurate answer.",
+            sci_title: "Youth Tech Three Pillars — Health Defense Weaponry",
+            sci_desc: "Let me tell you a secret: pinpointing the ultimate power of premium science.",
             sci_p1_sub: "PILLAR 01 · Fuel Recovery",
             sci_p1_title: "QuMA Charging Station",
             sci_p1_quote: "“QuMA is the switch that gets mitochondria working again.”",
@@ -286,251 +293,127 @@
           },
           'ja': {
             langName: "日本語",
-            title_suffix: "MitoActiveLife · 2026 社内用資料",
-            nav_pillars: "技術の三柱",
-            nav_lab: "細胞相互シミュレータ",
-            nav_academy: "スマート営業センター",
-            nav_team: "リーダーシップチーム",
-            nav_solutions: "システム配合",
-            nav_contact: "専用相談",
-            hero_tag: "MitoActiveLife · 営業スキル支援システム",
-            hero_title1: "老いは歳月のせいではなく、",
-            hero_title2: "ミトコンドリアの稼働停止が原因です",
-            hero_desc: "「活性カルシウム点火」×「QuMAエネルギー生産」×「MDSNVナノデリバリー」の融合により、37兆個の細胞に若々しい電力を再注入します。ただのサプリメントではなく、細胞充電システムです。",
-            hero_btn_academy: "営業センターへ",
-            hero_btn_lab: "細胞シミュレータ",
-            pill_quma: "QuMA ミトコンドリア発電",
-            pill_mdsnv: "MDSNV 乳由来ナノキャリア",
-            pill_calcium: "活性カルシウム MCU起動スイッチ",
-            mcu_ignited: "MCU 点火成功",
+            title_suffix: "ミトアクティブライフ · 2026 INTERNAL",
+            nav_pillars: "3大技術",
+            nav_lab: "細胞インタラクティブ・ラボ",
+            nav_academy: "セールス・アカデミー",
+            nav_team: "リーダーシップ",
+            nav_solutions: "複合システム",
+            nav_contact: "専用相談窓口",
+            hero_tag: "MitoActiveLife · 営業技術支援システム",
+            hero_title1: "年齢のせいではありません、",
+            hero_title2: "ミトコンドリアの生命力が消えかけているからです",
+            hero_desc: "「活性カルシウム点火機構」×「QuMA ミトコンドリア発電能力」×「MDSNV ツバメの巣酸ナノデリバリー」を融合し、37兆個の細胞に若々しい電力を再起動。単なるサプリメントではなく、細胞レベルの「充電システム」です。",
+            hero_btn_academy: "セールス・アカデミーに入る",
+            hero_btn_lab: "細胞インタラクティブ・ラボ",
+            pill_quma: "QuMA ミトコンドリア高効率発電",
+            pill_mdsnv: "MDSNV 乳由来ナノデリバリー",
+            pill_calcium: "活性カルシウム MCU 点火スイッチ",
+            mcu_ignited: "MCU点火完了",
             mdsnv_protect: "MDSNV ナノ保護膜",
-            product_name: "MitoActive チュアブル錠",
-            bio_rate: "99.7% 生体利用効率",
+            product_name: "ミトアクティブ チュアブル錠",
+            bio_rate: "99.7% 生体利用率",
             
             sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "技術の三柱 — 営業向け解説集",
-            sci_desc: "「他社商品と何が違うのか」と問われた際、最もシンプルかつ科学的にトップクラスの技術を伝える武器になります。",
+            sci_title: "若々しさを保つ3大技術 — セールスの「最強兵器」",
+            sci_desc: "他社製品との圧倒的な違いを、科学的かつシンプルに解説するための技術解説。",
             sci_p1_sub: "PILLAR 01 · 燃料効率の回復",
-            sci_p1_title: "QuMA ミトコンドリア充電スタンド",
-            sci_p1_quote: "「QuMAはミトコンドリアを呼び覚ます起動スイッチです。」",
-            sci_p1_desc: "進化型コエンザイムQ10とNMN前駆体を融合。従来の原料補給ではなく、細胞の発電所自体を若返らせて「生産能力」を高めます。",
-            sci_p1_weapon: "「一般的なQ10は胃腸で阻害されます。QuMAは成分を直接細胞へ届けます。他社はドアの外まで、私たちは中へ招き入れます。」",
-            sci_p2_sub: "PILLAR 02 · 高精度デリバリー",
-            sci_p2_title: "MDSNV シアル酸ナノ輸送車",
-            sci_p2_quote: "「有用成分シアル酸を確実に目的地へ届ける新技術です。」",
-            sci_p2_desc: "シアル酸は胃酸に弱いのが弱点。MDSNVは天然ナノカプセルでシアル酸を包み、母乳のように消化管を抜けて目的地へダイレクト配送します。",
-            sci_p2_weapon: "「高級ツバメの巣も吸収されなければ意味がありません。MDSNVはナノ輸送により、高価なシアル酸を余さず体内で活かします。」",
-            sci_p3_sub: "PILLAR 03 · MCU起動点火",
+            sci_p1_title: "QuMA ミトコンドリア充電ステーション",
+            sci_p1_quote: "「QuMAは、ミトコンドリアに再び仕事をさせるためのスイッチです」",
+            sci_p1_desc: "コエンザイムQ10の進化形とNMN前駆物質を組み合わせました。一般的なサプリは単なる「原料」ですが、QuMAは「発電能力」そのものを補い、細胞の発電所をダイレクトに修復します。",
+            sci_p1_weapon: "「通常のQ10は胃腸でブロックされがちですが、QuMAは細胞内に直接入り込んで働きます。他社はドアの外までしか届けられませんが、私たちは家の中までご案内します」",
+            sci_p2_sub: "PILLAR 02 · 精密デリバリー",
+            sci_p2_title: "MDSNV ツバメの巣酸ナノ輸送カプセル",
+            sci_p2_quote: "「ツバメの巣酸は有名ですが、MDSNVは目的地に確実に届けるための新技術です」",
+            sci_p2_desc: "ツバメの巣酸は胃酸に弱いのが弱点です。MDSNV（乳由来ツバメの巣酸ナノキャリア）は、天然のナノカプセルで包み込み、胃酸をスルーして必要な場所へ届けます。",
+            sci_p2_weapon: "「従来のツバメの巣は吸収率が低いのが難点。MDSNVはナノレベルの特殊カプセルに収めて届けるため、身体が贅沢な成分を十分に活用できます」",
+            sci_p3_sub: "PILLAR 03 · MCU点火スイッチ",
             sci_p3_title: "活性カルシウム × ミトコンドリア点火",
-            sci_p3_quote: "「カルシウムは骨のためだけでなく、細胞の発電キーです。」",
-            sci_p3_desc: "カルシウムイオンがMCUを通じてATP合成酵素を刺激。カルシウム不足は発電停止を意味します。活性カルシウムで吸収率40–50%向上。",
-            sci_p3_weapon: "「一般的なカルシウムが骨を作るなら、私たちのカルシウムは細胞に点火します。活性製法により、格段の吸収率を誇ります。」",
+            sci_p3_quote: "「カルシウムは骨のためだけではありません。細胞の発電エンジンを始動させる鍵です」",
+            sci_p3_desc: "カルシウムイオンはMCUを通じてダイレクトにATP合成酵素を刺激します。活性カルシウムを使用することで、炭酸カルシウムよりも40〜50%高い吸収率を実現、細胞のエネルギーを爆発させます。",
+            sci_p3_weapon: "「他社のカルシウムは骨を補いますが、私たちのカルシウムは細胞に点火します。しかも活性カルシウムなので、吸収率は約1.5倍です」",
             weapon_tag: "トークの武器",
 
             lab_tag: "LAB & SIMULATOR",
-            lab_title: "MitoActive 細胞エネルギーラボ v1.0",
-            lab_desc: "カルシウム、QuMA、MDSNVの変数を調整し、トリプル技術がどのように細胞寿命を最大化するかご体験ください。",
-            lab_ctrl_title: "各種パラメーター・生活習慣の調節",
-            lab_param_calcium: "活性カルシウム濃度 (MCUスイッチ)",
-            lab_param_calcium_active: "⚡ 点火システム作動中",
-            lab_param_calcium_inactive: "❌ MCU閉鎖（閾値未満）",
+            lab_title: "細胞エネルギーインタラクティブ・ラボ v1.0",
+            lab_desc: "3大技術のパラメーターを操作して、カルシウム点火、QuMA発電、MDSNV保護の相乗効果をシミュレーションしてみましょう。",
+            lab_ctrl_title: "テクノロジー＆ライフスタイルの調整",
+            lab_param_calcium: "活性カルシウム（MCU点火スイッチ）",
+            lab_param_calcium_active: "⚡ ミトコンドリア点火ON",
+            lab_param_calcium_inactive: "❌ スイッチOFF（基準値未満）",
             lab_param_calcium_tip: "40%を超えるとMCUチャンネルが開き、QuMAの発電効率が劇的に跳ね上がります。",
-            lab_param_quma: "QuMA コエンザイム & NMN電子流",
-            lab_param_quma_tip: "ミトコンドリア電子伝達系（ETC）の基盤燃料。機材が新しければパワーも最大に。",
-            lab_param_mdsnv: "MDSNV シアル酸保護力 (バリア)",
-            lab_param_mdsnv_tip: "活性酸素（ROS）や胃酸によるロスを防ぎ、ナノレベルで細胞膜を守ります。",
-            lab_lifestyle: "有酸素運動と上質な睡眠",
-            lab_lifestyle_desc: "新しい筋肉ミトコンドリアの合成を促し、老廃物を掃除します。",
-            lab_sim_state: "ミトコンドリア・ステータス",
-            lab_synergy_tag: "協調シナジー効果",
-            lab_synergy_high: "🚀 フルシナジー・全速運転中",
-            lab_synergy_mid: "⚡ 準備完了・点火待機中",
-            lab_synergy_low: "⚠️ 出力不足・細胞電力低下",
-            lab_data_atp: "細胞ATPエネルギー",
-            lab_data_mdsnv: "MDSNV ナノ防衛厚",
-            lab_data_aging: "予測細胞老化率",
-            lab_expert_tip: "💡 エキスパート通信",
-            lab_expert_desc: "カルシウム濃度が40%未満の場合、QuMAがいくら優れていても効率は60%に留まります。活性カルシウムによるMCUの開通が必須です。",
+            lab_param_quma: "QuMAコエンザイム＆NMN電子流",
+            lab_param_quma_tip: "電子伝達系を動かす基本燃料。発電機が新しくなれば、その分出力も最大化します。",
+            lab_param_mdsnv: "MDSNV ナノ保護バリア力",
+            lab_param_mdsnv_tip: "活性酸素（ROS）や胃酸によるエネルギーの損失を防ぎ、細胞膜レベルの盾を作ります。",
+            lab_lifestyle: "定期的な有酸素運動＆上質な睡眠",
+            lab_lifestyle_desc: "新たな筋肉ミトコンドリアの合成を促し、細胞の不要物を一掃します",
+            lab_sim_state: "ミトコンドリア・シミュレーション状態",
+            lab_synergy_tag: "3大技術シナジー状態",
+            lab_synergy_high: "🚀 全システム調和・フル稼働中",
+            lab_synergy_mid: "⚡ 発電スタンバイ・点火待機中",
+            lab_synergy_low: "⚠️ 出力不足・細胞エネルギー枯渇",
+            lab_data_atp: "総細胞 ATP エネルギー",
+            lab_data_mdsnv: "MDSNV ナノ防護シールド",
+            lab_data_aging: "予測細胞老効率",
+            lab_expert_tip: "💡 専門家のアドバイス",
+            lab_expert_desc: "カルシウムレベルが40%に満たない場合、QuMAの発電効率は最大でも60%に制限されます。活性カルシウムこそが、MCU発電スイッチを押すための重要要素です。",
 
-            academy_tag: "MitoActive 営業アカデミー v1.0",
-            academy_title: "疑問実戰サンドボックス",
-            academy_desc: "社内研修・対話検索用。タブを切り替えて、共感トーク、私にはこれが必要、感情アプローチを確認してください。",
-            academy_tab_brand: "理念と宣言",
+            academy_tag: "MitoActive アカデミー v1.0",
+            academy_title: "対話実践シミュレーター",
+            academy_desc: "営業チーム向け実戦トレーニングツール。タブを切り替えて、ブランドメッセージ、情緒のアプローチ、疑問回答を学びましょう。",
+            academy_tab_brand: "ブランドメッセージ",
             academy_tab_emotion: "感情マップ",
-            academy_tab_scripts: "疑問解答",
-            academy_tab_objections: "私にはこれが必要",
-            academy_copy_btn: "トークをコピーする",
-            academy_copy_success: "コピー完了",
-            academy_copy_line: "文字をコピー",
+            academy_tab_scripts: "疑問回答",
+            academy_tab_objections: "克服トーク",
+            academy_copy_btn: "トークをコピー",
+            academy_copy_success: "コピー完了！",
+            academy_copy_line: "テキストをコピー",
 
             team_tag: "OUR LEADERSHIP",
-            team_title: "サイエンスと経営のシナジー",
-            team_desc: "世界トップクラスの細胞生物学者、抗老化臨床医学の権威、そしてグローバル事業の精鋭たちがここに集結。",
-            team_tab_all: "全メンバー",
-            team_tab_exec: "経営執行役",
-            team_tab_science: "科学顧問",
-            team_read_more: "プロフィールとビジョンを見る",
+            team_title: "先端研究とグローバルビジネスの融合",
+            team_desc: "MitoActiveLifeには、世界トップクラス of 細胞生物学者、抗加齢臨床研究の専門家、バイオテック大手のマネジメント陣が集結しています。",
+            team_tab_all: "全員メンバー",
+            team_tab_exec: "経営陣",
+            team_tab_science: "学術顧問",
+            team_read_more: "経歴とビジョンを見る",
 
             sol_tag: "PRODUCT DESIGN & SYNERGY",
-            sol_title: "MitoActiveLife チュアブル錠",
-            sol_desc: "点火（カルシウム）➔ 発電（QuMA）➔ 保護（MDSNV）。45歳以上のためのトータル細胞充電システム。",
-            sol_cycle_title: "三重複合の閉環増幅ループ",
-            sol_cycle_desc: "ただの配合ではなく、体内で互いに補い、増幅しあうエネルギーサイクルを構築しました：",
-            sol_cycle_1_title: "点火 (活性カルシウム - MCUチャンネル)",
-            sol_cycle_1_desc: "吸収率を50%高めた活性カルシウムが点火キーとなり、ミトコンドリアを起動させます。",
-            sol_cycle_2_title: "発電 (QuMA 発電コンプレックス)",
-            sol_cycle_2_desc: "進化型Q10を主力に、電子伝達系（ETC）の稼働率を直接底上げします。",
-            sol_cycle_3_title: "保護 (MDSNV ナノカプセル)",
-            sol_cycle_3_desc: "細胞膜や神経をROSから保護。安定稼働により、点火の効率がさらに高まる好循環を生みます。",
-            sol_chew_title: "チュアブル錠がもたらす物理的メリット",
-            sol_chew_1_title: "1. 口腔粘膜での先制吸収",
-            sol_chew_1_desc: "口腔から素早く吸収を開始し、初回通過効果を回避。胃腸が弱まる45歳以上の層に最適です。",
-            sol_chew_2_title: "2. 高い継続率",
-            sol_chew_2_desc: "水なしでいつでも摂取可能。「飲み忘れ」を徹底的に防ぎます。",
+            sol_title: "ミトアクティブライフ チュアブル錠",
+            sol_desc: "点火（カルシウム）➔ 発電（QuMA）➔ 保護（MDSNV）の調和サイクル。45歳からの細胞エネルギーマネジメントです。",
+            sol_cycle_title: "3層が噛み合う「高効率循環エコシステム」",
+            sol_cycle_desc: "通常の製品は成分を重ねるだけですが、MitoActiveは身体内部で相互にエネルギーを補強し合うクローズドループです：",
+            sol_cycle_1_title: "点火（活性カルシウム - MCUチャンネル）",
+            sol_cycle_1_desc: "吸収率を約50%高めた活性カルシウムは、発電エンジンの起動キー。これなしでは、どれほど良い材料があっても発電は始まりません。",
+            sol_cycle_2_title: "発電（QuMAミトコンドリア機能複合体）",
+            sol_cycle_2_desc: "進化系Q10を中心に、電子伝達系（ETC）を直接サポートして細胞の発電出力を一気に高めます。",
+            sol_cycle_3_title: "保護（MDSNVツバメの巣酸ナノキャリア）",
+            sol_cycle_3_desc: "脳神経や細胞膜を保護し、活性酸素（ROS）の攻撃を防ぎます。安定した発電状態をキープすることで、カルシウム点火もさらに効率化します。",
+            sol_chew_title: "チュアブル（かむ）形状にこだわった理由",
+            sol_chew_1_title: "1. 口腔粘膜からのスピード吸収",
+            sol_chew_1_desc: "口の中でかむことで、胃をバイパスして粘膜から素早く吸収され、消化力が衰え始める45歳以上にも素早くアプローチします。",
+            sol_chew_2_title: "2. 水なしでいつでも習慣に",
+            sol_chew_2_desc: "水なしでそのまま召し上がれるため、飲み忘れを防ぎ、いつでも手軽に「細胞の充電」をライフスタイルに取り入れられます。",
 
             contact_tag: "INTERNAL USE ONLY",
-            contact_title: "細胞アクティベーションのお問い合わせ",
-            contact_desc: "特許成分、MCU点火の学術ディテール、営業資料の活用方法などのご質問はこちらからお寄せください。",
-            contact_office: "グローバル本部",
-            contact_office_loc: "米国テキサス州ダラス (Dallas, TX)",
-            contact_lab: "科学研究・開発ラボ",
-            contact_lab_loc: "スイス・バーゼル (Basel, Switzerland)",
+            contact_title: "細胞のアクティベーションをサポート",
+            contact_desc: "特許成分やカルシウムMCU点火経路、お客様へのアプローチ方法などについてサポートが必要な場合は、お問合せください。",
+            contact_office: "グローバル本社",
+            contact_office_loc: "米国テキサス州ダラス",
+            contact_lab: "研究開発センター",
+            contact_lab_loc: "スイス・バーゼル",
             contact_form_name: "お名前",
             contact_form_name_placeholder: "例：山田 営業担当",
-            contact_form_email: "社内メールアドレス",
-            contact_form_category: "お問い合わせ内容",
-            contact_form_cat1: "技術三柱の学術資料請求",
-            contact_form_cat2: "MDSNV & QuMA 吸収臨床データ",
-            contact_form_cat3: "販売代理店サポート・トレーニング",
+            contact_form_email: "社内用メールアドレス",
+            contact_form_category: "お問合せ内容",
+            contact_form_cat1: "3大技術の学術詳細リクエスト",
+            contact_form_cat2: "MDSNV & QuMA 吸収率臨床ホワイトペーパー",
+            contact_form_cat3: "販売代理店パートナー向けトレーニング支援",
             contact_form_detail: "詳細",
-            contact_form_detail_placeholder: "サポート要望や資料請求の詳細をご記入ください...",
-            contact_form_submit: "相談申請を送信する",
-            footer_copyright: "MitoActiveLife: 活性カルシウム × QuMAミトコンドリア機能 × MDSNVシアル酸配送。社内資料。2026年5月版。",
-            footer_decl: "* 営業用学術テキスト v1.0。社内教育専用。"
-          },
-          'zh-CN': {
-            langName: "简体中文",
-            title_suffix: "活「粒」生活 · 2026 INTERNAL",
-            nav_pillars: "技术三柱",
-            nav_lab: "细胞互动实验室",
-            nav_academy: "智能销售赋能中心",
-            nav_team: "领袖团队",
-            nav_solutions: "复合系统",
-            nav_contact: "专用咨询",
-            hero_tag: "MitoActiveLife 活「粒」生活 · 业务技术文稿辅助系统",
-            hero_title1: "你老不是因为岁月，",
-            hero_title2: "是因为你的线粒体放弃了",
-            hero_desc: "结合「活性钙点火机制」×「QuMA 线粒体产能」×「MDSNV 燕窝酸纳米递送」，让 37 万亿细胞重新燃起青春电力。这不只是一瓶保健品，而是全套细胞级「充电系统」。",
-            hero_btn_academy: "进入智能销售赋能中心",
-            hero_btn_lab: "细胞互动实验室",
-            pill_quma: "QuMA 线粒体高效发电",
-            pill_mdsnv: "MDSNV 乳源纳米运输载体",
-            pill_calcium: "活性钙 MCU 启动点火开关",
-            mcu_ignited: "MCU 启动点火",
-            mdsnv_protect: "MDSNV 纳米防护",
-            product_name: "活「粒」生活口嚼片",
-            bio_rate: "99.7% 生物利用率",
-            
-            sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "技术三柱 — 业务员的「技术武器库」",
-            sci_desc: "当客户问「这跟别人的有什么不同」时，你能用最简单的话回答，而且精准点出我们的顶级科技力量。",
-            sci_p1_sub: "PILLAR 01 · 燃料效能恢复",
-            sci_p1_title: "QuMA 线粒体的充电站",
-            sci_p1_quote: "「QuMA 是让线粒体重新开始做事的开关。」",
-            sci_p1_desc: "以辅酶 Q10 的进化形态搭配 NMN 前驱物质。大多数保健品补的是「原料」，QuMA 补的是「产能」，直接进入细胞发电厂，将旧机器翻新。",
-            sci_p1_weapon: "「普通 Q10 进到肠道大部分被挡在外面。QuMA 让成分能真正进入细胞工作——你之前吃的是门外的，我们让你进门了。」",
-            sci_p2_sub: "PILLAR 02 · 燕窝酸精准递送",
-            sci_p2_title: "MDSNV 燕窝酸纳米运输车",
-            sci_p2_quote: "「燕窝酸不是新成分，MDSNV 是让它真正到达目的地的新方法。」",
-            sci_p2_desc: "燕窝酸极易被胃酸破坏。MDSNV（乳源驱动燕窝酸纳米载体）用天然纳米囊泡将其包裹，如同母乳传递网络给婴儿的方式，穿过消化道直达需要它的地方。",
-            sci_p2_weapon: "「传统燕窝吸收率很低。MDSNV 是把燕窝酸装进纳米等级运输舱，让身体真正用到它——等于你买了燕窝，终于让它发挥效果了。」",
-            sci_p3_sub: "PILLAR 03 · MCU 点火启动",
-            sci_p3_title: "活性钙 × 线粒体点火",
-            sci_p3_quote: "「钙不只是补骨头的，它是让线粒体启动发电的钥匙。」",
-            sci_p3_desc: "钙离子通过 MCU 直接刺激 ATP 合成酶。钙离子不足发电系统就无法运转。我们采用活性钙，吸收率高碳酸钙 40–50%，精准引爆细胞能量。",
-            sci_p3_weapon: "「别人的钙是补骨头的，我们的钙是帮细胞充电点火的。而且我们用活性钙，吸收率比一般钙高将近一半，进得去才有用。」",
-            weapon_tag: "话术武器",
-
-            lab_tag: "LAB & SIMULATOR",
-            lab_title: "MitoActive 细胞能量互动实验室 v1.0",
-            lab_desc: "调动技术三柱的关键变量，亲自体验「活性钙点火 ➔ QuMA 发电 ➔ MDSNV 保护」三者如何交织出最强的细胞长寿能量。",
-            lab_ctrl_title: "调节技术柱与生活变量",
-            lab_param_calcium: "活性钙浓度 (MCU 点火开关)",
-            lab_param_calcium_active: "⚡ 线粒体点火已开启",
-            lab_param_calcium_inactive: "❌ 未达点火阈值 (MCU 关闭)",
-            lab_param_calcium_tip: "当数值超过 40%，MCU 点火通道开启，将显著加成 QuMA 的发电效率。",
-            lab_param_quma: "QuMA 辅酶/NMN 电子流 (发电原料)",
-            lab_param_quma_tip: "决定线粒体电子传递链（ETC）运作的基本原料。机器越新，产能越强。",
-            lab_param_mdsnv: "MDSNV 燕窝酸防御力 (保护屏障)",
-            lab_param_mdsnv_tip: "减少自由基（ROS）和胃酸对能量单位的耗损，建立纳米层次的细胞膜保护盾。",
-            lab_lifestyle: "规律有氧运动 & 黄金睡眠",
-            lab_lifestyle_desc: "刺激全新肌肉线粒体合成，清除代谢废物",
-            lab_sim_state: "Mito 模拟器活化状态",
-            lab_synergy_tag: "三柱协同动态",
-            lab_synergy_high: "🚀 三柱协同·全速发电中",
-            lab_synergy_mid: "⚡ 设备就绪·引擎等待点火",
-            lab_synergy_low: "⚠️ 起步功率偏低·细胞没电",
-            lab_data_atp: "整体细胞 ATP 能量",
-            lab_data_mdsnv: "MDSNV 纳米防御厚度",
-            lab_data_aging: "预估细胞衰老速率",
-            lab_expert_tip: "💡 专家提示",
-            lab_expert_desc: "钙离子浓度未达点火标签（<40%），即使 QuMA 再高发电效率也只有 60%。这就是活性钙作为 MCU 发电开关的重要之处。",
-
-            academy_tag: "活「粒」生活 智能销售赋能中心 v1.0",
-            academy_title: "MitoActive 疑问实战沙盒",
-            academy_desc: "本章节供 MitoActive 内部业务人员教育训练与实战对答查询。请点击下方分页，调阅话术武器、我需要他与情绪地图。",
-            academy_tab_brand: "品牌信仰",
-            academy_tab_emotion: "情绪地图",
-            academy_tab_scripts: "疑问解答",
-            academy_tab_objections: "我需要他",
-            academy_copy_btn: "一键复制话术",
-            academy_copy_success: "已复制",
-            academy_copy_line: "复制文字",
-
-            team_tag: "OUR LEADERSHIP",
-            team_title: "科研智慧与企业运营的完美结合",
-            team_desc: "MitoActiveLife 汇集了全球顶尖的细胞生物学家、抗衰老临床医学领袖与具备数十年跨国生技运作经验的商业精英。",
-            team_tab_all: "全体团队成员",
-            team_tab_exec: "执行领袖",
-            team_tab_science: "科学顾问",
-            team_read_more: "阅读完整履历与愿景",
-
-            sol_tag: "PRODUCT DESIGN & SYNERGY",
-            sol_title: "MitoActiveLife 活「粒」生活口嚼片",
-            sol_desc: "点火（活性钙）➔ 发电（QuMA）➔ 保护（MDSNV）。这不是单一补充品，而是一套为 45 岁以上设计的细胞发电系统。",
-            sol_cycle_title: "「三层协同」不是加法，是高效循环",
-            sol_cycle_desc: "普通的保健品是把好东西堆叠在一起。而活「粒」生活的三种技术，在身体内部是一个闭环的增益系统：",
-            sol_cycle_1_title: "点火 (活性钙 - MCU 机制)",
-            sol_cycle_1_desc: "吸收率提高 50% 的活性钙，是线粒体产能引擎的钥匙。如果没有它按开关，线粒体就没有启动发电信号。",
-            sol_cycle_2_title: "发电 (QuMA 线粒体机能复合体)",
-            sol_cycle_2_desc: "以辅酶 Q10 的进化形态为主力，直接修护与支援电子传递链（ETC），提升细胞的产能功率。",
-            sol_cycle_3_title: "保护 (MDSNV 燕窝酸纳米载体)",
-            sol_cycle_3_desc: "保护大脑神经与细胞膜，同时免受自由基（ROS）侵扰。发电系统更稳定，钙的点火信号就更有效率，形成自我增幅。",
-            sol_chew_title: "剂型物理考量 — 口嚼片设计",
-            sol_chew_1_title: "第一、吸收起点提前",
-            sol_chew_1_desc: "从口腔黏膜开始进行吸收，绕过部分肠道首关效应，让消化退化的 45 岁以上人群吸收更快。",
-            sol_chew_2_title: "第二、服用依从性高",
-            sol_chew_2_desc: "不需要配水吞，可随时放入口中咀嚼，提升「顺手吃」的频率，有效降低忘记服用的痛点。",
-
-            contact_tag: "INTERNAL USE ONLY",
-            contact_title: "开启您的细胞活化之旅",
-            contact_desc: "对活「粒」生活专利成分、活性钙MCU发电通路，或是如何运用文稿话术进行客户破冰有进一步疑问？欢迎递交内部支援咨询。",
-            contact_office: "全球运营总部",
-            contact_office_loc: "美国德克萨斯州达拉斯 (Dallas, TX)",
-            contact_lab: "科学实验研发中心",
-            contact_lab_loc: "瑞士巴塞尔 (Basel, Switzerland)",
-            contact_form_name: "姓名",
-            contact_form_name_placeholder: "例如：林业务",
-            contact_form_email: "内部联络电子邮件",
-            contact_form_category: "咨询范畴",
-            contact_form_cat1: "技术三柱科学细节索取",
-            contact_form_cat2: "MDSNV 与 QuMA 吸收率临床白皮书",
-            contact_form_cat3: "经销通路合作培训支援",
-            contact_form_detail: "备注详情",
-            contact_form_detail_placeholder: "请输入您希望得到的内部培训支援或学术文献需求...",
-            contact_form_submit: "递交内部协助申请",
-            footer_copyright: "MitoActiveLife 活「粒」生活 活性钙 × QuMA 线粒体机能 × MDSNV 燕窝酸纳米递送。内部业务用途，请勿外流，2026 年 5 月版。",
-            footer_decl: "* 业务技术文稿 v1.0。仅供内部培训使用。"
+            contact_form_detail_placeholder: "社内トレーニングの支援要請や学術論文のリクエストをご記入ください...",
+            contact_form_submit: "サポートリクエストを送信",
+            footer_copyright: "MitoActiveLife：活性カルシウム × QuMA ミトコンドリア機能 × MDSNV ツバメの巣酸ナノデリバリー。社内トレーニング用資料・転載禁止。2026年5月版。",
+            footer_decl: "* 営業用テクニカルコピー v1.0。社内トレーニング専用資料です。"
           },
           'th': {
             langName: "ไทย",
@@ -557,7 +440,7 @@
             
             sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
             sci_title: "3 เสาหลักเทคโนโลยี — คลังอาวุธของนักขาย",
-            sci_desc: "เมื่อลูกค้าถามว่า 'แตกต่างจากที่อื่นอย่างไร' นี่คือคำตอบที่เข้าใจง่ายและอิงหลักวิทยาศาสตร์ชั้นนำอย่างแม่นยำที่สุด",
+            sci_desc: "บอกความลับอย่างหนึ่ง...เน้นย้ำถึงขุมพลังแห่งเทคโนโลยีชั้นนำอย่างแม่นยำที่สุด",
             sci_p1_sub: "PILLAR 01 · ฟื้นฟูแหล่งพลังงาน",
             sci_p1_title: "QuMA สถานีชาร์จไมโตคอนเดรีย",
             sci_p1_quote: "“QuMA คือสวิตช์ปลุกไมโตคอนเดรียให้กลับมาทำงาน”",
@@ -586,7 +469,7 @@
             lab_param_quma: "ปริมาณ QuMA Coenzyme & NMN",
             lab_param_quma_tip: "กำหนดเชื้อเพลิงพื้นฐานสำหรับห่วงโซ่ส่งผ่านอิเล็กตรอน ยิ่งเครื่องจักรใหม่ พลังยิ่งสูง",
             lab_param_mdsnv: "การป้องกันระดับนาโนด้วย MDSNV",
-            lab_param_mdsnv_tip: "ลดความเสียหายจากสารอนุมูลอิสระ (ROS) และกรดในกระเพาะอาหาร สร้างเกราะคุ้มกันเซลล์",
+            lab_param_mdsnv_tip: "ลดความเสียหายจากสารอนุมูลอิสระ (ROS) และกรดในกระเพาะอาหาร เกราะคุ้มกันเซลล์",
             lab_lifestyle: "การออกกำลังกายสม่ำเสมอและนอนหลับลึก",
             lab_lifestyle_desc: "กระตุ้นการสังเคราะห์ไมโตคอนเดรียใหม่และกำจัดของเสียระดับเซลล์",
             lab_sim_state: "สถานะเครื่องจำลองไมโตคอนเดรีย",
@@ -596,7 +479,7 @@
             lab_synergy_low: "⚠️ พลังงานต่ำ เซลล์ขาดประจุไฟ",
             lab_data_atp: "พลังงาน ATP รวมระดับเซลล์",
             lab_data_mdsnv: "เกราะป้องกันนาโน MDSNV",
-            lab_data_aging: "อัตราการชราภาพของเซลล์",
+            lab_data_aging: "อัตราการชราภาพ of เซลล์",
             lab_expert_tip: "💡 คำแนะนำจากผู้เชี่ยวชาญ",
             lab_expert_desc: "หากระดับแคลเซียมต่ำกว่า 40% ประสิทธิภาพของ QuMA จะถูกจำกัดไว้ที่ 60% แคลเซียมแอคทีฟจึงเป็นสวิตช์สำคัญที่ขาดไม่ได้ในการจุดพลังงาน",
 
@@ -708,7 +591,6 @@
             setTimeout(() => setCopiedText(''), 2000);
           };
 
-          // 多語言領袖團隊履歷字典
           const leadersMap = {
             'zh-TW': [
               {
@@ -721,7 +603,7 @@
                 experience: '20 年以上生技醫療跨國企業管理經驗，致力於抗衰老與線粒體科學的產業化應用。',
                 quote: '我們不只是在延續生命的時間，更是在為每分每秒注入飽滿的細胞生命力。',
                 skills: ['企業戰略', '臨床研發管理', '生醫創投'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-indigo-900'
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
               },
               {
                 id: 'l2',
@@ -733,7 +615,7 @@
                 experience: '發表超過 80 篇關於線粒體自噬與 ATP 偶聯反應的頂級期刊學術論文。',
                 quote: '解開線粒體的功能編碼，就是掌握了人體生理時鐘的最終密鑰。',
                 skills: ['線粒體醫學', '細胞老化學', '基因編輯'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-emerald-900'
+                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
               },
               {
                 id: 'l3',
@@ -745,7 +627,7 @@
                 experience: '曾任多家知名百萬級大健康品牌全球供應鏈與國際市場拓展負責人。',
                 quote: '將前沿的實驗室科學，無縫轉化為全球消費者日常生活中觸手取及的健康方案。',
                 skills: ['全球供應鏈', '市場滲透', '營運優化'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-cyan-900'
+                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
               },
               {
                 id: 'l4',
@@ -757,7 +639,7 @@
                 experience: '專攻細胞級營養素協同吸收機制，MitoActive 專利配方的核心發明人。',
                 quote: '完美的配方在於天然分子與精準生物可利用率之間的黃金平衡。',
                 skills: ['配方動力學', '微靶向傳遞', '天然產物提取'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-teal-900'
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
               }
             ],
             'en': [
@@ -771,7 +653,7 @@
                 experience: '20+ years of multinational biotech executive experience, focusing on translational mitochondrial science.',
                 quote: 'We are not just extending lifespan; we are packing every single second with cellular vitality.',
                 skills: ['Corporate Strategy', 'Clinical Trial Management', 'Biotech VC'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-indigo-900'
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
               },
               {
                 id: 'l2',
@@ -783,7 +665,7 @@
                 experience: 'Published over 80 high-impact papers in top-tier journals on mitophagy and ATP synthesis coupling.',
                 quote: 'Decoding mitochondrial blueprints is the master key to human biological clocks.',
                 skills: ['Mitochondrial Medicine', 'Cellular Senescence', 'Gene Editing'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-emerald-900'
+                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
               },
               {
                 id: 'l3',
@@ -795,7 +677,7 @@
                 experience: 'Formally headed global supply chain and international expansion for top-tier wellness brands.',
                 quote: 'To translate premium laboratory breakthroughs into accessible, daily health paradigms.',
                 skills: ['Global Supply Chain', 'Market Penetration', 'Operations Optimization'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-cyan-900'
+                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
               },
               {
                 id: 'l4',
@@ -807,7 +689,7 @@
                 experience: 'Specializing in synergetic cellular absorption. Primary inventor of MitoActive targeted delivery systems.',
                 quote: 'The perfect formulation balances natural components and absolute bioavailability.',
                 skills: ['Formulation Dynamics', 'Micro-targeted Delivery', 'Phytochemical Extraction'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-teal-900'
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
               }
             ],
             'ja': [
@@ -815,25 +697,25 @@
                 id: 'l1',
                 category: 'exec',
                 name: 'Dr. Evelyn Carter',
-                title: '共同創設者 兼 最高経営責任者 (CEO)',
+                title: '共同創業者 兼 最高経営責任者 (CEO)',
                 role: 'Executive Leader',
                 education: 'ハーバード大学 生体医工学博士',
-                experience: '20年以上にわたるバイオテクノロジー企業のグローバルマネジメント、抗老化・ミトコンドリアの産業応用に専念。',
-                quote: '私たちは命の時間を引き延ばすだけでなく、その一瞬一瞬にみなぎる細胞の活力を注ぎ込んでいます。',
-                skills: ['企業戦略', '臨床研究管理', '生医ベンチャー投資'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-indigo-900'
+                experience: 'バイオテクノロジーおよびライフサイエンス業界で20年以上のグローバル経営経験を擁し、ミトコンドリア研究の実用化をリード。',
+                quote: '私たちは単に寿命を延ばすだけでなく、一瞬一瞬に満ち溢れるような細胞の生命力を吹き込みます。',
+                skills: ['企業戦略', '臨床研究管理', 'バイオテック投資'],
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
               },
               {
                 id: 'l2',
                 category: 'science',
                 name: 'Prof. Marcus Vance',
-                title: '首席科学者 兼 科学顧問委員会主席',
+                title: 'チーフサイエンティスト 兼 科学顧問委員会主席',
                 role: 'Scientific Advisor',
                 education: 'スタンフォード大学 細胞生物学教授',
-                experience: 'ミトコンドリア・オートファジーおよびATPカップリング反応分野でトップジャーナルに80本以上の学術論文を寄稿。',
-                quote: 'ミトコンドリアの稼働暗号を解読することは、人間の体内時計を支配する究極の鍵となります。',
+                experience: 'ミトコンドリアオートファジーとATP合成に関する一流学術誌での論文発表実績多数（80報以上）。',
+                quote: 'ミトコンドリアのコードを解読することは、生命の時計をコントロールする鍵を握るということです。',
                 skills: ['ミトコンドリア医学', '細胞老化研究', '遺伝子編集'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-emerald-900'
+                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
               },
               {
                 id: 'l3',
@@ -842,72 +724,22 @@
                 title: '最高執行責任者 (COO)',
                 role: 'Executive Leader',
                 education: 'ウォートン・スクール MBA',
-                experience: 'グローバルに展開する著名ウェルネスブランド of サプライチェーン管理とグローバル市場開拓の統括実績を誇る。',
-                quote: '最先端の実験室の成果を、日常的かつ手の届くヘルスケアパラダイムとしてシームレスに社会に還元します。',
-                skills: ['グローバルロジスティクス', '新規市場開拓', 'オペレーション最適化'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-cyan-900'
+                experience: '世界的なヘルスケアブランドにおけるサプライチェーン管理および国際市場の開拓を歴任。',
+                quote: '最先端の研究成果を、世界中のお客様が毎日手に取れる最高の健康ソリューションへと昇華させます。',
+                skills: ['世界サプライチェーン', '市場浸透', '業務効率化'],
+                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
               },
               {
                 id: 'l4',
                 category: 'science',
                 name: 'Dr. Sarah Lin',
-                title: '研究開発担当副社長 兼 シニアフォーミュラサイエンティスト',
+                title: '研究開発副社長 兼 シニアフォーミュラサイエンティスト',
                 role: 'Scientific Advisor',
                 education: 'ケンブリッジ大学 分子医学博士',
-                experience: '細胞レベルでの栄養素の相乗吸収メカニズムを専攻。MitoActive特許フォーミュラの開発主任。',
-                quote: '完璧な製法開発とは、天然分子と高効率生体利用率がもたらす究極の黄金比です。',
-                skills: ['製剤動力学', 'マイクロターゲット輸送', '植物成分抽出プロセス'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-teal-900'
-              }
-            ],
-            'zh-CN': [
-              {
-                id: 'l1',
-                category: 'exec',
-                name: 'Dr. Evelyn Carter',
-                title: '联合创始人 兼 首席执行官 (CEO)',
-                role: 'Executive Leader',
-                education: '哈佛大学生医工程博士',
-                experience: '20 年以上生技医疗跨国企业管理经验，致力于抗衰老与线粒体科学的产业化应用。',
-                quote: '我们不只是在延续生命的时间，更是在为每分每秒注入饱满的细胞生命力。',
-                skills: ['企业战略', '临床研发管理', '生医创投'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-indigo-900'
-              },
-              {
-                id: 'l2',
-                category: 'science',
-                name: 'Prof. Marcus Vance',
-                title: '首席科学家 兼 科学顾问委员会主席',
-                role: 'Scientific Advisor',
-                education: '斯坦福大学细胞生物学教授',
-                experience: '发表超过 80 篇关于线粒体自噬与 ATP 偶联反应的顶级期刊学术论文。',
-                quote: '解开线粒体的功能编码，就是掌握了人体生理时钟的最终密钥。',
-                skills: ['线粒体医学', '细胞老化学', '基因编辑'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-emerald-900'
-              },
-              {
-                id: 'l3',
-                category: 'exec',
-                name: 'Robert Chen',
-                title: '首席运营官 (COO)',
-                role: 'Executive Leader',
-                education: '沃顿商学院 MBA',
-                experience: '曾任多家知名百万级大健康品牌全球供应链与国际市场拓展负责人。',
-                quote: '将前沿的实验室科学，无缝转化为全球消费者日常生活中触手可及的健康方案。',
-                skills: ['全球供应链', '市场渗透', '运营优化'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-cyan-900'
-              },
-              {
-                id: 'l4',
-                category: 'science',
-                name: 'Dr. Sarah Lin',
-                title: '研发副总裁 兼 高级配方科学家',
-                role: 'Scientific Advisor',
-                education: '剑桥大学分子医学博士',
-                experience: '专攻细胞级营养素协同吸收机制，MitoActive 专利配方的核心发明人。',
-                quote: '完美的配方在于天然分子与精准生物可利用率之间的黄金平衡。',
-                skills: ['配方动力学', '微靶向传递', '天然产物提取'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-teal-900'
+                experience: '細胞栄養素のシナジー吸収メカニズムを専門とし、MitoActive特許フォーミュラの開発者。',
+                quote: '完璧な配合とは、天然分子と卓越した生体利用率の黄金のバランスにあります。',
+                skills: ['フォーミュラダイナミクス', 'ターゲットデリバリー', '天然成分抽出'],
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
               }
             ],
             'th': [
@@ -921,7 +753,7 @@
                 experience: 'ประสบการณ์กว่า 20 ปี ในการบริหารธุรกิจไบโอเทคข้ามชาติ มุ่งมั่นส่งเสริมการใช้ไมโตคอนเดรียระดับอุตสาหกรรมชะลอวัย',
                 quote: 'เราไม่ได้มุ่งหวังเพียงแค่ยืดอายุขัยของมนุษย์เท่านั้น แต่เราต้องการชาร์จพลังความมีชีวิตชีวาเข้าสู่ทุกวินาทีระดับเซลล์',
                 skills: ['กลยุทธ์องค์กร', 'การบริหารงานวิจัยคลินิก', 'การร่วมลงทุนไบโอเทค'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-indigo-900'
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
               },
               {
                 id: 'l2',
@@ -933,7 +765,7 @@
                 experience: 'ผลงานตีพิมพ์วิจัยในวารสารระดับท็อปกว่า 80 ฉบับ เกี่ยวกับกระบวนการรีไซเคิลเซลล์และการผสานพลังงาน ATP',
                 quote: 'การถอดรหัสรหัสลับฟังก์ชันของไมโตคอนเดรีย คือกุญแจหลักในการควบคุมนาฬิกาชีวภาพของมนุษย์',
                 skills: ['การแพทย์ไมโตคอนเดรีย', 'การชราภาพของเซลล์', 'การตัดแต่งยีน'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-emerald-900'
+                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
               },
               {
                 id: 'l3',
@@ -945,7 +777,7 @@
                 experience: 'อดีตหัวหน้าฝ่ายห่วงโซ่อุปทานระดับโลกและการขยายตลาดต่างประเทศสำหรับแบรนด์สุขภาพชั้นนำ',
                 quote: 'เปลี่ยนวิทยาการวิจัยขั้นสูงในห้องแล็บ ให้กลายเป็นผลิตภัณฑ์ดูแลสุขภาพระดับพรีเมียมที่ผู้บริโภคเข้าถึงง่าย',
                 skills: ['ห่วงโซ่อุปทานระดับโลก', 'การเจาะตลาดข้ามชาติ', 'การปรับปรุงระบบปฏิบัติการ'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-cyan-900'
+                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
               },
               {
                 id: 'l4',
@@ -957,7 +789,7 @@
                 experience: 'เชี่ยวชาญการทำงานร่วมกันในการดูดซึมสารอาหารระดับเซลล์ ผู้คิดค้นและจดสิทธิบัตรระบบนำส่ง MitoActive',
                 quote: 'ความสมบูรณ์แบบของสูตรสารสกัด อยู่ที่ความสมดุลระหว่างโมเลกุลธรรมชาติกับอัตราการดูดซึมขั้นสูง',
                 skills: ['จลนศาสตร์ของสูตรสารสกัด', 'การนำส่งเป้าหมายระดับย่อย', 'การสกัดสารจากธรรมชาติ'],
-                avatarBg: 'bg-gradient-to-br from-slate-800 to-teal-900'
+                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
               }
             ]
           };
@@ -968,21 +800,20 @@
             : leaders.filter(l => l.category === activeTab);
 
           return (
-            <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 overflow-x-hidden">
+            <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-800 overflow-x-hidden">
               
-              {}
               {/* Navbar */}
-              <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-900/60 transition-all">
+              <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 transition-all">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                   <a href="#" className="flex items-center gap-3 group">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/10 group-hover:scale-105 transition-transform">
-                      <i data-lucide="dna" className="w-5.5 h-5.5 text-slate-950 font-bold"></i>
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-400 flex items-center justify-center shadow-md shadow-emerald-400/20 group-hover:scale-105 transition-transform">
+                      <i data-lucide="dna" className="w-5.5 h-5.5 text-white font-bold"></i>
                     </div>
                     <div>
-                      <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-emerald-400 bg-clip-text text-transparent">
+                      <span className="text-xl font-black tracking-tight bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 bg-clip-text text-transparent">
                         MitoActiveLife
                       </span>
-                      <span className="block text-[10px] uppercase tracking-widest text-slate-500 font-medium leading-none mt-0.5">
+                      <span className="block text-[10px] uppercase tracking-widest text-slate-450 font-bold leading-none mt-0.5">
                         {t('title_suffix')}
                       </span>
                     </div>
@@ -990,30 +821,30 @@
 
                   {/* Desktop Nav */}
                   <nav className="hidden xl:flex items-center gap-6">
-                    <a href="#science" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">{t('nav_pillars')}</a>
-                    <a href="#lab" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">{t('nav_lab')}</a>
-                    <a href="#academy" className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+                    <a href="#science" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_pillars')}</a>
+                    <a href="#lab" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_lab')}</a>
+                    <a href="#academy" className="text-sm font-semibold text-emerald-600 hover:text-emerald-500 transition-colors flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
                       <i data-lucide="book-open" className="w-4 h-4"></i>
                       {t('nav_academy')}
                     </a>
-                    <a href="#team" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">{t('nav_team')}</a>
-                    <a href="#solutions" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">{t('nav_solutions')}</a>
-                    <a href="#contact" className="px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 hover:border-transparent transition-all duration-300">
+                    <a href="#team" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_team')}</a>
+                    <a href="#solutions" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_solutions')}</a>
+                    <a href="#contact" className="px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-800 hover:bg-emerald-500 hover:text-white border border-slate-200 hover:border-transparent transition-all duration-300 shadow-sm">
                       {t('nav_contact')}
                     </a>
 
                     {/* 語言切換 Dropdown */}
                     <div className="relative group ml-2">
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/85 border border-slate-800 rounded-lg text-xs hover:border-emerald-500 transition-all font-semibold">
-                        <i data-lucide="globe" className="w-3.5 h-3.5 text-emerald-400"></i>
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs hover:border-emerald-500 transition-all font-bold shadow-sm text-slate-700">
+                        <i data-lucide="globe" className="w-3.5 h-3.5 text-emerald-500"></i>
                         <span>{translations[lang].langName}</span>
                       </button>
-                      <div className="absolute right-0 mt-1.5 w-32 bg-slate-900 border border-slate-800/80 rounded-xl shadow-2xl opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
+                      <div className="absolute right-0 mt-1.5 w-32 bg-white border border-slate-200 rounded-xl shadow-xl opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
                         {Object.keys(translations).map((langKey) => (
                           <button
                             key={langKey}
                             onClick={() => setLang(langKey)}
-                            className={`w-full text-left px-4 py-2.5 text-xs hover:bg-slate-850 first:rounded-t-xl last:rounded-b-xl transition-colors block ${lang === langKey ? 'text-emerald-400 font-bold bg-emerald-500/5' : 'text-slate-400'}`}
+                            className={`w-full text-left px-4 py-2.5 text-xs hover:bg-slate-50 first:rounded-t-xl last:rounded-b-xl transition-colors block ${lang === langKey ? 'text-emerald-600 font-bold bg-emerald-500/5' : 'text-slate-600'}`}
                           >
                             {translations[langKey].langName}
                           </button>
@@ -1022,16 +853,15 @@
                     </div>
                   </nav>
 
-                  {/* Mobile Trigger and Language select for smaller screens */}
+                  {/* Mobile Trigger */}
                   <div className="flex xl:hidden items-center gap-3">
-                    {/* Small Screen Quick Switcher */}
                     <select 
                       value={lang} 
                       onChange={(e) => setLang(e.target.value)}
-                      className="bg-slate-900/80 border border-slate-800 text-slate-300 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-500 font-medium"
+                      className="bg-white border border-slate-200 text-slate-750 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-500 font-bold shadow-sm"
                     >
                       {Object.keys(translations).map((langKey) => (
-                        <option key={langKey} value={langKey} className="bg-slate-950">
+                        <option key={langKey} value={langKey}>
                           {translations[langKey].langName}
                         </option>
                       ))}
@@ -1039,9 +869,9 @@
 
                     <button 
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-                      className="p-2 text-slate-400 hover:text-white"
+                      className="p-2 text-slate-600 hover:text-slate-900"
                     >
-                      {mobileMenuOpen ? <i data-lucide="x" className="w-6 h-6"></i> : <i data-lucide="activity" className="w-6 h-6 text-emerald-400 animate-pulse"></i>}
+                      {mobileMenuOpen ? <i data-lucide="x" className="w-6 h-6"></i> : <i data-lucide="activity" className="w-6 h-6 text-emerald-500 animate-pulse"></i>}
                     </button>
                   </div>
                 </div>
@@ -1049,76 +879,75 @@
 
               {/* Mobile Menu */}
               {mobileMenuOpen && (
-                <div className="fixed inset-0 z-35 bg-slate-950 pt-24 px-6 flex flex-col gap-6 xl:hidden overflow-y-auto">
-                  <a href="#science" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">{t('nav_pillars')}</a>
-                  <a href="#lab" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">{t('nav_lab')}</a>
-                  <a href="#academy" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 text-emerald-400 flex items-center gap-2">
+                <div className="fixed inset-0 z-35 bg-white pt-24 px-6 flex flex-col gap-6 xl:hidden overflow-y-auto">
+                  <a href="#science" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_pillars')}</a>
+                  <a href="#lab" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_lab')}</a>
+                  <a href="#academy" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 text-emerald-600 flex items-center gap-2">
                     <i data-lucide="book-open" className="w-5 h-5"></i> {t('nav_academy')}
                   </a>
-                  <a href="#team" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">{t('nav_team')}</a>
-                  <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-semibold border-b border-slate-900 pb-3 hover:text-emerald-400">{t('nav_solutions')}</a>
-                  <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full py-4 rounded-xl bg-emerald-500 text-slate-950 text-center font-bold">{t('nav_contact')}</a>
+                  <a href="#team" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_team')}</a>
+                  <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_solutions')}</a>
+                  <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full py-4 rounded-xl bg-emerald-500 text-white text-center font-bold">{t('nav_contact')}</a>
                 </div>
               )}
 
-              {}
               {/* Hero Section */}
-              <section className="relative py-20 lg:py-32 overflow-hidden border-b border-slate-900/60">
-                <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
-                <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+              <section className="relative py-20 lg:py-32 overflow-hidden border-b border-slate-100">
+                <div className="absolute top-1/4 left-1/2 bg-glow-emerald w-[500px] h-[500px] bg-emerald-300/20 rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-200/20 rounded-full blur-[100px] pointer-events-none" />
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                   <div className="grid lg:grid-cols-12 gap-12 items-center">
                     
                     <div className="lg:col-span-7 space-y-8">
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-emerald-400 font-semibold tracking-wide">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs text-emerald-750 font-bold tracking-wide">
                         <i data-lucide="flame" className="w-3.5 h-3.5 text-amber-500 animate-pulse"></i>
                         <span>{t('hero_tag')}</span>
                       </div>
-                      <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight leading-tight text-white">
+                      <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-tight text-slate-900">
                         {t('hero_title1')} <br />
-                        <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
                           {t('hero_title2')}
                         </span>
                       </h1>
-                      <p className="text-slate-400 text-base sm:text-lg max-w-xl leading-relaxed">
+                      <p className="text-slate-650 text-base sm:text-lg max-w-xl leading-relaxed font-medium">
                         {t('hero_desc')}
                       </p>
                       
                       <div className="flex flex-wrap gap-4 pt-2">
-                        <a href="#academy" className="px-8 py-4 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+                        <a href="#academy" className="px-8 py-4 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-500 to-teal-400 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
                           <i data-lucide="book-open" className="w-5 h-5"></i> {t('hero_btn_academy')}
                         </a>
-                        <a href="#lab" className="px-8 py-4 rounded-xl text-sm font-bold bg-slate-900 hover:bg-slate-850 text-white border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
-                          {t('hero_btn_lab')} <i data-lucide="activity" className="w-4.5 h-4.5 text-emerald-400"></i>
+                        <a href="#lab" className="px-8 py-4 rounded-xl text-sm font-bold bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-2 shadow-sm">
+                          {t('hero_btn_lab')} <i data-lucide="activity" className="w-4.5 h-4.5 text-emerald-500"></i>
                         </a>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-900">
+                      <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-200">
                         <div>
-                          <span className="block text-xl sm:text-2xl font-extrabold text-white">QuMA</span>
-                          <span className="text-[10px] sm:text-xs text-slate-500">{t('pill_quma')}</span>
+                          <span className="block text-xl sm:text-2xl font-black text-slate-900">QuMA</span>
+                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">{t('pill_quma')}</span>
                         </div>
                         <div>
-                          <span className="block text-xl sm:text-2xl font-extrabold text-white">MDSNV</span>
-                          <span className="text-[10px] sm:text-xs text-slate-500">{t('pill_mdsnv')}</span>
+                          <span className="block text-xl sm:text-2xl font-black text-slate-900">MDSNV</span>
+                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">{t('pill_mdsnv')}</span>
                         </div>
                         <div>
-                          <span className="block text-xl sm:text-2xl font-extrabold text-white">MCU</span>
-                          <span className="text-[10px] sm:text-xs text-slate-500">{t('pill_calcium')}</span>
+                          <span className="block text-xl sm:text-2xl font-black text-slate-900">MCU</span>
+                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">{t('pill_calcium')}</span>
                         </div>
                       </div>
                     </div>
 
                     <div className="lg:col-span-5 flex justify-center items-center">
-                      <div className="relative w-80 h-80 sm:w-96 sm:h-96 bg-slate-900/20 rounded-3xl border border-slate-900 p-8 flex flex-col justify-between overflow-hidden">
+                      <div className="relative w-80 h-80 sm:w-96 sm:h-96 bg-white rounded-3xl border border-slate-200/80 p-8 flex flex-col justify-between overflow-hidden shadow-xl">
                         <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-cyan-500/5 pointer-events-none" />
                         
                         <div className="relative flex-1 flex items-center justify-center">
                           <div className="absolute w-56 h-56 rounded-full border border-emerald-500/10 animate-[spin_40s_linear_infinite]" />
                           <div className="absolute w-44 h-44 rounded-full border border-dashed border-cyan-500/20 animate-[spin_20s_linear_infinite_reverse]" />
                           
-                          <svg viewBox="0 0 100 100" className="w-32 h-32 text-emerald-400 animate-[pulse_3s_ease-in-out_infinite]">
+                          <svg viewBox="0 0 100 100" className="w-32 h-32 text-emerald-500 animate-[pulse_3s_ease-in-out_infinite]">
                             <path d="M 50 15 C 75 15, 85 30, 85 50 C 85 70, 75 85, 50 85 C 25 85, 15 70, 15 50 C 15 30, 25 15, 50 15 Z" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-30" />
                             <path d="M 50 18 Q 65 25, 50 32 T 50 46 T 50 60 T 50 74 T 50 82" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                             <circle cx="28" cy="30" r="3" className="fill-amber-400 animate-ping" />
@@ -1126,20 +955,20 @@
                             <circle cx="48" cy="68" r="3.5" className="fill-emerald-400 animate-bounce" />
                           </svg>
 
-                          <div className="absolute top-2 right-4 text-[10px] text-amber-400 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 flex items-center gap-1 animate-[bounce_4s_infinite]">
+                          <div className="absolute top-2 right-4 text-[10px] text-amber-600 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 flex items-center gap-1 animate-[bounce_4s_infinite]">
                             <i data-lucide="zap" className="w-2.5 h-2.5"></i> {t('mcu_ignited')}
                           </div>
-                          <div className="absolute bottom-2 left-4 text-[10px] text-cyan-400 font-bold bg-cyan-400/10 px-2 py-0.5 rounded border border-cyan-400/20 flex items-center gap-1">
+                          <div className="absolute bottom-2 left-4 text-[10px] text-cyan-600 font-bold bg-cyan-400/10 px-2 py-0.5 rounded border border-cyan-400/20 flex items-center gap-1">
                             <i data-lucide="shield" className="w-2.5 h-2.5"></i> {t('mdsnv_protect')}
                           </div>
                         </div>
 
-                        <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
                           <div className="flex items-center gap-2">
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-                            <span className="font-bold text-slate-200">{t('product_name')}</span>
+                            <span className="font-bold text-slate-800">{t('product_name')}</span>
                           </div>
-                          <span className="text-emerald-400 font-medium">{t('bio_rate')}</span>
+                          <span className="text-emerald-600 font-bold">{t('bio_rate')}</span>
                         </div>
                       </div>
                     </div>
@@ -1148,158 +977,156 @@
                 </div>
               </section>
 
-              {}
               {/* Science Section */}
-              <section id="science" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+              <section id="science" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-                  <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">{t('sci_title_sub')}</span>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('sci_title')}</h2>
-                  <p className="text-slate-400">{t('sci_desc')}</p>
+                  <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('sci_title_sub')}</span>
+                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('sci_title')}</h2>
+                  <p className="text-slate-600 font-medium">{t('sci_desc')}</p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
                   {/* Pillar 1 */}
-                  <div className="p-8 rounded-3xl bg-slate-900/30 hover:bg-slate-900/60 border border-slate-900 hover:border-emerald-500/30 transition-all group flex flex-col justify-between">
+                  <div className="p-8 rounded-3xl bg-white hover:bg-slate-50/50 border border-slate-200 transition-all group flex flex-col justify-between shadow-sm hover:shadow-md">
                     <div>
-                      <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="zap" className="w-6 h-6"></i>
                       </div>
-                      <span className="text-xs text-emerald-400 font-bold block mb-2 uppercase tracking-wider">{t('sci_p1_sub')}</span>
-                      <h3 className="text-xl font-bold text-white mb-4">{t('sci_p1_title')}</h3>
-                      <blockquote className="border-l-2 border-emerald-500/40 pl-3 italic text-sm text-slate-400 mb-4">{t('sci_p1_quote')}</blockquote>
-                      <p className="text-xs text-slate-400 leading-relaxed">{t('sci_p1_desc')}</p>
+                      <span className="text-xs text-emerald-600 font-bold block mb-2 uppercase tracking-wider">{t('sci_p1_sub')}</span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">{t('sci_p1_title')}</h3>
+                      <blockquote className="border-l-2 border-emerald-500/40 pl-3 italic text-sm text-slate-600 mb-4">{t('sci_p1_quote')}</blockquote>
+                      <p className="text-xs text-slate-500 leading-relaxed">{t('sci_p1_desc')}</p>
                     </div>
-                    <div className="mt-6 pt-4 border-t border-slate-800/60 bg-emerald-950/20 p-3 rounded-xl border border-emerald-500/10">
-                      <span className="text-[10px] text-emerald-400 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
-                      <p className="text-[11px] text-slate-300">{t('sci_p1_weapon')}</p>
+                    <div className="mt-6 pt-4 border-t border-slate-150 bg-emerald-50/30 p-3 rounded-xl border border-emerald-500/10">
+                      <span className="text-[10px] text-emerald-600 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
+                      <p className="text-[11px] text-slate-700 font-medium">{t('sci_p1_weapon')}</p>
                     </div>
                   </div>
 
                   {/* Pillar 2 */}
-                  <div className="p-8 rounded-3xl bg-slate-900/30 hover:bg-slate-900/60 border border-slate-900 hover:border-cyan-500/30 transition-all group flex flex-col justify-between">
+                  <div className="p-8 rounded-3xl bg-white hover:bg-slate-50/50 border border-slate-200 transition-all group flex flex-col justify-between shadow-sm hover:shadow-md">
                     <div>
-                      <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-2xl bg-cyan-50 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="dna" className="w-6 h-6"></i>
                       </div>
-                      <span className="text-xs text-cyan-400 font-bold block mb-2 uppercase tracking-wider">{t('sci_p2_sub')}</span>
-                      <h3 className="text-xl font-bold text-white mb-4">{t('sci_p2_title')}</h3>
-                      <blockquote className="border-l-2 border-cyan-500/40 pl-3 italic text-sm text-slate-400 mb-4">{t('sci_p2_quote')}</blockquote>
-                      <p className="text-xs text-slate-400 leading-relaxed">{t('sci_p2_desc')}</p>
+                      <span className="text-xs text-cyan-600 font-bold block mb-2 uppercase tracking-wider">{t('sci_p2_sub')}</span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">{t('sci_p2_title')}</h3>
+                      <blockquote className="border-l-2 border-cyan-500/40 pl-3 italic text-sm text-slate-600 mb-4">{t('sci_p2_quote')}</blockquote>
+                      <p className="text-xs text-slate-500 leading-relaxed">{t('sci_p2_desc')}</p>
                     </div>
-                    <div className="mt-6 pt-4 border-t border-slate-800/60 bg-cyan-950/20 p-3 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-cyan-400 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
-                      <p className="text-[11px] text-slate-300">{t('sci_p2_weapon')}</p>
+                    <div className="mt-6 pt-4 border-t border-slate-150 bg-cyan-50/30 p-3 rounded-xl border border-cyan-500/10">
+                      <span className="text-[10px] text-cyan-600 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
+                      <p className="text-[11px] text-slate-700 font-medium">{t('sci_p2_weapon')}</p>
                     </div>
                   </div>
 
                   {/* Pillar 3 */}
-                  <div className="p-8 rounded-3xl bg-slate-900/30 hover:bg-slate-900/60 border border-slate-900 hover:border-amber-500/30 transition-all group flex flex-col justify-between">
+                  <div className="p-8 rounded-3xl bg-white hover:bg-slate-50/50 border border-slate-200 transition-all group flex flex-col justify-between shadow-sm hover:shadow-md">
                     <div>
-                      <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-500 mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="flame" className="w-6 h-6"></i>
                       </div>
-                      <span className="text-xs text-amber-400 font-bold block mb-2 uppercase tracking-wider">{t('sci_p3_sub')}</span>
-                      <h3 className="text-xl font-bold text-white mb-4">{t('sci_p3_title')}</h3>
-                      <blockquote className="border-l-2 border-amber-500/40 pl-3 italic text-sm text-slate-400 mb-4">{t('sci_p3_quote')}</blockquote>
-                      <p className="text-xs text-slate-400 leading-relaxed">{t('sci_p3_desc')}</p>
+                      <span className="text-xs text-amber-600 font-bold block mb-2 uppercase tracking-wider">{t('sci_p3_sub')}</span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">{t('sci_p3_title')}</h3>
+                      <blockquote className="border-l-2 border-amber-500/40 pl-3 italic text-sm text-slate-600 mb-4">{t('sci_p3_quote')}</blockquote>
+                      <p className="text-xs text-slate-500 leading-relaxed">{t('sci_p3_desc')}</p>
                     </div>
-                    <div className="mt-6 pt-4 border-t border-slate-800/60 bg-amber-950/20 p-3 rounded-xl border border-amber-500/10">
-                      <span className="text-[10px] text-amber-400 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
-                      <p className="text-[11px] text-slate-300">{t('sci_p3_weapon')}</p>
+                    <div className="mt-6 pt-4 border-t border-slate-150 bg-amber-50/30 p-3 rounded-xl border border-amber-500/10">
+                      <span className="text-[10px] text-amber-600 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
+                      <p className="text-[11px] text-slate-700 font-medium">{t('sci_p3_weapon')}</p>
                     </div>
                   </div>
                 </div>
               </section>
 
-              {}
               {/* Lab Section */}
-              <section id="lab" className="py-20 bg-slate-950 border-b border-slate-900/60 relative">
-                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+              <section id="lab" className="py-20 bg-white border-b border-slate-100 relative">
+                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-100/50 rounded-full blur-3xl pointer-events-none" />
                 <div className="max-w-7xl mx-auto px-6">
                   <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-                    <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-bold text-emerald-400 inline-block">{t('lab_tag')}</span>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('lab_title')}</h2>
-                    <p className="text-slate-400">{t('lab_desc')}</p>
+                    <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-600 inline-block">{t('lab_tag')}</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('lab_title')}</h2>
+                    <p className="text-slate-600 font-medium">{t('lab_desc')}</p>
                   </div>
 
-                  <div className="grid lg:grid-cols-12 gap-8 bg-slate-900/40 p-6 sm:p-10 rounded-3xl border border-slate-900">
+                  <div className="grid lg:grid-cols-12 gap-8 bg-slate-50 p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-md">
                     <div className="lg:col-span-5 space-y-8">
-                      <div className="flex items-center gap-2 pb-2 border-b border-slate-800/60">
-                        <i data-lucide="sliders" className="w-5 h-5 text-emerald-400"></i>
-                        <h3 className="text-lg font-bold text-white">{t('lab_ctrl_title')}</h3>
+                      <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
+                        <i data-lucide="sliders" className="w-5 h-5 text-emerald-500"></i>
+                        <h3 className="text-lg font-bold text-slate-800">{t('lab_ctrl_title')}</h3>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
-                          <span className="font-bold text-slate-200 flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                          <span className="font-bold text-slate-700 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                             {t('lab_param_calcium')}
                           </span>
-                          <span className={`font-bold ${mcuActive ? 'text-amber-400' : 'text-slate-500'}`}>
+                          <span className={`font-bold ${mcuActive ? 'text-amber-600' : 'text-slate-400'}`}>
                             {mcuActive ? t('lab_param_calcium_active') : t('lab_param_calcium_inactive')}
                           </span>
                         </div>
                         <input 
                           type="range" min="0" max="100" value={calciumLevel}
                           onChange={(e) => setCalciumLevel(Number(e.target.value))}
-                          className="w-full accent-amber-400 bg-slate-800 rounded-lg appearance-none h-2 cursor-pointer"
+                          className="w-full accent-amber-500 bg-slate-200 rounded-lg appearance-none h-2 cursor-pointer"
                         />
-                        <p className="text-[11px] text-slate-500">{t('lab_param_calcium_tip')}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">{t('lab_param_calcium_tip')}</p>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
-                          <span className="font-bold text-slate-200 flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                          <span className="font-bold text-slate-700 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                             {t('lab_param_quma')}
                           </span>
-                          <span className="font-bold text-emerald-400">{qumaLevel}%</span>
+                          <span className="font-bold text-emerald-600">{qumaLevel}%</span>
                         </div>
                         <input 
                           type="range" min="0" max="100" value={qumaLevel}
                           onChange={(e) => setQumaLevel(Number(e.target.value))}
-                          className="w-full accent-emerald-400 bg-slate-800 rounded-lg appearance-none h-2 cursor-pointer"
+                          className="w-full accent-emerald-500 bg-slate-200 rounded-lg appearance-none h-2 cursor-pointer"
                         />
-                        <p className="text-[11px] text-slate-500">{t('lab_param_quma_tip')}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">{t('lab_param_quma_tip')}</p>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
-                          <span className="font-bold text-slate-200 flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                          <span className="font-bold text-slate-700 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
                             {t('lab_param_mdsnv')}
                           </span>
-                          <span className="font-bold text-cyan-400">{mdsnvLevel}%</span>
+                          <span className="font-bold text-cyan-600">{mdsnvLevel}%</span>
                         </div>
                         <input 
                           type="range" min="0" max="100" value={mdsnvLevel}
                           onChange={(e) => setMdsnvLevel(Number(e.target.value))}
-                          className="w-full accent-cyan-400 bg-slate-800 rounded-lg appearance-none h-2 cursor-pointer"
+                          className="w-full accent-cyan-500 bg-slate-200 rounded-lg appearance-none h-2 cursor-pointer"
                         />
-                        <p className="text-[11px] text-slate-500">{t('lab_param_mdsnv_tip')}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">{t('lab_param_mdsnv_tip')}</p>
                       </div>
 
-                      <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                      <div className="p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between shadow-sm">
                         <div className="space-y-1">
-                          <span className="font-bold text-sm text-slate-100 block">{t('lab_lifestyle')}</span>
-                          <p className="text-xs text-slate-400">{t('lab_lifestyle_desc')}</p>
+                          <span className="font-bold text-sm text-slate-800 block">{t('lab_lifestyle')}</span>
+                          <p className="text-xs text-slate-500">{t('lab_lifestyle_desc')}</p>
                         </div>
                         <button 
                           onClick={() => setLifestyleActive(!lifestyleActive)}
-                          className={`w-14 h-8 rounded-full transition-colors relative flex items-center px-1 ${lifestyleActive ? 'bg-emerald-500' : 'bg-slate-800'}`}
+                          className={`w-14 h-8 rounded-full transition-colors relative flex items-center px-1 ${lifestyleActive ? 'bg-emerald-500' : 'bg-slate-300'}`}
                         >
                           <div className={`w-6 h-6 rounded-full bg-white transition-transform ${lifestyleActive ? 'translate-x-6' : 'translate-x-0'} shadow-md`} />
                         </button>
                       </div>
                     </div>
 
-                    <div className="lg:col-span-4 bg-slate-950/60 rounded-2xl border border-slate-800 p-6 flex flex-col items-center justify-center min-h-[350px]">
-                      <span className="text-xs text-slate-500 uppercase tracking-widest font-semibold mb-4">{t('lab_sim_state')}</span>
+                    <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[350px] shadow-sm">
+                      <span className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-4">{t('lab_sim_state')}</span>
                       <div className="relative w-48 h-48 flex items-center justify-center">
-                        <div className={`absolute w-44 h-44 rounded-full border border-dashed transition-all duration-1000 ${atpScore > 80 ? 'border-emerald-500/40 animate-[spin_10s_linear_infinite]' : 'border-slate-800 animate-[spin_30s_linear_infinite]'}`} />
-                        <div className={`absolute w-36 h-36 rounded-full border border-dashed transition-all duration-1000 ${protectionRate > 60 ? 'border-cyan-500/30 animate-[spin_15s_linear_infinite_reverse]' : 'border-slate-800 animate-[spin_40s_linear_infinite_reverse]'}`} />
+                        <div className={`absolute w-44 h-44 rounded-full border border-dashed transition-all duration-1000 ${atpScore > 80 ? 'border-emerald-400/60 animate-[spin_10s_linear_infinite]' : 'border-slate-200 animate-[spin_30s_linear_infinite]'}`} />
+                        <div className={`absolute w-36 h-36 rounded-full border border-dashed transition-all duration-1000 ${protectionRate > 60 ? 'border-cyan-400/60 animate-[spin_15s_linear_infinite_reverse]' : 'border-slate-200 animate-[spin_40s_linear_infinite_reverse]'}`} />
 
-                        <svg viewBox="0 0 100 100" className={`w-28 h-28 transition-all duration-700 ${mcuActive ? 'text-amber-400' : atpScore > 50 ? 'text-emerald-400' : 'text-slate-500'}`}>
+                        <svg viewBox="0 0 100 100" className={`w-28 h-28 transition-all duration-700 ${mcuActive ? 'text-amber-500' : atpScore > 50 ? 'text-emerald-500' : 'text-slate-400'}`}>
                           <path d="M 50 15 C 75 15, 85 30, 85 50 C 85 70, 75 85, 50 85 C 25 85, 15 70, 15 50 C 15 30, 25 15, 50 15 Z" fill="none" stroke="currentColor" strokeWidth="2" />
                           <path d="M 50 20 Q 65 27, 50 34 T 50 48 T 50 62 T 50 76 T 50 80" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className={`${atpScore > 60 ? 'animate-pulse' : ''}`} />
                         </svg>
@@ -1314,8 +1141,8 @@
                       </div>
 
                       <div className="mt-4 text-center space-y-1">
-                        <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">{t('lab_synergy_tag')}</span>
-                        <p className={`text-sm font-bold ${atpScore > 80 ? 'text-emerald-400' : atpScore > 40 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                        <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{t('lab_synergy_tag')}</span>
+                        <p className={`text-sm font-black ${atpScore > 80 ? 'text-emerald-600' : atpScore > 40 ? 'text-cyan-600' : 'text-slate-500'}`}>
                           {atpScore > 80 ? t('lab_synergy_high') : atpScore > 40 ? t('lab_synergy_mid') : t('lab_synergy_low')}
                         </p>
                       </div>
@@ -1323,42 +1150,42 @@
 
                     <div className="lg:col-span-3 flex flex-col justify-between gap-6">
                       <div className="space-y-6">
-                        <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800">
-                          <span className="text-xs text-slate-500 block">{t('lab_data_atp')}</span>
+                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                          <span className="text-xs text-slate-550 block font-bold">{t('lab_data_atp')}</span>
                           <div className="flex items-baseline gap-1 mt-1">
-                            <span className="text-3xl font-extrabold text-white">{atpScore}</span>
-                            <span className="text-xs text-emerald-400 font-semibold">%</span>
+                            <span className="text-3xl font-black text-slate-800">{atpScore}</span>
+                            <span className="text-xs text-emerald-600 font-extrabold">%</span>
                           </div>
-                          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
+                          <div className="w-full bg-slate-100 h-1.5 rounded-full mt-2.5 overflow-hidden">
                             <div className="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full rounded-full transition-all duration-1000" style={{ width: `${atpScore}%` }} />
                           </div>
                         </div>
 
-                        <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800">
-                          <span className="text-xs text-slate-500 block">{t('lab_data_mdsnv')}</span>
+                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                          <span className="text-xs text-slate-550 block font-bold">{t('lab_data_mdsnv')}</span>
                           <div className="flex items-baseline gap-1 mt-1">
-                            <span className="text-3xl font-extrabold text-white">{protectionRate}</span>
-                            <span className="text-xs text-cyan-400 font-semibold">%</span>
+                            <span className="text-3xl font-black text-slate-800">{protectionRate}</span>
+                            <span className="text-xs text-cyan-600 font-extrabold">%</span>
                           </div>
-                          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2.5 overflow-hidden">
-                            <div className="bg-gradient-to-r from-cyan-500 to-indigo-400 h-full rounded-full transition-all duration-1000" style={{ width: `${protectionRate}%` }} />
+                          <div className="w-full bg-slate-100 h-1.5 rounded-full mt-2.5 overflow-hidden">
+                            <div className="bg-gradient-to-r from-cyan-400 to-indigo-400 h-full rounded-full transition-all duration-1000" style={{ width: `${protectionRate}%` }} />
                           </div>
                         </div>
 
-                        <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-slate-500 block">{t('lab_data_aging')}</span>
+                            <span className="text-xs text-slate-550 block font-bold">{t('lab_data_aging')}</span>
                             <i data-lucide="trending-up" className="w-4 h-4 text-rose-500 animate-pulse"></i>
                           </div>
                           <div className="flex items-baseline gap-1 mt-1">
-                            <span className="text-3xl font-extrabold text-white">{cellularAgingRate}</span>
-                            <span className="text-xs text-rose-400 font-semibold">x base</span>
+                            <span className="text-3xl font-black text-slate-800">{cellularAgingRate}</span>
+                            <span className="text-xs text-rose-500 font-extrabold">x base</span>
                           </div>
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
-                        <span className="text-slate-200 font-bold block mb-1">{t('lab_expert_tip')}</span>
+                      <div className="p-3.5 rounded-xl bg-white border border-slate-200 text-[11px] text-slate-600 shadow-sm">
+                        <span className="text-slate-800 font-black block mb-1">{t('lab_expert_tip')}</span>
                         {t('lab_expert_desc')}
                       </div>
                     </div>
@@ -1366,101 +1193,100 @@
                 </div>
               </section>
 
-              {}
               {/* Academy Section */}
-              <section id="academy" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
-                <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
+              <section id="academy" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
+                <div className="flex flex-col xl:flex-row items-start xl:items-end justify-between gap-6 mb-12">
                   <div className="space-y-4 max-w-2xl">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400 font-bold">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs text-emerald-600 font-bold">
                       <i data-lucide="book-open" className="w-3.5 h-3.5"></i>
                       <span>{t('academy_tag')}</span>
                     </div>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('academy_title')}</h2>
-                    <p className="text-slate-400">{t('academy_desc')}</p>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('academy_title')}</h2>
+                    <p className="text-slate-600 font-medium">{t('academy_desc')}</p>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
-                    <button onClick={() => setAcademyTab('manifesto')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'manifesto' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                  <div className="flex flex-wrap gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+                    <button onClick={() => setAcademyTab('manifesto')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'manifesto' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
                       <i data-lucide="sparkles" className="w-4 h-4"></i>{t('academy_tab_brand')}
                     </button>
-                    <button onClick={() => setAcademyTab('emotions')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'emotions' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                    <button onClick={() => setAcademyTab('emotions')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'emotions' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
                       <i data-lucide="heart" className="w-4 h-4"></i>{t('academy_tab_emotion')}
                     </button>
-                    <button onClick={() => setAcademyTab('scripts')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'scripts' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                    <button onClick={() => setAcademyTab('scripts')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'scripts' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
                       <i data-lucide="message-square" className="w-4 h-4"></i>{t('academy_tab_scripts')}
                     </button>
-                    <button onClick={() => setAcademyTab('objections')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'objections' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}>
+                    <button onClick={() => setAcademyTab('objections')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'objections' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
                       <i data-lucide="alert-triangle" className="w-4 h-4"></i>{t('academy_tab_objections')}
                     </button>
                   </div>
                 </div>
 
-                <div className="bg-slate-900/30 rounded-3xl border border-slate-900 p-6 sm:p-10">
+                <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-lg">
                   {academyTab === 'manifesto' && (
                     <div className="grid md:grid-cols-12 gap-8 items-center">
                       <div className="md:col-span-7 space-y-6">
-                        <span className="text-xs text-emerald-400 font-bold uppercase tracking-widest block">SECTION 01 · BRAND MANIFESTO</span>
+                        <span className="text-xs text-emerald-600 font-bold uppercase tracking-widest block">SECTION 01 · BRAND MANIFESTO</span>
                         {lang === 'zh-TW' || lang === 'zh-CN' ? (
                           <React.Fragment>
-                            <h3 className="text-2xl font-black text-white">「粒線體就是你的青春引擎」</h3>
-                            <p className="text-sm text-slate-300 leading-relaxed">你知道人為什麼會變老嗎？不是因為時間，時間只是個計數器。</p>
-                            <p className="text-sm text-slate-400 leading-relaxed font-light">
-                              真正讓你變老的，是你體內 <span className="text-white font-bold">37 兆個細胞</span>，開始「懶得做事」了。細胞為什麼懶？因為它沒電。每一個細胞裡，有幾百到幾千個叫做粒線體的小東西。
+                            <h3 className="text-2xl font-black text-slate-900">「粒線體就是你的青春引擎」</h3>
+                            <p className="text-sm text-slate-700 leading-relaxed font-medium">你知道人為什麼會變老嗎？不是因為時間，時間只是個計數器。</p>
+                            <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                              真正讓你變老的，是你體內 <span className="text-slate-900 font-bold">37 兆個細胞</span>，開始「懶得做事」了。細胞為什麼懶？因為它沒電。每一個細胞裡，有幾百到幾千個叫做粒線體的小東西。
                             </p>
                           </React.Fragment>
                         ) : lang === 'en' ? (
                           <React.Fragment>
-                            <h3 className="text-2xl font-black text-white">"Mitochondria is your youth engine"</h3>
-                            <p className="text-sm text-slate-300 leading-relaxed">Do you know why people age? It is not because of time. Time is just a counter.</p>
-                            <p className="text-sm text-slate-400 leading-relaxed font-light">
-                              What truly makes you old is that <span className="text-white font-bold">37 trillion cells</span> in your body begin to slow down. Why? Because they lack power. Inside every cell, there are hundreds of small factories called mitochondria.
+                            <h3 className="text-2xl font-black text-slate-900">"Mitochondria is your youth engine"</h3>
+                            <p className="text-sm text-slate-700 leading-relaxed font-medium">Do you know why people age? It is not because of time. Time is just a counter.</p>
+                            <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                              What truly makes you old is that <span className="text-slate-900 font-bold">37 trillion cells</span> in your body begin to slow down. Why? Because they lack power. Inside every cell, there are hundreds of small factories called mitochondria.
                             </p>
                           </React.Fragment>
                         ) : lang === 'ja' ? (
                           <React.Fragment>
-                            <h3 className="text-2xl font-black text-white">「ミトコンドリアはあなたの若さの原動力です」</h3>
-                            <p className="text-sm text-slate-300 leading-relaxed">なぜ人は老いるのか、ご存知ですか？時間のせいではありません。時間はただのカウンターです。</p>
-                            <p className="text-sm text-slate-400 leading-relaxed font-light">
-                              真の老いとは、体内の<span className="text-white font-bold">37兆個の細胞</span>が稼働をサボり始めることです。なぜサボるのか？電力が足りないからです。一つ一つの細胞内には、数千もの「ミトコンドリア」という小さな発電所があります。
+                            <h3 className="text-2xl font-black text-slate-900">「ミトコンドリアはあなたの若さの原動力です」</h3>
+                            <p className="text-sm text-slate-700 leading-relaxed font-medium">なぜ人は老いるのか、ご存知ですか？時間のせいではありません。時間はただのカウンターです。</p>
+                            <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                              真の老いとは、体内の<span className="text-slate-900 font-bold">37兆個の細胞</span>が稼働をサボり始めることです。なぜサボるのか？電力が足りないからです。一つ一つの細胞内には、数千もの「ミトコンドリア」という小さな発電所があります。
                             </p>
                           </React.Fragment>
                         ) : (
                           <React.Fragment>
-                            <h3 className="text-2xl font-black text-white">"ไมโตคอนเดรียคือเครื่องยนต์แห่งความเยาว์วัยของคุณ"</h3>
-                            <p className="text-sm text-slate-300 leading-relaxed">คุณรู้ไหมว่าทำไมมนุษย์เราถึงแก่ตัวลง? ไม่ใช่เพราะกาลเวลา เวลาเป็นแค่ตัวนับเลขเท่านั้น</p>
-                            <p className="text-sm text-slate-400 leading-relaxed font-light">
-                              สิ่งชราภาพที่แท้จริงเกิดจาก <span className="text-white font-bold">37 ล้านล้านเซลล์</span> ในร่างกายของคุณเริ่มขี้เกียจทำงานเพราะแบตเตอรี่หมด ในแต่ละเซลล์มีโรงไฟฟ้าขนาดเล็กหลายร้อยแห่งเรียกว่าไมโตคอนเดรีย
+                            <h3 className="text-2xl font-black text-slate-900">"ไมโตคอนเดรียคือเครื่องยนต์แห่งความเยาว์วัยของคุณ"</h3>
+                            <p className="text-sm text-slate-700 leading-relaxed font-medium">คุณรู้ไหมว่าทำไมมนุษย์เราถึงแก่ตัวลง? ไม่ใช่เพราะกาลเวลา เวลาเป็นแค่ตัวนับเลขเท่านั้น</p>
+                            <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                              สิ่งชราภาพที่แท้จริงเกิดจาก <span className="text-slate-900 font-bold">37 ล้านล้านเซลล์</span> ในร่างกายของคุณเริ่มขี้เกียจทำงานเพราะแบตเตอรี่หมด ในแต่ละเซลล์มีโรงไฟฟ้าขนาดเล็กหลายร้อยแห่งเรียกว่าไมโตคอนเดรีย
                             </p>
                           </React.Fragment>
                         )}
-                        <div className="grid sm:grid-cols-2 gap-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                          <div className="text-xs text-slate-400">
-                            <span className="text-emerald-400 font-bold block mb-1">⚡ Energy Blueprint</span>
+                        <div className="grid sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                          <div className="text-xs text-slate-600">
+                            <span className="text-emerald-600 font-bold block mb-1">⚡ Energy Blueprint</span>
                             {lang === 'en' ? 'Whether you wake up feeling energetic or your skin recovers skin collagen, it all depends on mitochondrial output.' : lang === 'ja' ? '毎朝の目覚めの良さや、肌のコラーゲン修復能力は、すべてミトコンドリアの発電量に依存しています。' : lang === 'th' ? 'ไม่ว่าจะเป็นแรงพลังที่ลุกขึ้นในตอนเช้า หรือการสังเคราะห์คอลลาเจนใหม่ของผิว ล้วนขึ้นอยู่กับประสิทธิภาพไมโตคอนเดรียทั้งสิ้น' : '你早上起床有沒有力氣、皮膚膠原蛋白補不補得回來，全看粒線體產能。'}
                           </div>
-                          <div className="text-xs text-slate-400">
-                            <span className="text-emerald-400 font-bold block mb-1">📉 Post-30 Signal</span>
+                          <div className="text-xs text-slate-600">
+                            <span className="text-emerald-600 font-bold block mb-1">📉 Post-30 Signal</span>
                             {lang === 'en' ? 'After 30, mitochondrial efficiency drops by 10% per decade. By 50, efficiency is less than half of your youth.' : lang === 'ja' ? '30歳を過ぎると、ミトコンドリアの発電効率は10年ごとに10%低下。50歳を迎える頃には、若い頃の半分以下に減少します。' : lang === 'th' ? 'หลังอายุ 30 ปี ประสิทธิภาพไมโตคอนเดรียจะลดลง 10% ทุกๆ ทศวรรษ เมื่อถึงอายุ 50 ปี พลังงานจะเหลือไม่ถึงครึ่งของวัยเยาว์' : '30 歲之後，粒線體的效能每十年下降 10%。到了 50 歲，產能只剩年輕時的一半不到。'}
                           </div>
                         </div>
-                        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-400 italic">
+                        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 text-sm text-emerald-700 italic font-semibold">
                           {lang === 'en' ? '"You do not age because of years; you age because your cell engines gave up. We ignite them."' : lang === 'ja' ? '「老いは歳月のせいではなく、ミトコンドリアが諦めたからです。私たちはそれを再起動させます。」' : lang === 'th' ? '“คุณไม่ได้แก่เพราะอายุ แต่เป็นเพราะเซลล์คุณยอมจำนน เราจะปลุกพลังมันกลับมาเอง”' : '「你老不是因為歲月，是因為你的粒線體放棄了。我們讓它重新燃起來。」'}
                         </div>
                       </div>
-                      <div className="md:col-span-5 bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                      <div className="md:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                         <span className="text-[11px] uppercase tracking-widest text-slate-500 font-black block">
                           {lang === 'en' ? 'Rep Mindset Alignment' : lang === 'ja' ? 'セールスマインドセット' : lang === 'th' ? 'การจัดทัศนคติคนขาย' : '業務員心態校準'}
                         </span>
-                        <p className="text-xs text-slate-400 leading-relaxed">
+                        <p className="text-xs text-slate-600 leading-relaxed font-medium">
                           {lang === 'en' ? '"You must believe it first, then clients will. They don’t just buy a product; they buy the absolute confidence in your eyes."' : lang === 'ja' ? '「あなたがまず製品を心から信じてこそ、お客様も信じてくれます。お客様は製品だけでなく、あなたの瞳にある揺るぎない確信を買うのです。」' : lang === 'th' ? '“คุณต้องเชื่อมั่นก่อน ลูกค้าถึงจะเชื่อมั่นตาม พวกเขาไม่ได้ซื้อแค่ผลิตภัณฑ์ แต่ซื้อความมั่นใจในสายตาของคุณ”' : '「你必須先相信它，客戶才會相信你。客戶買的不是產品，買的是你說這件事時，眼神裡有沒有那個確定感。」'}
                         </p>
                         <div className="flex items-center gap-3 pt-2">
-                          <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                          <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
                             <i data-lucide="user-check" className="w-5 h-5"></i>
                           </div>
                           <div>
-                            <span className="text-xs font-bold text-slate-200 block">{lang === 'en' ? 'More Than Pitching' : lang === 'ja' ? '単なる販売ではない' : lang === 'th' ? 'ไม่ใช่แค่การเสนอขาย' : '非單純推銷'}</span>
-                            <span className="text-[10px] text-slate-500">{lang === 'en' ? 'You are educating them on the true physical cause of their fatigue.' : lang === 'ja' ? '疲労の背後にある本当の科学的原因を、優しく伝えるアドバイザーです。' : lang === 'th' ? 'คุณกำลังบอกต้นเหตุทางกายภาพที่แท้จริงของความเหนื่อยล้าให้พวกเขา' : '你是告訴他們，疲憊背後有個真正的原因。'}</span>
+                            <span className="text-xs font-bold text-slate-800 block">{lang === 'en' ? 'More Than Pitching' : lang === 'ja' ? '単なる販売ではない' : lang === 'th' ? 'ไม่ใช่แค่การเสนอขาย' : '非單純推銷'}</span>
+                            <span className="text-[10px] text-slate-500 font-medium">{lang === 'en' ? 'You are educating them on the true physical cause of their fatigue.' : lang === 'ja' ? '疲労の背後にある本当の科学的原因を、優しく伝えるアドバイザーです。' : lang === 'th' ? 'คุณกำลังบอกต้นเหตุทางกายภาพที่แท้จริงของความเหนื่อยล้าให้พวกเขา' : '你是告訴他們，疲憊背後有個真正的原因。'}</span>
                           </div>
                         </div>
                       </div>
@@ -1470,7 +1296,7 @@
                   {academyTab === 'emotions' && (
                     <div className="grid md:grid-cols-12 gap-8">
                       <div className="md:col-span-4 space-y-3">
-                        <span className="text-xs text-cyan-400 font-bold uppercase tracking-widest block mb-4">5 Emotional Gates</span>
+                        <span className="text-xs text-cyan-600 font-bold uppercase tracking-widest block mb-4">5 Emotional Gates</span>
                         {[
                           { id: 'fatigue', label: lang === 'en' ? '1. Fatigue' : lang === 'ja' ? '1. 常に疲れる' : lang === 'th' ? '1. เหนื่อยล้าสะสม' : '入口一：【累】', subtitle: lang === 'en' ? 'Waking up tired after sleep' : lang === 'ja' ? '十分に寝ても朝から眠い' : lang === 'th' ? 'นอนเท่าไหร่ก็ไม่หายเหนื่อย' : '睡再飽起來也還是累' },
                           { id: 'noEffect', label: lang === 'en' ? '2. No Effect' : lang === 'ja' ? '2. 効果が不明' : lang === 'th' ? '2. กินแล้วไม่เห็นผล' : '入口二：【補了沒感覺】', subtitle: lang === 'en' ? 'Tried multiple brands with no result' : lang === 'ja' ? '色々飲んだが効果を実感できない' : lang === 'th' ? 'ทานแบรนด์อื่นมาเยอะ ไม่รู้ดีจริงไหม' : '吃了好幾種，不知道有沒有用' },
@@ -1480,27 +1306,27 @@
                         ].map(emo => (
                           <button
                             key={emo.id} onClick={() => setSelectedEmotion(emo.id)}
-                            className={`w-full text-left p-4 rounded-xl border transition-all ${selectedEmotion === emo.id ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-md' : 'bg-slate-950/40 border-slate-900 text-slate-400 hover:border-slate-800'}`}
+                            className={`w-full text-left p-4 rounded-xl border transition-all ${selectedEmotion === emo.id ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-700 shadow-sm' : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'}`}
                           >
                             <span className="block text-xs font-bold">{emo.label}</span>
-                            <span className="block text-[11px] text-slate-500 mt-0.5">{emo.subtitle}</span>
+                            <span className="block text-[11px] text-slate-500 mt-0.5 font-medium">{emo.subtitle}</span>
                           </button>
                         ))}
                       </div>
 
-                      <div className="md:col-span-8 bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                      <div className="md:col-span-8 bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
                         {/* Render simple localized scripts directly inside */}
                         <div className="space-y-6">
-                          <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
-                            <i data-lucide="heart" className="w-5 h-5 text-cyan-400 animate-pulse"></i>
-                            <h4 className="text-lg font-bold text-white">
+                          <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
+                            <i data-lucide="heart" className="w-5 h-5 text-cyan-500 animate-pulse"></i>
+                            <h4 className="text-lg font-bold text-slate-800">
                               {selectedEmotion === 'fatigue' ? t('lab_param_calcium_active') : selectedEmotion === 'noEffect' ? t('pill_quma') : selectedEmotion === 'skin' ? t('pill_mdsnv') : t('sol_title')}
                             </h4>
                           </div>
                           
-                          <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-                            <span className="text-[10px] text-cyan-400 font-bold uppercase">{t('weapon_tag')}</span>
-                            <p className="text-sm text-slate-200">
+                          <div className="space-y-2 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            <span className="text-[10px] text-cyan-600 font-bold uppercase">{t('weapon_tag')}</span>
+                            <p className="text-sm text-slate-700 leading-relaxed font-medium">
                               {lang === 'en' ? 
                                 '“Have you considered that the tiredness is not laziness, but your cells literally losing charge? Mitochondrial energy depletion cannot be solved by sleep — it needs correct raw triggers.”' : 
                                 lang === 'ja' ? 
@@ -1511,14 +1337,14 @@
                             </p>
                           </div>
                           
-                          <div className="text-xs text-slate-500">
-                            <span className="text-slate-400 font-bold">🧠 Emotion Logic:</span>
+                          <div className="text-xs text-slate-500 font-medium">
+                            <span className="text-slate-650 font-bold">🧠 Emotion Logic:</span>
                             {lang === 'en' ? 'Shift self-blame ("I am getting lazy") to a solvable biological problem ("my cell engines need power").' : lang === 'ja' ? '「体力が衰えた自分」を責める気持ちを、「細胞レベルの電力不足」という解決可能な課題へと昇華させ、お客様との強い信頼関係を築きます。' : lang === 'th' ? 'เปลี่ยนความรู้สึกโทษตัวเองว่า “เราขี้เกียจลง” เป็นปัญหาทางชีววิทยาที่รักษาได้แทน เพื่อเปิดใจผู้ฟัง' : '把「自己體力變差」這個自我批評，轉化成「細胞能量不足」這個能被物理科學解決的問題。他們感覺被理解了，而不是被評判。'}
                           </div>
                         </div>
 
-                        <div className="mt-4 pt-4 border-t border-slate-800 text-[11px] text-slate-500">
-                          ⚠️ <span className="text-amber-500 font-bold">Mantra:</span> {lang === 'en' ? 'Don’t overcomplicate biology. Focus on how they feel. Science brings credibility; empathy closes the deal.' : lang === 'ja' ? '専門的なサイエンス用語だけで終わらせず、相手の「実感」に寄り添いましょう。知性が信頼を、心が決断をもたらします。' : lang === 'th' ? 'อย่าพูดแต่คำศัพท์แพทย์คุยเรื่องความรู้สึกก่อน วิทยาศาสตร์สร้างความมั่นใจ แต่อารมณ์คือตัวปิดการขาย' : '不要跟客戶一味聊「粒線體學術」，要跟客戶聊「感覺」。科學讓你有說話的底氣。情感讓他們決定掏錢包。'}
+                        <div className="mt-4 pt-4 border-t border-slate-200 text-[11px] text-slate-500 font-medium">
+                          ⚠️ <span className="text-amber-600 font-bold">Mantra:</span> {lang === 'en' ? 'Don’t overcomplicate biology. Focus on how they feel. Science brings credibility; empathy closes the deal.' : lang === 'ja' ? '専門的なサイエンス用語だけで終わらせず、相手の「実感」に寄り添いましょう。知性が信頼を、心が決断をもたらします。' : lang === 'th' ? 'อย่าพูดแต่คำศัพท์แพทย์คุยเรื่องความรู้สึกก่อน วิทยาศาสตร์สร้างความมั่นใจ แต่อารมณ์คือตัวปิดการขาย' : '不要跟客戶一味聊「粒線體學術」，要跟客戶聊「感覺」。科學讓你有說話的底氣。情感讓他們決定掏錢包。'}
                         </div>
                       </div>
                     </div>
@@ -1526,33 +1352,33 @@
 
                   {academyTab === 'scripts' && (
                     <div className="space-y-8">
-                      <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                      <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <i data-lucide="sparkles" className="w-5 h-5 text-emerald-400"></i>
-                            <h4 className="text-base font-bold text-white">3-Min Pitch (Icebreaker / Social / LINE)</h4>
+                            <i data-lucide="sparkles" className="w-5 h-5 text-emerald-500"></i>
+                            <h4 className="text-base font-bold text-slate-800">3-Min Pitch (Icebreaker / Social / LINE)</h4>
                           </div>
                           <button 
-                            onClick={() => handleCopy(`MitoActiveLife is designed specifically for mitochondrial age decline. Over age 45, energy production drops significantly. We combine Active Calcium Ignition, QuMA Coenzyme ATP synthesis, and MDSNV Nano protection. A full charging cycle for cells. Many feel waking freshness in 2 weeks. Interested in taking a try?`, 'standard3m')}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-semibold text-slate-300 hover:text-white"
+                            onClick={() => handleCopy(lang === 'en' ? `MitoActiveLife is designed specifically for mitochondrial age decline. Over age 45, energy production drops significantly. We combine Active Calcium Ignition, QuMA Coenzyme ATP synthesis, and MDSNV Nano protection. A full charging cycle for cells. Many feel waking freshness in 2 weeks. Interested in taking a try?` : lang === 'ja' ? `ミトアクティブライフは、45歳以降のミトコンドリアの機能低下に特化して設計されています。活性カルシウムの点火、QuMAコエンザイムによるATP合成、そしてMDSNVナノ保護膜を融合。細胞に完全な充電サイクルを提供し、多くの方が2週間以内に朝のスッキリ感を実感しています。一度試してみませんか？` : `MitoActiveLife is designed specifically for mitochondrial age decline. Over age 45, energy production drops significantly. We combine Active Calcium Ignition, QuMA Coenzyme ATP synthesis, and MDSNV Nano protection. A full charging cycle for cells. Many feel waking freshness in 2 weeks. Interested in taking a try?`, 'standard3m')}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-slate-700 hover:text-emerald-600 transition-all shadow-sm animate-pulse"
                           >
-                            {copiedText === 'standard3m' ? <i data-lucide="check" className="w-3.5 h-3.5 text-emerald-400"></i> : <i data-lucide="copy" className="w-3.5 h-3.5"></i>}
+                            {copiedText === 'standard3m' ? <i data-lucide="check" className="w-3.5 h-3.5 text-emerald-500"></i> : <i data-lucide="copy" className="w-3.5 h-3.5"></i>}
                             {copiedText === 'standard3m' ? t('academy_copy_success') : t('academy_copy_btn')}
                           </button>
                         </div>
 
-                        <div className="grid md:grid-cols-3 gap-4 text-xs">
-                          <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/40">
-                            <span className="text-emerald-400 font-bold block mb-1">Min 1: Empathy</span>
-                            {lang === 'en' ? 'Waking up tired, dull skin despite standard skincare...' : '睡再多還是累，皮膚擦再多還是沒光亮？'}
+                        <div className="grid md:grid-cols-3 gap-4 text-xs font-semibold">
+                          <div className="p-3 rounded-lg bg-white border border-slate-150 shadow-sm">
+                            <span className="text-emerald-600 font-black block mb-1">Min 1: Empathy</span>
+                            {lang === 'en' ? 'Waking up tired, dull skin despite standard skincare...' : lang === 'ja' ? '十分に寝ても朝から疲れが抜けず、スキンケアをしていても肌が暗く沈む...' : '睡再多還是累，皮膚擦再多還是沒光亮？'}
                           </div>
-                          <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/40">
-                            <span className="text-emerald-400 font-bold block mb-1">Min 2: Decode Cause</span>
-                            {lang === 'en' ? 'It is a dead battery in cells. Post-45, cell output plummets annually.' : '這不是因為你懶，是細胞粒線體沒電了。45歲後它的效能每年都在大退步。'}
+                          <div className="p-3 rounded-lg bg-white border border-slate-150 shadow-sm">
+                            <span className="text-emerald-600 font-black block mb-1">Min 2: Decode Cause</span>
+                            {lang === 'en' ? 'It is a dead battery in cells. Post-45, cell output plummets annually.' : lang === 'ja' ? 'それは怠慢ではなく細胞のバッテリー切れ。45歳以降ミトコンドリア出力は毎年大幅に低下します。' : '這不是因為你懶，是細胞粒線體沒電了。45歲後它的效能每年都在大退步。'}
                           </div>
-                          <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/40">
-                            <span className="text-emerald-400 font-bold block mb-1">Min 3: Close & Charge</span>
-                            {lang === 'en' ? 'Active Calcium ignites, QuMA generates, MDSNV protects. Re-charge cell life!' : 'MitoActive 三合一系統：活性鈣點火、QuMA發電、MDSNV保護。要不要試試看？'}
+                          <div className="p-3 rounded-lg bg-white border border-slate-150 shadow-sm">
+                            <span className="text-emerald-600 font-black block mb-1">Min 3: Close & Charge</span>
+                            {lang === 'en' ? 'Active Calcium ignites, QuMA generates, MDSNV protects. Re-charge cell life!' : lang === 'ja' ? 'カルシウム点火、QuMA発電、MDSNV保護。ミトアクティブで細胞に活力をチャージ！' : 'MitoActive 三合一系統：活性鈣點火、QuMA發電、MDSNV保護。要不要試試看？'}
                           </div>
                         </div>
                       </div>
@@ -1561,29 +1387,29 @@
 
                   {academyTab === 'objections' && (
                     <div className="space-y-6">
-                      <span className="text-xs text-amber-400 font-bold uppercase tracking-widest block">{t('academy_tab_objections')} (Click cards to reveal responses)</span>
+                      <span className="text-xs text-amber-600 font-bold uppercase tracking-widest block">{t('academy_tab_objections')} (Click cards to reveal responses)</span>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
-                          { id: 'o1', client: lang === 'en' ? '"Let me think"' : lang === 'ja' ? '「少し考えます」' : lang === 'th' ? '“ขอคิดดูก่อนนะ”' : '「我再想想」', truth: lang === 'en' ? 'Insufficient value/safety.' : '還沒有足夠的購買理由與安全感。', response: lang === 'en' ? 'Pinpoint worries and cycle back to the Fatigue gate.' : '問他哪個地方還不夠清楚，重新回到「累」或「補了沒感覺」情緒入口。' },
-                          { id: 'o2', client: lang === 'en' ? '"Too Expensive"' : lang === 'ja' ? '「高すぎます」' : lang === 'th' ? '“ราคาแพงไปนิด”' : '「這太貴了」', truth: lang === 'en' ? 'Did not grasp technical value.' : '還沒感受到這份技術能帶給他的具體價值。', response: lang === 'en' ? 'Pitch bioavailability: standard bird nest gets destroyed; MDSNV delivers perfectly.' : '使用「進得去 vs 進不去」建立價值對比：普通燕窩被胃酸破壞，我們的奈米車是買路費，保證送達細胞。' },
-                          { id: 'o3', client: lang === 'en' ? '"No Supplements"' : lang === 'ja' ? '「サプリは飲みません」' : lang === 'th' ? '“ไม่เคยทานอาหารเสริม”' : '「我不吃保健品」', truth: lang === 'en' ? 'Burned by useless chemicals.' : '曾經買過一堆無感保健品，失去了信任感。', response: lang === 'en' ? 'Validate past failure. "Correct! Chemical supplements that cannot enter cells are waste. We are cellular absorption."' : '從「補了沒感覺」的痛點切入，先認同他的經驗：「對！吃一堆進不去細胞的化學品，不吃也罷。我們的三柱是生物利用率吸收革命。」' },
-                          { id: 'o4', client: lang === 'en' ? '"I Feel Fine"' : lang === 'ja' ? '「まだ元気です」' : lang === 'th' ? '“ตอนนี้ยังแข็งแรงดี”' : '「我身體還好」', truth: lang === 'en' ? 'No sense of biological urgency.' : '沒有感受到衰退與老化的緊迫性。', response: lang === 'en' ? 'Defensive strategy: "Even if fine on the outside, mitochondria drop efficiency daily. Recharge before the drop."' : '從「主動式防禦」框架切入：「現在外觀精神還好，不代表細胞內部的粒線體沒有在每天被氧化耗損。提前充飽電，是為了不起皺、不走下坡。」' }
+                          { id: 'o1', client: lang === 'en' ? '"Let me think"' : lang === 'ja' ? '「少し考えます」' : lang === 'th' ? '“ขอคิดดูก่อนนะ”' : '「我再想想」', truth: lang === 'en' ? 'Insufficient value/safety.' : lang === 'ja' ? '購買理由や安全性がまだ不足している。' : '還沒有足夠的購買理由與安全感。', response: lang === 'en' ? 'Pinpoint worries and cycle back to the Fatigue gate.' : lang === 'ja' ? '懸念点を聞き出し、「疲れ」や「効果の実感」の入り口へ誘導する。' : '問他哪個地方還不夠清楚，重新回到「累」或「補了沒感覺」情緒入口。' },
+                          { id: 'o2', client: lang === 'en' ? '"Too Expensive"' : lang === 'ja' ? '「高すぎます」' : lang === 'th' ? '“ราคาแพงไปนิด”' : '「這太貴了」', truth: lang === 'en' ? 'Did not grasp technical value.' : lang === 'ja' ? '技術的な価値が伝わりきっていない。' : '還沒感受到這份技術能帶給他的具體價值。', response: lang === 'en' ? 'Pitch bioavailability: standard bird nest gets destroyed; MDSNV delivers perfectly.' : lang === 'ja' ? '通常のツバメの巣は胃酸で壊れますが、MDSNVナノ輸送カプセルは細胞まで届くことを強調。' : '使用「進得去 vs 進不去」建立價值對比：普通燕窩被胃酸破壞，我們的奈米車是買路費，保證送達細胞。' },
+                          { id: 'o3', client: lang === 'en' ? '"No Supplements"' : lang === 'ja' ? '「サプリは飲みません」' : lang === 'th' ? '“ไม่เคยทานอาหารเสริม”' : '「我不吃保健品」', truth: lang === 'en' ? 'Burned by useless chemicals.' : lang === 'ja' ? '無駄な化学サプリメントで失望した経験がある。' : '曾經買過一堆無感保健品，失去了信任感。', response: lang === 'en' ? 'Validate past failure. "Correct! Chemical supplements that cannot enter cells are waste. We are cellular absorption."' : lang === 'ja' ? '「その通りです！細胞に届かない製品は無駄です。私たちは生体利用率のテクノロジーです」と共感する。' : '從「補了沒感覺」的痛點切入，先認同他的經驗：「對！吃一堆進不去細胞的化學品，不吃也罷。我們的三柱是生物利用率吸收革命。」' },
+                          { id: 'o4', client: lang === 'en' ? '"I Feel Fine"' : lang === 'ja' ? '「まだ元気です」' : lang === 'th' ? '“ตอนนี้ยังแข็งแรงดี”' : '「我身體還好」', truth: lang === 'en' ? 'No sense of biological urgency.' : lang === 'ja' ? '衰えや老化に対する危機感がまだない。' : '沒有感受到衰退與老化的緊迫性。', response: lang === 'en' ? 'Defensive strategy: "Even if fine on the outside, mitochondria drop efficiency daily. Recharge before the drop."' : lang === 'ja' ? '「外見が元気でも、細胞内の発電能力は毎日低下しています。下り坂になる前にチャージを」と提案。' : '從「主動式防禦」框架切入：「現在外觀精神還好，不代表細胞內部的粒線體沒有在每天被氧化耗損。提前充飽電，是為了不起皺、不走下坡。」' }
                         ].map(obj => (
                           <div 
                             key={obj.id} onClick={() => setFlippedObjection(flippedObjection === obj.id ? null : obj.id)}
-                            className={`p-6 rounded-2xl border transition-all cursor-pointer min-h-[180px] flex flex-col justify-between ${flippedObjection === obj.id ? 'bg-amber-950/30 border-amber-500/40 text-slate-100' : 'bg-slate-950 border-slate-900 hover:border-slate-800'}`}
+                            className={`p-6 rounded-2xl border transition-all cursor-pointer min-h-[180px] flex flex-col justify-between shadow-sm hover:shadow-md ${flippedObjection === obj.id ? 'bg-emerald-50 border-emerald-300 text-slate-800' : 'bg-white border-slate-200 hover:border-slate-300'}`}
                           >
                             <div>
-                              <span className="text-[10px] text-slate-500 font-bold block mb-1">Objection</span>
-                              <h4 className="text-base font-bold text-white mb-2">{obj.client}</h4>
+                              <span className="text-[10px] text-slate-400 font-bold block mb-1">Objection</span>
+                              <h4 className="text-base font-bold text-slate-800 mb-2">{obj.client}</h4>
                             </div>
                             {flippedObjection === obj.id ? (
-                              <div className="space-y-2 text-xs pt-2 border-t border-amber-500/20">
-                                <span className="text-rose-400 font-bold block">🎯 Truth: {obj.truth}</span>
-                                <span className="text-slate-300 block"><strong className="text-emerald-400">Response: </strong>{obj.response}</span>
+                              <div className="space-y-2 text-xs pt-2 border-t border-emerald-200">
+                                <span className="text-rose-600 font-bold block">🎯 Truth: {obj.truth}</span>
+                                <span className="text-slate-700 block font-medium"><strong className="text-emerald-700">Response: </strong>{obj.response}</span>
                               </div>
                             ) : (
-                              <span className="text-[11px] text-amber-400 font-bold flex items-center gap-1 mt-4">
+                              <span className="text-[11px] text-amber-600 font-bold flex items-center gap-1 mt-4">
                                 <i data-lucide="help-circle" className="w-3.5 h-3.5"></i> Click to Flip & Solve
                               </span>
                             )}
@@ -1595,88 +1421,86 @@
                 </div>
               </section>
 
-              {}
               {/* Solutions Section */}
-              <section id="solutions" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+              <section id="solutions" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-                  <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">{t('sol_tag')}</span>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('sol_title')}</h2>
-                  <p className="text-slate-400">{t('sol_desc')}</p>
+                  <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('sol_tag')}</span>
+                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('sol_title')}</h2>
+                  <p className="text-slate-650 font-medium">{t('sol_desc')}</p>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-12 items-center bg-slate-900/20 p-8 sm:p-12 rounded-3xl border border-slate-900">
+                <div className="grid lg:grid-cols-12 gap-12 items-center bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-md">
                   <div className="lg:col-span-7 space-y-8">
-                    <span className="text-xs text-emerald-400 font-bold block uppercase">SYNERGY CYCLE</span>
-                    <h3 className="text-2xl font-black text-white">{t('sol_cycle_title')}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">{t('sol_cycle_desc')}</p>
+                    <span className="text-xs text-emerald-600 font-bold block uppercase">SYNERGY CYCLE</span>
+                    <h3 className="text-2xl font-black text-slate-900">{t('sol_cycle_title')}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{t('sol_cycle_desc')}</p>
 
                     <div className="space-y-4">
                       <div className="flex items-start gap-4">
-                        <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold shrink-0 text-xs">1</div>
+                        <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold shrink-0 text-xs shadow-sm">1</div>
                         <div>
-                          <h4 className="text-sm font-bold text-slate-100">{t('sol_cycle_1_title')}</h4>
-                          <p className="text-xs text-slate-400 mt-1">{t('sol_cycle_1_desc')}</p>
+                          <h4 className="text-sm font-bold text-slate-800">{t('sol_cycle_1_title')}</h4>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">{t('sol_cycle_1_desc')}</p>
                         </div>
                       </div>
 
                       <div className="flex items-start gap-4">
-                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold shrink-0 text-xs">2</div>
+                        <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold shrink-0 text-xs shadow-sm">2</div>
                         <div>
-                          <h4 className="text-sm font-bold text-slate-100">{t('sol_cycle_2_title')}</h4>
-                          <p className="text-xs text-slate-400 mt-1">{t('sol_cycle_2_desc')}</p>
+                          <h4 className="text-sm font-bold text-slate-800">{t('sol_cycle_2_title')}</h4>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">{t('sol_cycle_2_desc')}</p>
                         </div>
                       </div>
 
                       <div className="flex items-start gap-4">
-                        <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-bold shrink-0 text-xs">3</div>
+                        <div className="w-8 h-8 rounded-lg bg-cyan-100 flex items-center justify-center text-cyan-600 font-bold shrink-0 text-xs shadow-sm">3</div>
                         <div>
-                          <h4 className="text-sm font-bold text-slate-100">{t('sol_cycle_3_title')}</h4>
-                          <p className="text-xs text-slate-400 mt-1">{t('sol_cycle_3_desc')}</p>
+                          <h4 className="text-sm font-bold text-slate-800">{t('sol_cycle_3_title')}</h4>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">{t('sol_cycle_3_desc')}</p>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="lg:col-span-5 bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+                  <div className="lg:col-span-5 bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-6 shadow-inner">
                     <span className="text-xs text-slate-500 font-bold block uppercase">{t('sol_chew_title')}</span>
                     
                     <div className="relative flex justify-center py-4">
-                      <svg viewBox="0 0 100 100" className="w-24 h-24 text-emerald-400 animate-[spin_30s_linear_infinite]">
+                      <svg viewBox="0 0 100 100" className="w-24 h-24 text-emerald-500 animate-[spin_30s_linear_infinite]">
                         <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray="10 4 2 4" />
-                        <circle cx="50" cy="50" r="28" className="fill-slate-900 stroke-slate-800" strokeWidth="2" />
+                        <circle cx="50" cy="50" r="28" className="fill-white stroke-slate-100" strokeWidth="2" />
                       </svg>
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-850">
-                        <span className="text-xs font-bold text-slate-200 block">{t('sol_chew_1_title')}</span>
-                        <span className="text-[11px] text-slate-500 block mt-1">{t('sol_chew_1_desc')}</span>
+                      <div className="p-3.5 bg-white rounded-xl border border-slate-150 shadow-sm">
+                        <span className="text-xs font-bold text-slate-800 block">{t('sol_chew_1_title')}</span>
+                        <span className="text-[11px] text-slate-500 block mt-1 font-medium">{t('sol_chew_1_desc')}</span>
                       </div>
 
-                      <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-850">
-                        <span className="text-xs font-bold text-slate-200 block">{t('sol_chew_2_title')}</span>
-                        <span className="text-[11px] text-slate-500 block mt-1">{t('sol_chew_2_desc')}</span>
+                      <div className="p-3.5 bg-white rounded-xl border border-slate-150 shadow-sm">
+                        <span className="text-xs font-bold text-slate-800 block">{t('sol_chew_2_title')}</span>
+                        <span className="text-[11px] text-slate-500 block mt-1 font-medium">{t('sol_chew_2_desc')}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
 
-              {}
               {/* Team Section */}
-              <section id="team" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-900/60">
+              <section id="team" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
                   <div className="space-y-4 max-w-2xl">
-                    <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">{t('team_tag')}</span>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('team_title')}</h2>
-                    <p className="text-slate-400">{t('team_desc')}</p>
+                    <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('team_tag')}</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('team_title')}</h2>
+                    <p className="text-slate-650 font-medium">{t('team_desc')}</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
                     {['all', 'exec', 'science'].map(tabId => (
                       <button
                         key={tabId} onClick={() => setActiveTab(tabId)}
-                        className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${activeTab === tabId ? 'bg-emerald-500 text-slate-950' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
+                        className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${activeTab === tabId ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/10' : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-sm'}`}
                       >
                         {tabId === 'all' ? t('team_tab_all') : tabId === 'exec' ? t('team_tab_exec') : t('team_tab_science')}
                       </button>
@@ -1688,27 +1512,27 @@
                   {filteredLeaders.map(leader => (
                     <div 
                       key={leader.id} onClick={() => setSelectedLeader(leader)}
-                      className="group bg-slate-900/40 rounded-2xl border border-slate-900 hover:border-slate-850 overflow-hidden transition-all duration-300 cursor-pointer flex flex-col justify-between hover:scale-[1.01] hover:shadow-xl hover:shadow-emerald-500/[0.02]"
+                      className="group bg-white rounded-2xl border border-slate-200 hover:border-emerald-200 overflow-hidden transition-all duration-300 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-lg"
                     >
                       <div>
                         <div className={`h-48 ${leader.avatarBg} relative flex items-center justify-center p-6 overflow-hidden`}>
-                          <div className="absolute w-32 h-32 rounded-full bg-white/5 border border-white/10 animate-pulse" />
-                          <div className="relative z-10 w-20 h-20 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-center text-emerald-400">
+                          <div className="absolute w-32 h-32 rounded-full bg-white/20 border border-white/30 animate-pulse" />
+                          <div className="relative z-10 w-20 h-20 rounded-2xl bg-white border border-slate-200/80 flex items-center justify-center text-emerald-500 shadow-md">
                             <i data-lucide="atom" className="w-8 h-8 animate-[spin_20s_linear_infinite]"></i>
                           </div>
-                          <span className="absolute top-3 right-3 bg-slate-950/70 border border-slate-800 text-[9px] px-2.5 py-0.5 rounded-full text-emerald-400 font-bold tracking-wide uppercase">
+                          <span className="absolute top-3 right-3 bg-white/90 border border-slate-150 text-[9px] px-2.5 py-0.5 rounded-full text-emerald-600 font-extrabold tracking-wide uppercase shadow-sm">
                             {leader.role}
                           </span>
                         </div>
                         <div className="p-5 space-y-2">
-                          <h3 className="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">{leader.name}</h3>
-                          <p className="text-xs text-slate-400 font-medium leading-tight">{leader.title}</p>
-                          <p className="text-[11px] text-slate-500 line-clamp-2 mt-2 leading-relaxed">{leader.experience}</p>
+                          <h3 className="text-lg font-black text-slate-800 group-hover:text-emerald-600 transition-colors">{leader.name}</h3>
+                          <p className="text-xs text-slate-500 font-bold leading-tight">{leader.title}</p>
+                          <p className="text-[11px] text-slate-500 line-clamp-2 mt-2 leading-relaxed font-medium">{leader.experience}</p>
                         </div>
                       </div>
-                      <div className="p-5 pt-0 border-t border-slate-900/60 mt-3 flex items-center justify-between text-[11px] text-emerald-400 font-bold">
+                      <div className="p-5 pt-0 border-t border-slate-100 mt-3 flex items-center justify-between text-[11px] text-emerald-600 font-bold">
                         <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">{t('team_read_more')} <i data-lucide="chevron-right" className="w-3.5 h-3.5"></i></span>
-                        <span className="w-7 h-7 rounded-full bg-slate-950/60 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+                        <span className="w-7 h-7 rounded-full bg-slate-50 border border-slate-150 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors shadow-sm">
                           <i data-lucide="linkedin" className="w-3.5 h-3.5"></i>
                         </span>
                       </div>
@@ -1720,37 +1544,37 @@
               {/* Modal */}
               {selectedLeader && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-                  <div onClick={() => setSelectedLeader(null)} className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" />
-                  <div className="relative z-10 w-full max-w-2xl bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
-                    <button onClick={() => setSelectedLeader(null)} className="absolute top-6 right-6 p-2 rounded-full bg-slate-950/50 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
+                  <div onClick={() => setSelectedLeader(null)} className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" />
+                  <div className="relative z-10 w-full max-w-2xl bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
+                    <button onClick={() => setSelectedLeader(null)} className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors shadow-sm">
                       <i data-lucide="x" className="w-5 h-5"></i>
                     </button>
                     <div className="grid md:grid-cols-12">
                       <div className={`md:col-span-5 ${selectedLeader.avatarBg} p-8 flex flex-col justify-between min-h-[250px] md:min-h-full`}>
-                        <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-800 inline-self-start self-start">
-                          <i data-lucide="dna" className="w-5 h-5 text-emerald-400 animate-pulse"></i>
+                        <div className="bg-white/80 p-3 rounded-xl border border-slate-250 inline-self-start self-start shadow-sm">
+                          <i data-lucide="dna" className="w-5 h-5 text-emerald-600 animate-pulse"></i>
                         </div>
                         <div className="space-y-2">
-                          <span className="text-[9px] tracking-widest uppercase font-extrabold text-emerald-400 bg-slate-950/80 px-2.5 py-0.5 rounded-full border border-slate-800 inline-block">{selectedLeader.role}</span>
-                          <h3 className="text-xl font-black text-white">{selectedLeader.name}</h3>
-                          <p className="text-xs text-slate-300 font-semibold">{selectedLeader.education}</p>
+                          <span className="text-[9px] tracking-widest uppercase font-extrabold text-emerald-600 bg-white px-2.5 py-0.5 rounded-full border border-slate-200 inline-block shadow-sm">{selectedLeader.role}</span>
+                          <h3 className="text-xl font-black text-slate-800">{selectedLeader.name}</h3>
+                          <p className="text-xs text-slate-600 font-bold">{selectedLeader.education}</p>
                         </div>
                       </div>
                       <div className="md:col-span-7 p-8 space-y-5">
                         <div>
-                          <h4 className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1">官方職掌 / Role</h4>
-                          <p className="text-base font-bold text-white">{selectedLeader.title}</p>
+                          <h4 className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold mb-1">官方職掌 / Role</h4>
+                          <p className="text-base font-bold text-slate-800">{selectedLeader.title}</p>
                         </div>
-                        <div className="bg-slate-950/50 p-3.5 rounded-xl border-l-2 border-emerald-500 italic text-xs text-slate-300 leading-relaxed">"{selectedLeader.quote}"</div>
+                        <div className="bg-slate-50 p-3.5 rounded-xl border-l-2 border-emerald-500 italic text-xs text-slate-600 leading-relaxed font-semibold">"{selectedLeader.quote}"</div>
                         <div>
-                          <h4 className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1">專業背景 & 研發歷程</h4>
-                          <p className="text-xs text-slate-400 leading-relaxed">{selectedLeader.experience}</p>
+                          <h4 className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold mb-1">專業背景 & 研發歷程</h4>
+                          <p className="text-xs text-slate-500 leading-relaxed font-medium">{selectedLeader.experience}</p>
                         </div>
                         <div>
-                          <h4 className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-2">核心管理與學術專長</h4>
+                          <h4 className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold mb-2">核心管理與學術專長</h4>
                           <div className="flex flex-wrap gap-1.5">
                             {selectedLeader.skills.map((skill, index) => (
-                              <span key={index} className="px-2.5 py-1 rounded bg-slate-950 text-slate-300 text-[10px] font-semibold border border-slate-800">{skill}</span>
+                              <span key={index} className="px-2.5 py-1 rounded bg-slate-100 text-slate-600 text-[10px] font-bold border border-slate-150">{skill}</span>
                             ))}
                           </div>
                         </div>
@@ -1760,94 +1584,92 @@
                 </div>
               )}
 
-              {}
               {/* Contact Section */}
               <section id="contact" className="py-20 max-w-7xl mx-auto px-6">
-                <div className="grid lg:grid-cols-12 gap-12 bg-slate-900/40 p-8 sm:p-12 rounded-3xl border border-slate-900 relative overflow-hidden">
-                  <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="grid lg:grid-cols-12 gap-12 bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 relative overflow-hidden shadow-lg">
+                  <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-emerald-100/50 rounded-full blur-3xl pointer-events-none" />
                   <div className="lg:col-span-5 space-y-6">
-                    <span className="text-xs font-extrabold tracking-widest text-emerald-400 uppercase">{t('contact_tag')}</span>
-                    <h2 className="text-3xl font-bold text-white">{t('contact_title')}</h2>
-                    <p className="text-slate-400 text-sm leading-relaxed">{t('contact_desc')}</p>
+                    <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('contact_tag')}</span>
+                    <h2 className="text-3xl font-black text-slate-900">{t('contact_title')}</h2>
+                    <p className="text-slate-600 text-sm leading-relaxed font-medium">{t('contact_desc')}</p>
                     <div className="space-y-4 pt-4">
-                      <div className="flex items-center gap-4 text-sm text-slate-350">
-                        <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-emerald-400"><i data-lucide="globe" className="w-5 h-5"></i></div>
+                      <div className="flex items-center gap-4 text-sm text-slate-700">
+                        <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-150 flex items-center justify-center text-emerald-500 shadow-sm"><i data-lucide="globe" className="w-5 h-5"></i></div>
                         <div>
-                          <span className="block text-xs text-slate-500">{t('contact_office')}</span>
-                          <span className="font-semibold text-white">{t('contact_office_loc')}</span>
+                          <span className="block text-xs text-slate-400 font-bold">{t('contact_office')}</span>
+                          <span className="font-bold text-slate-800">{t('contact_office_loc')}</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-slate-350">
-                        <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-emerald-400"><i data-lucide="award" className="w-5 h-5"></i></div>
+                      <div className="flex items-center gap-4 text-sm text-slate-700">
+                        <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-150 flex items-center justify-center text-emerald-500 shadow-sm"><i data-lucide="award" className="w-5 h-5"></i></div>
                         <div>
-                          <span className="block text-xs text-slate-500">{t('contact_lab')}</span>
-                          <span className="font-semibold text-white">{t('contact_lab_loc')}</span>
+                          <span className="block text-xs text-slate-400 font-bold">{t('contact_lab')}</span>
+                          <span className="font-bold text-slate-800">{t('contact_lab_loc')}</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="lg:col-span-7 bg-slate-950/40 p-6 sm:p-8 rounded-2xl border border-slate-850">
+                  <div className="lg:col-span-7 bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-inner">
                     <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); }}>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold text-slate-400 mb-2">{t('contact_form_name')}</label>
-                          <input type="text" placeholder={t('contact_form_name_placeholder')} className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-white focus:outline-none transition-colors" />
+                          <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_name')}</label>
+                          <input type="text" placeholder={t('contact_form_name_placeholder')} className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-slate-400 mb-2">{t('contact_form_email')}</label>
-                          <input type="email" placeholder="name@mitoactivelife.com" className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-white focus:outline-none transition-colors" />
+                          <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_email')}</label>
+                          <input type="email" placeholder="name@mitoactivelife.com" className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-400 mb-2">{t('contact_form_category')}</label>
-                        <select className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-slate-300 focus:outline-none transition-colors">
+                        <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_category')}</label>
+                        <select className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-700 focus:outline-none transition-colors shadow-sm font-semibold">
                           <option>{t('contact_form_cat1')}</option>
                           <option>{t('contact_form_cat2')}</option>
                           <option>{t('contact_form_cat3')}</option>
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-400 mb-2">{t('contact_form_detail')}</label>
-                        <textarea rows={4} placeholder={t('contact_form_detail_placeholder')} className="w-full px-4 py-3 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-sm text-white focus:outline-none transition-colors" />
+                        <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_detail')}</label>
+                        <textarea rows={4} placeholder={t('contact_form_detail_placeholder')} className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
                       </div>
-                      <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-sm font-bold shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all hover:scale-[1.01] active:scale-95">{t('contact_form_submit')}</button>
+                      <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-white text-sm font-bold shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all hover:scale-[1.01] active:scale-95">{t('contact_form_submit')}</button>
                     </form>
                   </div>
                 </div>
               </section>
 
-              {}
               {/* Footer */}
-              <footer className="bg-slate-950 border-t border-slate-900/60 py-12">
+              <footer className="bg-white border-t border-slate-200/80 py-12">
                 <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center"><i data-lucide="dna" className="w-4 h-4 text-slate-950"></i></div>
-                      <span className="text-lg font-bold text-white">MitoActiveLife</span>
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm"><i data-lucide="dna" className="w-4 h-4 text-white"></i></div>
+                      <span className="text-lg font-black text-slate-900">MitoActiveLife</span>
                     </div>
-                    <p className="text-xs text-slate-500 leading-relaxed">{t('footer_copyright')}</p>
+                    <p className="text-xs text-slate-500 leading-relaxed font-semibold">{t('footer_copyright')}</p>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">{t('nav_solutions')}</h4>
-                    <ul className="space-y-2 text-xs text-slate-500">
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">{t('nav_solutions')}</h4>
+                    <ul className="space-y-2 text-xs text-slate-600 font-bold">
                       <li>{t('sol_cycle_1_title')}</li>
                       <li>{t('sol_cycle_2_title')}</li>
                       <li>{t('sol_cycle_3_title')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">{t('hero_btn_academy')}</h4>
-                    <ul className="space-y-2 text-xs text-slate-500">
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">{t('hero_btn_academy')}</h4>
+                    <ul className="space-y-2 text-xs text-slate-600 font-bold">
                       <li>{t('academy_tab_brand')}</li>
                       <li>{t('academy_tab_emotion')}</li>
                       <li>{t('academy_tab_scripts')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">MitoActiveLife</h4>
-                    <p className="text-[10px] text-slate-600 leading-relaxed">{t('footer_decl')}</p>
-                    <div className="flex gap-4 mt-4"><span className="text-xs text-slate-500">© 2026 MitoActiveLife.</span></div>
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">MitoActiveLife</h4>
+                    <p className="text-[10px] text-slate-500 leading-relaxed font-bold">{t('footer_decl')}</p>
+                    <div className="flex gap-4 mt-4"><span className="text-xs text-slate-400 font-bold">© 2026 MitoActiveLife.</span></div>
                   </div>
                 </div>
               </footer>
