@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <!-- 引入 Babel 用於瀏覽器中編譯 JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.23.3/babel.min.js"></script>
     <!-- 引入 Lucide 圖標 CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -35,514 +35,7 @@
 
     <!-- 載入我們編寫的 React 元件代碼 -->
     <script type="text/babel">
-        const { 
-          Users, Dna, Activity, ChevronRight, Linkedin, Mail, X, Zap, 
-          ShieldCheck, Heart, Sparkles, ArrowUpRight, TrendingUp, Sliders, 
-          CheckCircle2, Atom, Globe, Award, BookOpen, MessageSquare, Copy, 
-          Check, Smartphone, Flame, Shield, HelpCircle, UserCheck
-        } = lucide;
-
-        const translations = {
-          'zh-TW': {
-            langName: "繁體中文",
-            title_suffix: "活「粒」生活 · 2026 INTERNAL",
-            nav_pillars: "技術三柱",
-            nav_lab: "細胞互動實驗室",
-            nav_academy: "智能銷售賦能中心",
-            nav_team: "領袖團隊",
-            nav_solutions: "複合系統",
-            nav_contact: "專用諮詢",
-            hero_tag: "MitoActiveLife 活「粒」生活 · 業務技術文稿輔助系統",
-            hero_title1: "你老不是因為歲月，",
-            hero_title2: "是因為你的粒線體放棄了",
-            hero_desc: "結合「活性鈣點火機制」×「QuMA 粒線體產能」×「MDSNV 燕窩酸奈米遞送」，讓 37 兆細胞重新燃起青春電力。這不只是一瓶保健品，而是全套細胞級「充電系統」。",
-            hero_btn_academy: "進入智能銷售賦能中心",
-            hero_btn_lab: "細胞互動實驗室",
-            pill_quma: "QuMA 粒線體高效發電",
-            pill_mdsnv: "MDSNV 乳源奈米運輸載體",
-            pill_calcium: "活性鈣 MCU 啟動點火開關",
-            mcu_ignited: "MCU 啟動點火",
-            mdsnv_protect: "MDSNV 奈米防護",
-            product_name: "活「粒」生活口嚼片",
-            bio_rate: "99.7% 生物利用率",
-            
-            sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "保持年輕科技術三柱 — 保持健康的「技術武器庫」",
-            sci_desc: "告訴你一個秘密 精準點出頂級科技力量。",
-            sci_p1_sub: "PILLAR 01 · 燃料效能恢復",
-            sci_p1_title: "QuMA 粒線體的充電站",
-            sci_p1_quote: "「QuMA 是讓粒線體重新開始做事的開關。」",
-            sci_p1_desc: "以輔酶 Q10 的進化形態搭配 NMN 前驅物質。大多數保健品補的是「原料」，QuMA 補的是「產能」，直接進入細胞發電廠，將舊機器翻新。",
-            sci_p1_weapon: "「普通 Q10 進到腸道大部分被擋在外面。QuMA 讓成分能真正進入細胞工作——你之前吃的是門外的，我們讓你進門了。」",
-            sci_p2_sub: "PILLAR 02 · 燕窩酸精準遞送",
-            sci_p2_title: "MDSNV 燕窩酸奈米運輸車",
-            sci_p2_quote: "「燕窩酸不是新成分，MDSNV 是讓它真正到達目的地的新方法。」",
-            sci_p2_desc: "燕窩酸極易被胃酸破壞。MDSNV（乳源驅動燕窩酸奈米載體）用天然奈米囊泡將其包裹，如同母乳傳遞營養給嬰兒的方式，穿過消化道直達需要它的地方。",
-            sci_p2_weapon: "「傳統燕窩吸收率很低。MDSNV 是把燕窩酸裝進奈米等級運輸艙，讓身體真的能用到它——等於你買了燕窩，終於讓它發揮效果了。」",
-            sci_p3_sub: "PILLAR 03 · MCU 點火啟動",
-            sci_p3_title: "活性鈣 × 粒線體點火",
-            sci_p3_quote: "「鈣不只是補骨頭的，它是讓粒線體啟動發電的鑰匙。」",
-            sci_p3_desc: "鈣離子通過 MCU 直接刺激 ATP 合成酶。鈣離子不足發電系統就無法運轉。我們採用活性鈣，吸收率高碳酸鈣 40–50%，精準引爆細胞能量。",
-            sci_p3_weapon: "「別人的鈣是補骨頭的，我們的鈣是幫細胞充電點火的。而且我們用活性鈣，吸收率比一般鈣高將近一半，進得去才有用。」",
-            weapon_tag: "話術武器",
-
-            lab_tag: "LAB & SIMULATOR",
-            lab_title: "MitoActive 細胞能量互動實驗室 v1.0",
-            lab_desc: "調動技術三柱的關鍵變數，親自體驗「活性鈣點火 ➔ QuMA 發電 ➔ MDSNV 保護」三者如何交織出最強的細胞長壽能量。",
-            lab_ctrl_title: "調節技術柱與生活變數",
-            lab_param_calcium: "活性鈣濃度 (MCU 點火開關)",
-            lab_param_calcium_active: "⚡ 粒線體點火已開啟",
-            lab_param_calcium_inactive: "❌ 未達點火閾值 (MCU 關閉)",
-            lab_param_calcium_tip: "當數值超過 40%，MCU 點火通道開啟，將顯著加成 QuMA 的發電效率。",
-            lab_param_quma: "QuMA 輔酶/NMN 電子流 (發電原料)",
-            lab_param_quma_tip: "決定粒線體電子傳遞鏈（ETC）運作的基本原料。機器越新，產能越強。",
-            lab_param_mdsnv: "MDSNV 燕窩酸防禦力 (保護屏障)",
-            lab_param_mdsnv_tip: "減少自由基（ROS）和胃酸對能量單位的耗損，建立奈米層次的細胞膜保護盾。",
-            lab_lifestyle: "規律有氧運動 & 黃金睡眠",
-            lab_lifestyle_desc: "刺激全新肌肉線粒體合成，掃除代謝廢物",
-            lab_sim_state: "Mito 模擬器活化狀態",
-            lab_synergy_tag: "三柱協同動態",
-            lab_synergy_high: "🚀 三柱協同·全速發電中",
-            lab_synergy_mid: "⚡ 設備就緒·引擎等待點火",
-            lab_synergy_low: "⚠️ 起步功率偏低·細胞沒電",
-            lab_data_atp: "整體細胞 ATP 能量",
-            lab_data_mdsnv: "MDSNV 奈米防禦厚度",
-            lab_data_aging: "預估細胞衰老速率",
-            lab_expert_tip: "💡 專家提示",
-            lab_expert_desc: "鈣離子濃度未達點火標籤（<40%），即使 QuMA 再高發電效率也只有 60%。這就是活性鈣作為 MCU 發電開關的重要之處。",
-
-            academy_tag: "活「粒」生活 智能銷售賦能中心 v1.0",
-            academy_title: "MitoActive 疑問實戰沙盒",
-            academy_desc: "本章節供 MitoActive 內部業務人員教育訓練與實戰對答查詢。請點選下方分頁，調閱話術武器、我需要他與情緒地圖。",
-            academy_tab_brand: "品牌信仰",
-            academy_tab_emotion: "情緒地圖",
-            academy_tab_scripts: "疑問解答",
-            academy_tab_objections: "我需要他",
-            academy_copy_btn: "一鍵複製話術",
-            academy_copy_success: "已複製",
-            academy_copy_line: "複製文字",
-
-            team_tag: "OUR LEADERSHIP",
-            team_title: "科研智慧與企業運營的完美結合",
-            team_desc: "MitoActiveLife 匯集了全球頂尖的細胞生物學家、抗衰老臨床醫學領袖與具備數十年跨國生技運作經驗的商業精英。",
-            team_tab_all: "全體團隊成員",
-            team_tab_exec: "執行領袖",
-            team_tab_science: "科學顧問",
-            team_read_more: "閱讀完整履歷與願景",
-
-            sol_tag: "PRODUCT DESIGN & SYNERGY",
-            sol_title: "MitoActiveLife 活「粒」生活口嚼片",
-            sol_desc: "點火（活性鈣）➔ 發電（QuMA）➔ 保護（MDSNV）。這不是單一補充品，而是一套為 45 歲以上設計的細胞發電系統。",
-            sol_cycle_title: "「三層協同」不是加法，是高效循環",
-            sol_cycle_desc: "普通的保健品是把好東西堆疊在一起。而活「粒」生活的三種技術，在身體內部是一個閉環的增益系統：",
-            sol_cycle_1_title: "點火 (活性鈣 - MCU 機制)",
-            sol_cycle_1_desc: "吸收率提高 50% 的活性鈣，是粒線體產能引擎的鑰匙。如果沒有它按開關，粒線體就沒有啟動發電信號。",
-            sol_cycle_2_title: "發電 (QuMA 粒線體機能複合體)",
-            sol_cycle_2_desc: "以輔酶 Q10 的進化形態為主力，直接修護與支援電子傳遞鏈（ETC），提升細胞的產能功率。",
-            sol_cycle_3_title: "保護 (MDSNV 燕窩酸奈米載體)",
-            sol_cycle_3_desc: "保護大腦神經與細胞膜，同時免受自由基（ROS）侵擾。發電系統更穩定，鈣的點火信號就更有效率，形成自我增幅。",
-            sol_chew_title: "劑型物理考量 — 口嚼片設計",
-            sol_chew_1_title: "第一、吸收起點提前",
-            sol_chew_1_desc: "從口腔黏膜開始進行吸收，繞過部分腸道首關效應，讓消化退化的 45 歲以上族群吸收更快。",
-            sol_chew_2_title: "第二、服用依從性高",
-            sol_chew_2_desc: "不需要配水吞，可隨時放入口中咀嚼，提升「順手吃」的頻率，有效降低忘記服用的痛點。",
-
-            contact_tag: "INTERNAL USE ONLY",
-            contact_title: "開啟您的細胞活化之旅",
-            contact_desc: "對活「粒」生活專利成分、活性鈣MCU發電通路，或是如何運用文稿話術進行客戶破冰有進一步疑問？歡迎遞交內部支援諮詢。",
-            contact_office: "全球營運總部",
-            contact_office_loc: "美國德克薩斯州達拉斯 (Dallas, TX)",
-            contact_lab: "科學實驗研發中心",
-            contact_lab_loc: "瑞士巴塞爾 (Basel, Switzerland)",
-            contact_form_name: "姓名",
-            contact_form_name_placeholder: "例如：林業務",
-            contact_form_email: "內部聯絡電子郵件",
-            contact_form_category: "諮詢範疇",
-            contact_form_cat1: "技術三柱科學細節索取",
-            contact_form_cat2: "MDSNV 與 QuMA 吸收率臨床白皮書",
-            contact_form_cat3: "經銷通路合作培訓支援",
-            contact_form_detail: "備註詳情",
-            contact_form_detail_placeholder: "請輸入您希望得到的內部培訓支援或學術文獻需求...",
-            contact_form_submit: "遞交內部協助申請",
-            footer_copyright: "MitoActiveLife 活「粒」生活 活性鈣 × QuMA 粒線體機能 × MDSNV 燕窩酸奈米遞送。內部業務用途，請勿外流，2026 年 5 月版。",
-            footer_decl: "* 業務技術文稿 v1.0。僅供內部培訓使用。"
-          },
-          'en': {
-            langName: "English",
-            title_suffix: "MitoActiveLife · 2026 INTERNAL",
-            nav_pillars: "3 Pillars",
-            nav_lab: "Cell Lab",
-            nav_academy: "Sales Center",
-            nav_team: "Leadership",
-            nav_solutions: "Synergy System",
-            nav_contact: "Inquiry",
-            hero_tag: "MitoActiveLife · Sales Technical Support System",
-            hero_title1: "Aging is not about years,",
-            hero_title2: "It's because your mitochondria gave up.",
-            hero_desc: "Combining 'Active Calcium Ignition Mechanism' × 'QuMA Mitochondrial Energy Generation' × 'MDSNV Sialic Acid Nano-Delivery' to rekindle youth energy in 37 trillion cells. This is not just a supplement, but a complete cell-level 'charging system'.",
-            hero_btn_academy: "Enter Sales Academy",
-            hero_btn_lab: "Interactive Lab",
-            pill_quma: "QuMA Mitochondrial Generation",
-            pill_mdsnv: "MDSNV Milk-derived Carrier",
-            pill_calcium: "Active Calcium MCU Switch",
-            mcu_ignited: "MCU Ignited",
-            mdsnv_protect: "MDSNV Protection",
-            product_name: "MitoActive Chewable",
-            bio_rate: "99.7% Bioavailability",
-            
-            sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "Youth Tech Three Pillars — Health Defense Weaponry",
-            sci_desc: "Let me tell you a secret: pinpointing the ultimate power of premium science.",
-            sci_p1_sub: "PILLAR 01 · Fuel Recovery",
-            sci_p1_title: "QuMA Charging Station",
-            sci_p1_quote: "“QuMA is the switch that gets mitochondria working again.”",
-            sci_p1_desc: "Advanced CoQ10 combined with NMN precursors. While most supplements provide raw materials, QuMA enhances production directly within cellular powerhouses.",
-            sci_p1_weapon: "“Standard CoQ10 is blocked in the gut. QuMA lets ingredients enter cells directly. Others keep nutrients outside; we bring them inside.”",
-            sci_p2_sub: "PILLAR 02 · Precise Delivery",
-            sci_p2_title: "MDSNV Nano-Delivery",
-            sci_p2_quote: "“Sialic acid is classic; MDSNV is the new way to make sure it arrives.”",
-            sci_p2_desc: "Sialic acid is easily destroyed by stomach acid. MDSNV wraps it in milk-derived nano-vesicles, traveling safely to target areas.",
-            sci_p2_weapon: "“Traditional bird's nest has low absorption. MDSNV packs sialic acid into nano-vessels, ensuring your body actually utilizes what you paid for.”",
-            sci_p3_sub: "PILLAR 03 · MCU Ignition",
-            sci_p3_title: "Active Calcium MCU Ignition",
-            sci_p3_quote: "“Calcium is not just for bones; it's the key to igniting energy.”",
-            sci_p3_desc: "Calcium ions stimulate ATP synthase via MCU. Without calcium, power output stalls. We use active calcium for 40-50% higher absorption.",
-            sci_p3_weapon: "“Ordinary calcium builds bones; our calcium ignites cell engines. Plus, the active form boosts absorption rate by nearly half.”",
-            weapon_tag: "Pitch Tool",
-
-            lab_tag: "LAB & SIMULATOR",
-            lab_title: "Cell Energy Interactive Lab v1.0",
-            lab_desc: "Adjust the variables of our three pillars to experience how Calcium, QuMA, and MDSNV work together to maximize cellular lifespan.",
-            lab_ctrl_title: "Adjust Pillars & Lifestyle Variables",
-            lab_param_calcium: "Active Calcium (MCU Switch)",
-            lab_param_calcium_active: "⚡ Mitochondria Ignited",
-            lab_param_calcium_inactive: "❌ Off (Below Threshold)",
-            lab_param_calcium_tip: "Once past 40%, the MCU pathway opens, significantly boosting QuMA power generation efficiency.",
-            lab_param_quma: "QuMA Coenzyme & NMN Flow",
-            lab_param_quma_tip: "Determines the base fuel for the electron transport chain. Newer machinery means higher power.",
-            lab_param_mdsnv: "MDSNV Sialic Acid Protection",
-            lab_param_mdsnv_tip: "Reduces ROS damage and stomach acid depletion, creating a nano-scale cellular shield.",
-            lab_lifestyle: "Regular Cardio & Sleep",
-            lab_lifestyle_desc: "Stimulates muscle mitochondrial synthesis and clears waste.",
-            lab_sim_state: "Mito Simulator Status",
-            lab_synergy_tag: "Synergy Dynamics",
-            lab_synergy_high: "🚀 Fully Coordinated Output",
-            lab_synergy_mid: "⚡ Ready & Awaiting Ignition",
-            lab_synergy_low: "⚠️ Insufficient Power Output",
-            lab_data_atp: "Cellular ATP Energy",
-            lab_data_mdsnv: "MDSNV Defense Thickness",
-            lab_data_aging: "Est. Cellular Aging Rate",
-            lab_expert_tip: "💡 Expert Tip",
-            lab_expert_desc: "If calcium is below 40%, even maximum QuMA efficiency is limited to 60%. Active Calcium is absolutely essential as the MCU power switch.",
-
-            academy_tag: "MitoActive Academy v1.0",
-            academy_title: "Inquiry Practical Sandbox",
-            academy_desc: "Designed for internal sales reps. Select tabs below to study messaging cards, I Need This, and emotional entry points.",
-            academy_tab_brand: "Manifesto",
-            academy_tab_emotion: "Emotions",
-            academy_tab_scripts: "Q&A Answers",
-            academy_tab_objections: "I Need This",
-            academy_copy_btn: "Copy Script",
-            academy_copy_success: "Copied!",
-            academy_copy_line: "Copy Text",
-
-            team_tag: "OUR LEADERSHIP",
-            team_title: "Where Science Meets Corporate Strategy",
-            team_desc: "MitoActiveLife unites world-class cellular biologists, anti-aging clinical experts, and global biotech operations specialists.",
-            team_tab_all: "All Members",
-            team_tab_exec: "Executive Leaders",
-            team_tab_science: "Scientific Advisors",
-            team_read_more: "Read Full Bio & Vision",
-
-            sol_tag: "PRODUCT DESIGN & SYNERGY",
-            sol_title: "MitoActiveLife Chewable Tablets",
-            sol_desc: "Ignite (Active Calcium) ➔ Generate (QuMA) ➔ Protect (MDSNV). A complete power grid tailored for individuals over 45.",
-            sol_cycle_title: "Triple Coordination Ecosystem",
-            sol_cycle_desc: "While normal products stack ingredients, MitoActive creates a self-reinforcing closed-loop system:",
-            sol_cycle_1_title: "Ignite (Active Calcium - MCU)",
-            sol_cycle_1_desc: "Highly bioavailable active calcium acts as the ignition key. Without it, the engine stays cold.",
-            sol_cycle_2_title: "Generate (QuMA Complex)",
-            sol_cycle_2_desc: "Advanced Q10 feeds the electron transport chain (ETC), scaling up raw cell output.",
-            sol_cycle_3_title: "Protect (MDSNV Carrier)",
-            sol_cycle_3_desc: "Protects neural networks and cell membranes from free radicals, ensuring stable power delivery.",
-            sol_chew_title: "Physical Dosage Formulation",
-            sol_chew_1_title: "1. Early Absorption",
-            sol_chew_1_desc: "Begins absorption via oral mucosa, bypassing gut first-pass effects for faster onset in adults over 45.",
-            sol_chew_2_title: "2. Higher Compliance",
-            sol_chew_2_desc: "No water required. Easy chewable design makes it a seamless daily habit.",
-
-            contact_tag: "INTERNAL USE ONLY",
-            contact_title: "Embark on Cellular Activation",
-            contact_desc: "Have questions regarding the triple pillars, active calcium MCU channels, or presentation techniques? Request support below.",
-            contact_office: "Global Headquarters",
-            contact_office_loc: "Dallas, TX, United States",
-            contact_lab: "Scientific R&D Center",
-            contact_lab_loc: "Basel, Switzerland",
-            contact_form_name: "Name",
-            contact_form_name_placeholder: "e.g., Rep John",
-            contact_form_email: "Internal Corporate Email",
-            contact_form_category: "Inquiry Category",
-            contact_form_cat1: "Request Technical Specifications",
-            contact_form_cat2: "MDSNV & QuMA Absorption Papers",
-            contact_form_cat3: "Distribution Channel Support",
-            contact_form_detail: "Details",
-            contact_form_detail_placeholder: "Please type your academic paper request or channel support needs here...",
-            contact_form_submit: "Submit Support Request",
-            footer_copyright: "MitoActiveLife: Active Calcium × QuMA Mitochondrial Function × MDSNV Sialic Acid Delivery. Internal sales use only. May 2026 Edition.",
-            footer_decl: "* Sales Technical Copy v1.0. For Internal Training Only."
-          },
-          'ja': {
-            langName: "日本語",
-            title_suffix: "ミトアクティブライフ · 2026 INTERNAL",
-            nav_pillars: "3大技術",
-            nav_lab: "細胞インタラクティブ・ラボ",
-            nav_academy: "セールス・アカデミー",
-            nav_team: "リーダーシップ",
-            nav_solutions: "複合システム",
-            nav_contact: "専用相談窓口",
-            hero_tag: "MitoActiveLife · 営業技術支援システム",
-            hero_title1: "年齢のせいではありません、",
-            hero_title2: "ミトコンドリアの生命力が消えかけているからです",
-            hero_desc: "「活性カルシウム点火機構」×「QuMA ミトコンドリア発電能力」×「MDSNV ツバメの巣酸ナノデリバリー」を融合し、37兆個の細胞に若々しい電力を再起動。単なるサプリメントではなく、細胞レベルの「充電システム」です。",
-            hero_btn_academy: "セールス・アカデミーに入る",
-            hero_btn_lab: "細胞インタラクティブ・ラボ",
-            pill_quma: "QuMA ミトコンドリア高効率発電",
-            pill_mdsnv: "MDSNV 乳由来ナノデリバリー",
-            pill_calcium: "活性カルシウム MCU 点火スイッチ",
-            mcu_ignited: "MCU点火完了",
-            mdsnv_protect: "MDSNV ナノ保護膜",
-            product_name: "ミトアクティブ チュアブル錠",
-            bio_rate: "99.7% 生体利用率",
-            
-            sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "若々しさを保つ3大技術 — セールスの「最強兵器」",
-            sci_desc: "他社製品との圧倒的な違いを、科学的かつシンプルに解説するための技術解説。",
-            sci_p1_sub: "PILLAR 01 · 燃料効率の回復",
-            sci_p1_title: "QuMA ミトコンドリア充電ステーション",
-            sci_p1_quote: "「QuMAは、ミトコンドリアに再び仕事をさせるためのスイッチです」",
-            sci_p1_desc: "コエンザイムQ10の進化形とNMN前駆物質を組み合わせました。一般的なサプリは単なる「原料」ですが、QuMAは「発電能力」そのものを補い、細胞の発電所をダイレクトに修復します。",
-            sci_p1_weapon: "「通常のQ10は胃腸でブロックされがちですが、QuMAは細胞内に直接入り込んで働きます。他社はドアの外までしか届けられませんが、私たちは家の中までご案内します」",
-            sci_p2_sub: "PILLAR 02 · 精密デリバリー",
-            sci_p2_title: "MDSNV ツバメの巣酸ナノ輸送カプセル",
-            sci_p2_quote: "「ツバメの巣酸は有名ですが、MDSNVは目的地に確実に届けるための新技術です」",
-            sci_p2_desc: "ツバメの巣酸は胃酸に弱いのが弱点です。MDSNV（乳由来ツバメの巣酸ナノキャリア）は、天然のナノカプセルで包み込み、胃酸をスルーして必要な場所へ届けます。",
-            sci_p2_weapon: "「従来のツバメの巣は吸収率が低いのが難点。MDSNVはナノレベルの特殊カプセルに収めて届けるため、身体が贅沢な成分を十分に活用できます」",
-            sci_p3_sub: "PILLAR 03 · MCU点火スイッチ",
-            sci_p3_title: "活性カルシウム × ミトコンドリア点火",
-            sci_p3_quote: "「カルシウムは骨のためだけではありません。細胞の発電エンジンを始動させる鍵です」",
-            sci_p3_desc: "カルシウムイオンはMCUを通じてダイレクトにATP合成酵素を刺激します。活性カルシウムを使用することで、炭酸カルシウムよりも40〜50%高い吸収率を実現、細胞のエネルギーを爆発させます。",
-            sci_p3_weapon: "「他社のカルシウムは骨を補いますが、私たちのカルシウムは細胞に点火します。しかも活性カルシウムなので、吸収率は約1.5倍です」",
-            weapon_tag: "トークの武器",
-
-            lab_tag: "LAB & SIMULATOR",
-            lab_title: "細胞エネルギーインタラクティブ・ラボ v1.0",
-            lab_desc: "3大技術のパラメーターを操作して、カルシウム点火、QuMA発電、MDSNV保護の相乗効果をシミュレーションしてみましょう。",
-            lab_ctrl_title: "テクノロジー＆ライフスタイルの調整",
-            lab_param_calcium: "活性カルシウム（MCU点火スイッチ）",
-            lab_param_calcium_active: "⚡ ミトコンドリア点火ON",
-            lab_param_calcium_inactive: "❌ スイッチOFF（基準値未満）",
-            lab_param_calcium_tip: "40%を超えるとMCUチャンネルが開き、QuMAの発電効率が劇的に跳ね上がります。",
-            lab_param_quma: "QuMAコエンザイム＆NMN電子流",
-            lab_param_quma_tip: "電子伝達系を動かす基本燃料。発電機が新しくなれば、その分出力も最大化します。",
-            lab_param_mdsnv: "MDSNV ナノ保護バリア力",
-            lab_param_mdsnv_tip: "活性酸素（ROS）や胃酸によるエネルギーの損失を防ぎ、細胞膜レベルの盾を作ります。",
-            lab_lifestyle: "定期的な有酸素運動＆上質な睡眠",
-            lab_lifestyle_desc: "新たな筋肉ミトコンドリアの合成を促し、細胞の不要物を一掃します",
-            lab_sim_state: "ミトコンドリア・シミュレーション状態",
-            lab_synergy_tag: "3大技術シナジー状態",
-            lab_synergy_high: "🚀 全システム調和・フル稼働中",
-            lab_synergy_mid: "⚡ 発電スタンバイ・点火待機中",
-            lab_synergy_low: "⚠️ 出力不足・細胞エネルギー枯渇",
-            lab_data_atp: "総細胞 ATP エネルギー",
-            lab_data_mdsnv: "MDSNV ナノ防護シールド",
-            lab_data_aging: "予測細胞老効率",
-            lab_expert_tip: "💡 専門家のアドバイス",
-            lab_expert_desc: "カルシウムレベルが40%に満たない場合、QuMAの発電効率は最大でも60%に制限されます。活性カルシウムこそが、MCU発電スイッチを押すための重要要素です。",
-
-            academy_tag: "MitoActive アカデミー v1.0",
-            academy_title: "対話実践シミュレーター",
-            academy_desc: "営業チーム向け実戦トレーニングツール。タブを切り替えて、ブランドメッセージ、情緒のアプローチ、疑問回答を学びましょう。",
-            academy_tab_brand: "ブランドメッセージ",
-            academy_tab_emotion: "感情マップ",
-            academy_tab_scripts: "疑問回答",
-            academy_tab_objections: "克服トーク",
-            academy_copy_btn: "トークをコピー",
-            academy_copy_success: "コピー完了！",
-            academy_copy_line: "テキストをコピー",
-
-            team_tag: "OUR LEADERSHIP",
-            team_title: "先端研究とグローバルビジネスの融合",
-            team_desc: "MitoActiveLifeには、世界トップクラス of 細胞生物学者、抗加齢臨床研究の専門家、バイオテック大手のマネジメント陣が集結しています。",
-            team_tab_all: "全員メンバー",
-            team_tab_exec: "経営陣",
-            team_tab_science: "学術顧問",
-            team_read_more: "経歴とビジョンを見る",
-
-            sol_tag: "PRODUCT DESIGN & SYNERGY",
-            sol_title: "ミトアクティブライフ チュアブル錠",
-            sol_desc: "点火（カルシウム）➔ 発電（QuMA）➔ 保護（MDSNV）の調和サイクル。45歳からの細胞エネルギーマネジメントです。",
-            sol_cycle_title: "3層が噛み合う「高効率循環エコシステム」",
-            sol_cycle_desc: "通常の製品は成分を重ねるだけですが、MitoActiveは身体内部で相互にエネルギーを補強し合うクローズドループです：",
-            sol_cycle_1_title: "点火（活性カルシウム - MCUチャンネル）",
-            sol_cycle_1_desc: "吸収率を約50%高めた活性カルシウムは、発電エンジンの起動キー。これなしでは、どれほど良い材料があっても発電は始まりません。",
-            sol_cycle_2_title: "発電（QuMAミトコンドリア機能複合体）",
-            sol_cycle_2_desc: "進化系Q10を中心に、電子伝達系（ETC）を直接サポートして細胞の発電出力を一気に高めます。",
-            sol_cycle_3_title: "保護（MDSNVツバメの巣酸ナノキャリア）",
-            sol_cycle_3_desc: "脳神経や細胞膜を保護し、活性酸素（ROS）の攻撃を防ぎます。安定した発電状態をキープすることで、カルシウム点火もさらに効率化します。",
-            sol_chew_title: "チュアブル（かむ）形状にこだわった理由",
-            sol_chew_1_title: "1. 口腔粘膜からのスピード吸収",
-            sol_chew_1_desc: "口の中でかむことで、胃をバイパスして粘膜から素早く吸収され、消化力が衰え始める45歳以上にも素早くアプローチします。",
-            sol_chew_2_title: "2. 水なしでいつでも習慣に",
-            sol_chew_2_desc: "水なしでそのまま召し上がれるため、飲み忘れを防ぎ、いつでも手軽に「細胞の充電」をライフスタイルに取り入れられます。",
-
-            contact_tag: "INTERNAL USE ONLY",
-            contact_title: "細胞のアクティベーションをサポート",
-            contact_desc: "特許成分やカルシウムMCU点火経路、お客様へのアプローチ方法などについてサポートが必要な場合は、お問合せください。",
-            contact_office: "グローバル本社",
-            contact_office_loc: "米国テキサス州ダラス",
-            contact_lab: "研究開発センター",
-            contact_lab_loc: "スイス・バーゼル",
-            contact_form_name: "お名前",
-            contact_form_name_placeholder: "例：山田 営業担当",
-            contact_form_email: "社内用メールアドレス",
-            contact_form_category: "お問合せ内容",
-            contact_form_cat1: "3大技術の学術詳細リクエスト",
-            contact_form_cat2: "MDSNV & QuMA 吸収率臨床ホワイトペーパー",
-            contact_form_cat3: "販売代理店パートナー向けトレーニング支援",
-            contact_form_detail: "詳細",
-            contact_form_detail_placeholder: "社内トレーニングの支援要請や学術論文のリクエストをご記入ください...",
-            contact_form_submit: "サポートリクエストを送信",
-            footer_copyright: "MitoActiveLife：活性カルシウム × QuMA ミトコンドリア機能 × MDSNV ツバメの巣酸ナノデリバリー。社内トレーニング用資料・転載禁止。2026年5月版。",
-            footer_decl: "* 営業用テクニカルコピー v1.0。社内トレーニング専用資料です。"
-          },
-          'th': {
-            langName: "ไทย",
-            title_suffix: "MitoActiveLife · 2026 INTERNAL",
-            nav_pillars: "3 เสาหลัก",
-            nav_lab: "แล็บเซลล์",
-            nav_academy: "ศูนย์ฝึกอบรม",
-            nav_team: "คณะผู้นำ",
-            nav_solutions: "ระบบผสานพลัง",
-            nav_contact: "ติดต่อสอบถาม",
-            hero_tag: "MitoActiveLife · ระบบสนับสนุนการขายและการตลาด",
-            hero_title1: "คุณไม่ได้แก่เพราะกาลเวลา",
-            hero_title2: "แต่เป็นเพราะไมโตคอนเดรียของคุณถอดใจ",
-            hero_desc: "ผสาน 'กลไกกระตุ้นแคลเซียมแอคทีฟ MCU' × 'เพิ่มพลังไมโตคอนเดรียด้วย QuMA' × 'นำส่งกรดรังนกด้วยนาโน MDSNV' เพื่อชาร์จพลังงานเยาว์วัยให้ 37 ล้านล้านเซลล์ นี่ไม่ใช่แค่ผลิตภัณฑ์เสริมอาหารทั่วไป แต่เป็น 'ระบบชาร์จพลังงาน' ระดับเซลล์",
-            hero_btn_academy: "เข้าสู่ศูนย์ฝึกอบรม",
-            hero_btn_lab: "ห้องแล็บจำลอง",
-            pill_quma: "QuMA กระตุ้นการผลิตพลังงาน",
-            pill_mdsnv: "MDSNV นำส่งระดับนาโน",
-            pill_calcium: "แคลเซียมแอคทีฟ สวิตช์เปิด MCU",
-            mcu_ignited: "ระบบ MCU ทำงาน",
-            mdsnv_protect: "การปกป้องด้วย MDSNV",
-            product_name: "MitoActive ชนิดเคี้ยว",
-            bio_rate: "การดูดซึมสูงถึง 99.7%",
-            
-            sci_title_sub: "TECHNOLOGY TRIPLE PILLARS",
-            sci_title: "3 เสาหลักเทคโนโลยี — คลังอาวุธของนักขาย",
-            sci_desc: "บอกความลับอย่างหนึ่ง...เน้นย้ำถึงขุมพลังแห่งเทคโนโลยีชั้นนำอย่างแม่นยำที่สุด",
-            sci_p1_sub: "PILLAR 01 · ฟื้นฟูแหล่งพลังงาน",
-            sci_p1_title: "QuMA สถานีชาร์จไมโตคอนเดรีย",
-            sci_p1_quote: "“QuMA คือสวิตช์ปลุกไมโตคอนเดรียให้กลับมาทำงาน”",
-            sci_p1_desc: "ผสาน CoQ10 รูปแบบวิวัฒนาการกับสารตั้งต้น NMN ผลิตภัณฑ์อื่นให้แค่ 'วัตถุดิบ' แต่ QuMA เสริม 'กำลังการผลิต' โดยตรงในโรงไฟฟ้าเซลล์",
-            sci_p1_weapon: "“CoQ10 ทั่วไปมักถูกบล็อกในลำไส้ แต่ QuMA นำสารอาหารตรงเข้าสู่เซลล์ ยี่ห้ออื่นพามาแค่หน้าประตู แต่เราพาเข้าในบ้าน”",
-            sci_p2_sub: "PILLAR 02 · การจัดส่งที่แม่นยำ",
-            sci_p2_title: "MDSNV ยานขนส่งกรดรังนกนาโน",
-            sci_p2_quote: "“กรดรังนกมีค่ามาก MDSNV คือนวัตกรรมที่รับประกันการส่งถึงที่หมาย”",
-            sci_p2_desc: "กรดรังนกถูกทำลายง่ายด้วยกรดในกระเพาะ MDSNV ปกป้องด้วยถุงนาโนจากธรรมชาติ ผ่านระบบทางเดินอาหารไปยังเซลล์เป้าหมายอย่างปลอดภัย",
-            sci_p2_weapon: "“รังนกแบบเดิมดูดซึมต่ำมาก MDSNV ขนส่งกรดรังนกในระดับนาโน ช่วยให้ร่างกายนำสิ่งที่คุณจ่ายไปใช้งานได้อย่างเต็มที่”",
-            sci_p3_sub: "PILLAR 03 · สตาร์ทเครื่องยนต์ MCU",
-            sci_p3_title: "แคลเซียมแอคทีฟ × การจุดระเบิดเซลล์",
-            sci_p3_quote: "“แคลเซียมไม่ได้มีไว้สำหรับกระดูกเท่านั้น แต่เป็นกุญแจสตาร์ทพลังงานเซลล์”",
-            sci_p3_desc: "แคลเซียมไอออนกระตุ้นการผลิต ATP ผ่านช่องทาง MCU หากขาดแคลเซียมเครื่องจะสตาร์ทไม่ติด แคลเซียมแอคทีฟของเราดูดซึมดีกว่าทั่วไป 40-50%",
-            sci_p3_weapon: "“แคลเซียมทั่วไปบำรุงกระดูก แต่แคลเซียมของเราจุดพลังงานเซลล์ และด้วยรูปแบบแอคทีฟช่วยเพิ่มประสิทธิภาพการดูดซึมเกือบครึ่ง”",
-            weapon_tag: "บทพูดติดอาวุธ",
-
-            lab_tag: "LAB & SIMULATOR",
-            lab_title: "แล็บทดลองพลังงานเซลล์อัจฉริยะ v1.0",
-            lab_desc: "ปรับค่าตัวแปรหลัก 3 เทคโนโลยี เพื่อสัมผัสวิธีสร้างสมดุลและฟื้นฟูอายุเซลล์ให้ยืนยาวที่สุด",
-            lab_ctrl_title: "ปรับแต่งเสาหลักและไลฟ์สไตล์",
-            lab_param_calcium: "ความเข้มข้นแคลเซียมแอคทีฟ (สวิตช์ MCU)",
-            lab_param_calcium_active: "⚡ เริ่มกระตุ้นพลังงานไมโตคอนเดรีย",
-            lab_param_calcium_inactive: "❌ ระบบ MCU ปิด (ต่ำกว่ากำหนด)",
-            lab_param_calcium_tip: "เมื่อเกิน 40% ช่องทาง MCU จะเปิดขึ้น ช่วยเพิ่มประสิทธิภาพการผลิตพลังงานของ QuMA อย่างก้าวกระโดด",
-            lab_param_quma: "ปริมาณ QuMA Coenzyme & NMN",
-            lab_param_quma_tip: "กำหนดเชื้อเพลิงพื้นฐานสำหรับห่วงโซ่ส่งผ่านอิเล็กตรอน ยิ่งเครื่องจักรใหม่ พลังยิ่งสูง",
-            lab_param_mdsnv: "การป้องกันระดับนาโนด้วย MDSNV",
-            lab_param_mdsnv_tip: "ลดความเสียหายจากสารอนุมูลอิสระ (ROS) และกรดในกระเพาะอาหาร เกราะคุ้มกันเซลล์",
-            lab_lifestyle: "การออกกำลังกายสม่ำเสมอและนอนหลับลึก",
-            lab_lifestyle_desc: "กระตุ้นการสังเคราะห์ไมโตคอนเดรียใหม่และกำจัดของเสียระดับเซลล์",
-            lab_sim_state: "สถานะเครื่องจำลองไมโตคอนเดรีย",
-            lab_synergy_tag: "สถานะการทำงานร่วมกัน",
-            lab_synergy_high: "🚀 ระบบผสานพลังงานเต็มพิกัด",
-            lab_synergy_mid: "⚡ อุปกรณ์พร้อม รอสัญญาณสตาร์ท",
-            lab_synergy_low: "⚠️ พลังงานต่ำ เซลล์ขาดประจุไฟ",
-            lab_data_atp: "พลังงาน ATP รวมระดับเซลล์",
-            lab_data_mdsnv: "เกราะป้องกันนาโน MDSNV",
-            lab_data_aging: "อัตราการชราภาพ of เซลล์",
-            lab_expert_tip: "💡 คำแนะนำจากผู้เชี่ยวชาญ",
-            lab_expert_desc: "หากระดับแคลเซียมต่ำกว่า 40% ประสิทธิภาพของ QuMA จะถูกจำกัดไว้ที่ 60% แคลเซียมแอคทีฟจึงเป็นสวิตช์สำคัญที่ขาดไม่ได้ในการจุดพลังงาน",
-
-            academy_tag: "MitoActive Academy v1.0",
-            academy_title: "ระบบจำลองการไขข้อสงสัย",
-            academy_desc: "สำหรับใช้ฝึกอบรมภายในทีมงานนักขาย เลือกแท็บด้านล่างเพื่อศึกษาบทสนทนา ฉันต้องการสิ่งนี้ และจุดจี้ใจใจลูกค้า",
-            academy_tab_brand: "ปณิธานแบรนด์",
-            academy_tab_emotion: "แผนภาพอารมณ์",
-            academy_tab_scripts: "คำถามและคำตอบ",
-            academy_tab_objections: "ฉันต้องการสิ่งนี้",
-            academy_copy_btn: "คัดลอกบทพูด",
-            academy_copy_success: "คัดลอกแล้ว!",
-            academy_copy_line: "คัดลอกข้อความ",
-
-            team_tag: "OUR LEADERSHIP",
-            team_title: "การผสานศาสตร์การวิจัยและวิสัยทัศน์ธุรกิจ",
-            team_desc: "MitoActiveLife รวบรวมนักชีววิทยาเซลล์ แพทย์ผู้เชี่ยวชาญด้านเวชศาสตร์ชะลอวัย และนักบริหารอุตสาหกรรมไบโอเทคระดับโลก",
-            team_tab_all: "คณะทำงานทั้งหมด",
-            team_tab_exec: "คณะผู้นำบริหาร",
-            team_tab_science: "คณะที่ปรึกษาทางวิทยาศาสตร์",
-            team_read_more: "อ่านประวัติและวิสัยทัศน์ฉบับเต็ม",
-
-            sol_tag: "PRODUCT DESIGN & SYNERGY",
-            sol_title: "ผลิตภัณฑ์ MitoActive แบบเคี้ยว",
-            sol_desc: "สตาร์ท (แคลเซียม) ➔ ผลิต (QuMA) ➔ ปกป้อง (MDSNV) การทำงานประสานกัน 3 ชั้นเพื่อชาร์จประจุพลังงานสำหรับผู้วัย 45+",
-            sol_cycle_title: "วัฏจักรการผสานพลังสามชั้น",
-            sol_cycle_desc: "ไม่ใช่แค่ผสมรวมกันทั่วไป แต่สร้างระบบนิเวศน์หมุนเวียนพลังงานที่เอื้อผลประโยชน์ซึ่งกันและกัน:",
-            sol_cycle_1_title: "จุดระเบิด (แคลเซียมแอคทีฟ - กลไก MCU)",
-            sol_cycle_1_desc: "แคลเซียมแอคทีฟที่ดูดซึมได้สูง เป็นกุญแจสำคัญในการเปิดช่องทางส่งผ่าน หากปราศจากสิ่งนี้เครื่องชาร์จจะทำงานไม่ได้",
-            sol_cycle_2_title: "ผลิตไฟ (QuMA สารสกัดไมโตคอนเดรียรวม)",
-            sol_cycle_2_desc: "ใช้ CoQ10 รูปแบบขั้นสูงเพื่อเพิ่มพลังงานตรงช่องทางขนส่งอิเล็กตรอน (ETC) ยกระดับกำลังผลิตเซลล์",
-            sol_cycle_3_title: "ปกป้อง (ระบบขนส่งนาโน MDSNV)",
-            sol_cycle_3_desc: "ถนอมเนื้อเยื่อสมองและเยื่อหุ้มเซลล์จากสารอนุมูลอิสระ (ROS) ยิ่งระบบเสถียร สตาร์ทไฟยิ่งส่งผลลัพธ์ดียิ่งขึ้น",
-            sol_chew_title: "การออกแบบรูปแบบเม็ดเคี้ยว",
-            sol_chew_1_title: "1. เริ่มดูดซึมได้รวดเร็วขึ้น",
-            sol_chew_1_desc: "ดูดซึมผ่านเยื่อบุช่องปากโดยตรง เลี่ยงการถูกทำลายในระบบย่อยอาหาร เหมาะสำหรับกลุ่มอายุ 45+",
-            sol_chew_2_title: "2. ความสะดวกและความสม่ำเสมอในการรับประทาน",
-            sol_chew_2_desc: "ไม่จำเป็นต้องทานพร้อมน้ำ พกพาสะดวก เคี้ยวทานได้ทันที ช่วยลดปัญหาการลืมรับประทานระหว่างวัน",
-
-            contact_tag: "INTERNAL USE ONLY",
-            contact_title: "เปิดประตูสู่อายุเซลล์ยืนยาว",
-            contact_desc: "มีคำถามทางวิชาการเกี่ยวกับระบบจุดไฟแคลเซียม MCU หรือเทคนิคการนำเสนอต่อลูกค้า? ส่งคำร้องขอความช่วยเหลือจากทีมภายในได้ทันที",
-            contact_office: "สำนักงานใหญ่ระดับโลก",
-            contact_office_loc: "แดลลัส, รัฐเท็กซัส, สหรัฐอเมริกา",
-            contact_lab: "ศูนย์วิจัยและพัฒนาวิชาการ",
-            contact_lab_loc: "บาเซิล, ประเทศสวิตเซอร์แลนด์",
-            contact_form_name: "ชื่อ-นามสกุล",
-            contact_form_name_placeholder: "เช่น ลินดา ทีมขาย",
-            contact_form_email: "อีเมลภายในองค์กร",
-            contact_form_category: "หัวข้อปรึกษา",
-            contact_form_cat1: "ขอข้อมูลสเปคทางวิทยาศาสตร์สามเสาหลัก",
-            contact_form_cat2: "รับรายงานผลวิจัยการดูดซึม MDSNV & QuMA",
-            contact_form_cat3: "ขอรับการสนับสนุนพันธมิตรจัดจำหน่าย",
-            contact_form_detail: "รายละเอียด",
-            contact_form_detail_placeholder: "กรุณาระบุรายละเอียดเอกสารวิชาการหรือการสนับสนุนที่ท่านต้องการ...",
-            contact_form_submit: "ส่งแบบฟอร์มขอการสนับสนุน",
-            footer_copyright: "MitoActiveLife: แคลเซียมแอคทีฟ × พลังงานไมโตคอนเดรีย QuMA × ระบบนำส่งกรดรังนก MDSNV สำหรับใช้ภายในทีมขายเท่านั้น เวอร์ชัน พฤษภาคม 2026",
-            footer_decl: "* เอกสารทางเทคนิคสนับสนุนนักขาย v1.0 สำหรับใช้ฝึกอบรมภายในเท่านั้น"
-          }
-        };
-
         function App() {
-          const [lang, setLang] = React.useState('zh-TW'); // 當前語系狀態
           const [activeTab, setActiveTab] = React.useState('all');
           const [selectedLeader, setSelectedLeader] = React.useState(null);
           const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -551,6 +44,7 @@
           const [flippedObjection, setFlippedObjection] = React.useState(null);
           const [copiedText, setCopiedText] = React.useState('');
 
+          // 實驗室關鍵變量
           const [calciumLevel, setCalciumLevel] = React.useState(50);
           const [qumaLevel, setQumaLevel] = React.useState(50);
           const [mdsnvLevel, setMdsnvLevel] = React.useState(50);
@@ -560,11 +54,6 @@
           const [atpScore, setAtpScore] = React.useState(50);
           const [protectionRate, setProtectionRate] = React.useState(50);
           const [cellularAgingRate, setCellularAgingRate] = React.useState(1.5);
-
-          // 獲取翻譯文字的輔助函數
-          const t = (key) => {
-            return translations[lang][key] || translations['zh-TW'][key] || key;
-          };
 
           React.useEffect(() => {
             const isMcuIgnited = calciumLevel > 40;
@@ -581,9 +70,9 @@
           }, [calciumLevel, qumaLevel, mdsnvLevel, lifestyleActive]);
 
           React.useEffect(() => {
-            // 在 React 渲染或語言切換完成後初始化 Lucide 圖標
+            // 每當 UI 交互改變時重新調用 Lucide 圖標渲染
             lucide.createIcons();
-          }, [lang, academyTab, selectedEmotion, flippedObjection, selectedLeader, activeTab]);
+          }, [activeTab, academyTab, selectedEmotion, flippedObjection, selectedLeader]);
 
           const handleCopy = (text, id) => {
             navigator.clipboard.writeText(text);
@@ -591,210 +80,57 @@
             setTimeout(() => setCopiedText(''), 2000);
           };
 
-          const leadersMap = {
-            'zh-TW': [
-              {
-                id: 'l1',
-                category: 'exec',
-                name: 'Dr. Evelyn Carter',
-                title: '聯合創始人 兼 首席執行官 (CEO)',
-                role: 'Executive Leader',
-                education: '哈佛大學生醫工程博士',
-                experience: '20 年以上生技醫療跨國企業管理經驗，致力於抗衰老與線粒體科學的產業化應用。',
-                quote: '我們不只是在延續生命的時間，更是在為每分每秒注入飽滿的細胞生命力。',
-                skills: ['企業戰略', '臨床研發管理', '生醫創投'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
-              },
-              {
-                id: 'l2',
-                category: 'science',
-                name: 'Prof. Marcus Vance',
-                title: '首席科學家 兼 科學顧問委員會主席',
-                role: 'Scientific Advisor',
-                education: '史丹佛大學細胞生物學教授',
-                experience: '發表超過 80 篇關於線粒體自噬與 ATP 偶聯反應的頂級期刊學術論文。',
-                quote: '解開線粒體的功能編碼，就是掌握了人體生理時鐘的最終密鑰。',
-                skills: ['線粒體醫學', '細胞老化學', '基因編輯'],
-                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
-              },
-              {
-                id: 'l3',
-                category: 'exec',
-                name: 'Robert Chen',
-                title: '首席營運官 (COO)',
-                role: 'Executive Leader',
-                education: '沃頓商學院 MBA',
-                experience: '曾任多家知名百萬級大健康品牌全球供應鏈與國際市場拓展負責人。',
-                quote: '將前沿的實驗室科學，無縫轉化為全球消費者日常生活中觸手取及的健康方案。',
-                skills: ['全球供應鏈', '市場滲透', '營運優化'],
-                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
-              },
-              {
-                id: 'l4',
-                category: 'science',
-                name: 'Dr. Sarah Lin',
-                title: '研發副總裁 兼 高級配方科學家',
-                role: 'Scientific Advisor',
-                education: '劍橋大學分子醫學博士',
-                experience: '專攻細胞級營養素協同吸收機制，MitoActive 專利配方的核心發明人。',
-                quote: '完美的配方在於天然分子與精準生物可利用率之間的黃金平衡。',
-                skills: ['配方動力學', '微靶向傳遞', '天然產物提取'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
-              }
-            ],
-            'en': [
-              {
-                id: 'l1',
-                category: 'exec',
-                name: 'Dr. Evelyn Carter',
-                title: 'Co-Founder & Chief Executive Officer (CEO)',
-                role: 'Executive Leader',
-                education: 'Ph.D. in Biomedical Engineering, Harvard University',
-                experience: '20+ years of multinational biotech executive experience, focusing on translational mitochondrial science.',
-                quote: 'We are not just extending lifespan; we are packing every single second with cellular vitality.',
-                skills: ['Corporate Strategy', 'Clinical Trial Management', 'Biotech VC'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
-              },
-              {
-                id: 'l2',
-                category: 'science',
-                name: 'Prof. Marcus Vance',
-                title: 'Chief Scientist & SAC Chair',
-                role: 'Scientific Advisor',
-                education: 'Professor of Cell Biology, Stanford University',
-                experience: 'Published over 80 high-impact papers in top-tier journals on mitophagy and ATP synthesis coupling.',
-                quote: 'Decoding mitochondrial blueprints is the master key to human biological clocks.',
-                skills: ['Mitochondrial Medicine', 'Cellular Senescence', 'Gene Editing'],
-                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
-              },
-              {
-                id: 'l3',
-                category: 'exec',
-                name: 'Robert Chen',
-                title: 'Chief Operating Officer (COO)',
-                role: 'Executive Leader',
-                education: 'MBA, Wharton Business School',
-                experience: 'Formally headed global supply chain and international expansion for top-tier wellness brands.',
-                quote: 'To translate premium laboratory breakthroughs into accessible, daily health paradigms.',
-                skills: ['Global Supply Chain', 'Market Penetration', 'Operations Optimization'],
-                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
-              },
-              {
-                id: 'l4',
-                category: 'science',
-                name: 'Dr. Sarah Lin',
-                title: 'VP of R&D & Senior Formulation Scientist',
-                role: 'Scientific Advisor',
-                education: 'Ph.D. in Molecular Medicine, University of Cambridge',
-                experience: 'Specializing in synergetic cellular absorption. Primary inventor of MitoActive targeted delivery systems.',
-                quote: 'The perfect formulation balances natural components and absolute bioavailability.',
-                skills: ['Formulation Dynamics', 'Micro-targeted Delivery', 'Phytochemical Extraction'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
-              }
-            ],
-            'ja': [
-              {
-                id: 'l1',
-                category: 'exec',
-                name: 'Dr. Evelyn Carter',
-                title: '共同創業者 兼 最高経営責任者 (CEO)',
-                role: 'Executive Leader',
-                education: 'ハーバード大学 生体医工学博士',
-                experience: 'バイオテクノロジーおよびライフサイエンス業界で20年以上のグローバル経営経験を擁し、ミトコンドリア研究の実用化をリード。',
-                quote: '私たちは単に寿命を延ばすだけでなく、一瞬一瞬に満ち溢れるような細胞の生命力を吹き込みます。',
-                skills: ['企業戦略', '臨床研究管理', 'バイオテック投資'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
-              },
-              {
-                id: 'l2',
-                category: 'science',
-                name: 'Prof. Marcus Vance',
-                title: 'チーフサイエンティスト 兼 科学顧問委員会主席',
-                role: 'Scientific Advisor',
-                education: 'スタンフォード大学 細胞生物学教授',
-                experience: 'ミトコンドリアオートファジーとATP合成に関する一流学術誌での論文発表実績多数（80報以上）。',
-                quote: 'ミトコンドリアのコードを解読することは、生命の時計をコントロールする鍵を握るということです。',
-                skills: ['ミトコンドリア医学', '細胞老化研究', '遺伝子編集'],
-                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
-              },
-              {
-                id: 'l3',
-                category: 'exec',
-                name: 'Robert Chen',
-                title: '最高執行責任者 (COO)',
-                role: 'Executive Leader',
-                education: 'ウォートン・スクール MBA',
-                experience: '世界的なヘルスケアブランドにおけるサプライチェーン管理および国際市場の開拓を歴任。',
-                quote: '最先端の研究成果を、世界中のお客様が毎日手に取れる最高の健康ソリューションへと昇華させます。',
-                skills: ['世界サプライチェーン', '市場浸透', '業務効率化'],
-                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
-              },
-              {
-                id: 'l4',
-                category: 'science',
-                name: 'Dr. Sarah Lin',
-                title: '研究開発副社長 兼 シニアフォーミュラサイエンティスト',
-                role: 'Scientific Advisor',
-                education: 'ケンブリッジ大学 分子医学博士',
-                experience: '細胞栄養素のシナジー吸収メカニズムを専門とし、MitoActive特許フォーミュラの開発者。',
-                quote: '完璧な配合とは、天然分子と卓越した生体利用率の黄金のバランスにあります。',
-                skills: ['フォーミュラダイナミクス', 'ターゲットデリバリー', '天然成分抽出'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
-              }
-            ],
-            'th': [
-              {
-                id: 'l1',
-                category: 'exec',
-                name: 'Dr. Evelyn Carter',
-                title: 'ผู้ร่วมก่อตั้ง และ ประธานเจ้าหน้าที่บริหาร (CEO)',
-                role: 'Executive Leader',
-                education: 'ปริญญาเอก วิศวกรรมชีวการแพทย์ มหาวิทยาลัยฮาร์วาร์ด',
-                experience: 'ประสบการณ์กว่า 20 ปี ในการบริหารธุรกิจไบโอเทคข้ามชาติ มุ่งมั่นส่งเสริมการใช้ไมโตคอนเดรียระดับอุตสาหกรรมชะลอวัย',
-                quote: 'เราไม่ได้มุ่งหวังเพียงแค่ยืดอายุขัยของมนุษย์เท่านั้น แต่เราต้องการชาร์จพลังความมีชีวิตชีวาเข้าสู่ทุกวินาทีระดับเซลล์',
-                skills: ['กลยุทธ์องค์กร', 'การบริหารงานวิจัยคลินิก', 'การร่วมลงทุนไบโอเทค'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
-              },
-              {
-                id: 'l2',
-                category: 'science',
-                name: 'Prof. Marcus Vance',
-                title: '首席科学家 兼 科学顾问委员会主席',
-                role: 'Scientific Advisor',
-                education: 'ศาสตราจารย์ด้านชีววิทยาเซลล์ มหาวิทยาลัยสแตนฟอร์ด',
-                experience: 'ผลงานตีพิมพ์วิจัยในวารสารระดับท็อปกว่า 80 ฉบับ เกี่ยวกับกระบวนการรีไซเคิลเซลล์และการผสานพลังงาน ATP',
-                quote: 'การถอดรหัสรหัสลับฟังก์ชันของไมโตคอนเดรีย คือกุญแจหลักในการควบคุมนาฬิกาชีวภาพของมนุษย์',
-                skills: ['การแพทย์ไมโตคอนเดรีย', 'การชราภาพของเซลล์', 'การตัดแต่งยีน'],
-                avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
-              },
-              {
-                id: 'l3',
-                category: 'exec',
-                name: 'Robert Chen',
-                title: 'ประธานเจ้าหน้าที่ฝ่ายปฏิบัติการ (COO)',
-                role: 'Executive Leader',
-                education: 'ปริญญาโทบริหารธุรกิจ (MBA) มหาวิทยาลัยวอร์ตัน',
-                experience: 'อดีตหัวหน้าฝ่ายห่วงโซ่อุปทานระดับโลกและการขยายตลาดต่างประเทศสำหรับแบรนด์สุขภาพชั้นนำ',
-                quote: 'เปลี่ยนวิทยาการวิจัยขั้นสูงในห้องแล็บ ให้กลายเป็นผลิตภัณฑ์ดูแลสุขภาพระดับพรีเมียมที่ผู้บริโภคเข้าถึงง่าย',
-                skills: ['ห่วงโซ่อุปทานระดับโลก', 'การเจาะตลาดข้ามชาติ', 'การปรับปรุงระบบปฏิบัติการ'],
-                avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
-              },
-              {
-                id: 'l4',
-                category: 'science',
-                name: 'Dr. Sarah Lin',
-                title: 'รองประธานฝ่ายวิจัยและพัฒนา และ นักวิทยาศาสตร์สูตรยาขั้นสูง',
-                role: 'Scientific Advisor',
-                education: 'ปริญญาเอก อายุรศาสตร์โมเลกุล มหาวิทยาลัยเคมบริดจ์',
-                experience: 'เชี่ยวชาญการทำงานร่วมกันในการดูดซึมสารอาหารระดับเซลล์ ผู้คิดค้นและจดสิทธิบัตรระบบนำส่ง MitoActive',
-                quote: 'ความสมบูรณ์แบบของสูตรสารสกัด อยู่ที่ความสมดุลระหว่างโมเลกุลธรรมชาติกับอัตราการดูดซึมขั้นสูง',
-                skills: ['จลนศาสตร์ของสูตรสารสกัด', 'การนำส่งเป้าหมายระดับย่อย', 'การสกัดสารจากธรรมชาติ'],
-                avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
-              }
-            ]
-          };
+          const leaders = [
+            {
+              id: 'l1',
+              category: 'exec',
+              name: 'Dr. Evelyn Carter',
+              title: '聯合創始人 兼 首席執行官 (CEO)',
+              role: '執行領袖',
+              education: '哈佛大學生醫工程博士',
+              experience: '20 年以上生技醫療跨國企業管理經驗，致力於抗衰老與線粒體科學的產業化應用。',
+              quote: '我們不只是在延續生命的時間，更是在為每分每秒注入飽滿的細胞生命力。',
+              skills: ['企業戰略', '臨床研發管理', '生醫創投'],
+              avatarBg: 'bg-gradient-to-br from-teal-50 to-emerald-100'
+            },
+            {
+              id: 'l2',
+              category: 'science',
+              name: 'Prof. Marcus Vance',
+              title: '首席科學家 兼 科學顧問委員會主席',
+              role: '科學顧問',
+              education: '史丹佛大學細胞生物學教授',
+              experience: '發表超過 80 篇關於線粒體自噬與 ATP 偶聯反應的頂級期刊學術論文。',
+              quote: '解開線粒體的功能編碼，就是掌握了人體生理時鐘的最終密鑰。',
+              skills: ['線粒體醫學', '細胞老化學', '基因編輯'],
+              avatarBg: 'bg-gradient-to-br from-emerald-50 to-teal-100'
+            },
+            {
+              id: 'l3',
+              category: 'exec',
+              name: 'Robert Chen',
+              title: '首席營運官 (COO)',
+              role: '執行領袖',
+              education: '沃頓商學院 MBA',
+              experience: '曾任多家知名百萬級大健康品牌全球供應鏈與國際市場拓展負責人。',
+              quote: '將前沿的實驗室科學，無縫轉化為全球消費者日常生活中觸手取及的健康方案。',
+              skills: ['全球供應鏈', '市場滲透', '營運優化'],
+              avatarBg: 'bg-gradient-to-br from-cyan-50 to-blue-100'
+            },
+            {
+              id: 'l4',
+              category: 'science',
+              name: 'Dr. Sarah Lin',
+              title: '研發副總裁 兼 高級配方科學家',
+              role: '科學顧問',
+              education: '劍橋大學分子醫學博士',
+              experience: '專攻細胞級營養素協同吸收機制，MitoActive 專利配方的核心發明人。',
+              quote: '完美的配方在於天然分子與精準生物可利用率之間的黃金平衡。',
+              skills: ['配方動力學', '微靶向傳遞', '天然產物提取'],
+              avatarBg: 'bg-gradient-to-br from-teal-50 to-cyan-100'
+            }
+          ];
 
-          const leaders = leadersMap[lang] || leadersMap['zh-TW'];
           const filteredLeaders = activeTab === 'all' 
             ? leaders 
             : leaders.filter(l => l.category === activeTab);
@@ -802,7 +138,7 @@
           return (
             <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-800 overflow-x-hidden">
               
-              {/* Navbar */}
+              {}
               <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 transition-all">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                   <a href="#" className="flex items-center gap-3 group">
@@ -814,59 +150,28 @@
                         MitoActiveLife
                       </span>
                       <span className="block text-[10px] uppercase tracking-widest text-slate-450 font-bold leading-none mt-0.5">
-                        {t('title_suffix')}
+                        活「粒」生活 · 2026 INTERNAL
                       </span>
                     </div>
                   </a>
 
-                  {/* Desktop Nav */}
+                  {/* 桌記導航 */}
                   <nav className="hidden xl:flex items-center gap-6">
-                    <a href="#science" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_pillars')}</a>
-                    <a href="#lab" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_lab')}</a>
+                    <a href="#science" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">技術三柱</a>
+                    <a href="#lab" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">細胞互動實驗室</a>
                     <a href="#academy" className="text-sm font-semibold text-emerald-600 hover:text-emerald-500 transition-colors flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
                       <i data-lucide="book-open" className="w-4 h-4"></i>
-                      {t('nav_academy')}
+                      智能銷售賦能中心
                     </a>
-                    <a href="#team" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_team')}</a>
-                    <a href="#solutions" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">{t('nav_solutions')}</a>
+                    <a href="#team" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">領袖團隊</a>
+                    <a href="#solutions" className="text-sm font-semibold text-slate-600 hover:text-emerald-650 transition-colors">複合系統</a>
                     <a href="#contact" className="px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-800 hover:bg-emerald-500 hover:text-white border border-slate-200 hover:border-transparent transition-all duration-300 shadow-sm">
-                      {t('nav_contact')}
+                      專用諮詢
                     </a>
-
-                    {/* 語言切換 Dropdown */}
-                    <div className="relative group ml-2">
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs hover:border-emerald-500 transition-all font-bold shadow-sm text-slate-700">
-                        <i data-lucide="globe" className="w-3.5 h-3.5 text-emerald-500"></i>
-                        <span>{translations[lang].langName}</span>
-                      </button>
-                      <div className="absolute right-0 mt-1.5 w-32 bg-white border border-slate-200 rounded-xl shadow-xl opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
-                        {Object.keys(translations).map((langKey) => (
-                          <button
-                            key={langKey}
-                            onClick={() => setLang(langKey)}
-                            className={`w-full text-left px-4 py-2.5 text-xs hover:bg-slate-50 first:rounded-t-xl last:rounded-b-xl transition-colors block ${lang === langKey ? 'text-emerald-600 font-bold bg-emerald-500/5' : 'text-slate-600'}`}
-                          >
-                            {translations[langKey].langName}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
                   </nav>
 
-                  {/* Mobile Trigger */}
+                  {/* 行動版觸發器 */}
                   <div className="flex xl:hidden items-center gap-3">
-                    <select 
-                      value={lang} 
-                      onChange={(e) => setLang(e.target.value)}
-                      className="bg-white border border-slate-200 text-slate-750 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-500 font-bold shadow-sm"
-                    >
-                      {Object.keys(translations).map((langKey) => (
-                        <option key={langKey} value={langKey}>
-                          {translations[langKey].langName}
-                        </option>
-                      ))}
-                    </select>
-
                     <button 
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
                       className="p-2 text-slate-600 hover:text-slate-900"
@@ -877,21 +182,21 @@
                 </div>
               </header>
 
-              {/* Mobile Menu */}
+              {/* 行動版菜單 */}
               {mobileMenuOpen && (
                 <div className="fixed inset-0 z-35 bg-white pt-24 px-6 flex flex-col gap-6 xl:hidden overflow-y-auto">
-                  <a href="#science" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_pillars')}</a>
-                  <a href="#lab" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_lab')}</a>
+                  <a href="#science" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">技術三柱</a>
+                  <a href="#lab" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">細胞互動實驗室</a>
                   <a href="#academy" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 text-emerald-600 flex items-center gap-2">
-                    <i data-lucide="book-open" className="w-5 h-5"></i> {t('nav_academy')}
+                    <i data-lucide="book-open" className="w-5 h-5"></i> 智能銷售賦能中心
                   </a>
-                  <a href="#team" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_team')}</a>
-                  <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">{t('nav_solutions')}</a>
-                  <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full py-4 rounded-xl bg-emerald-500 text-white text-center font-bold">{t('nav_contact')}</a>
+                  <a href="#team" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">領袖團隊</a>
+                  <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold border-b border-slate-100 pb-3 hover:text-emerald-500">複合系統</a>
+                  <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full py-4 rounded-xl bg-emerald-500 text-white text-center font-bold">專用諮詢</a>
                 </div>
               )}
 
-              {/* Hero Section */}
+              {}
               <section className="relative py-20 lg:py-32 overflow-hidden border-b border-slate-100">
                 <div className="absolute top-1/4 left-1/2 bg-glow-emerald w-[500px] h-[500px] bg-emerald-300/20 rounded-full blur-[120px] pointer-events-none" />
                 <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-200/20 rounded-full blur-[100px] pointer-events-none" />
@@ -902,39 +207,39 @@
                     <div className="lg:col-span-7 space-y-8">
                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs text-emerald-750 font-bold tracking-wide">
                         <i data-lucide="flame" className="w-3.5 h-3.5 text-amber-500 animate-pulse"></i>
-                        <span>{t('hero_tag')}</span>
+                        <span>MitoActiveLife 活「粒」生活 · 業務技術文稿輔助系統</span>
                       </div>
                       <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-tight text-slate-900">
-                        {t('hero_title1')} <br />
+                        你老不是因為歲月， <br />
                         <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
-                          {t('hero_title2')}
+                          是因為你的粒線體放棄了
                         </span>
                       </h1>
                       <p className="text-slate-650 text-base sm:text-lg max-w-xl leading-relaxed font-medium">
-                        {t('hero_desc')}
+                        結合「活性鈣點火機制」×「QuMA 粒線體產能」×「MDSNV 燕窩酸奈米遞送」，讓 37 兆細胞重新燃起青春電力。這不只是一瓶保健品，而是全套細胞級「充電系統」。
                       </p>
                       
                       <div className="flex flex-wrap gap-4 pt-2">
                         <a href="#academy" className="px-8 py-4 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-500 to-teal-400 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
-                          <i data-lucide="book-open" className="w-5 h-5"></i> {t('hero_btn_academy')}
+                          <i data-lucide="book-open" className="w-5 h-5"></i> 進入智能銷售賦能中心
                         </a>
                         <a href="#lab" className="px-8 py-4 rounded-xl text-sm font-bold bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-2 shadow-sm">
-                          {t('hero_btn_lab')} <i data-lucide="activity" className="w-4.5 h-4.5 text-emerald-500"></i>
+                          細胞互動實驗室 <i data-lucide="activity" className="w-4.5 h-4.5 text-emerald-500"></i>
                         </a>
                       </div>
 
                       <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-200">
                         <div>
                           <span className="block text-xl sm:text-2xl font-black text-slate-900">QuMA</span>
-                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">{t('pill_quma')}</span>
+                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">QuMA 粒線體高效發電</span>
                         </div>
                         <div>
                           <span className="block text-xl sm:text-2xl font-black text-slate-900">MDSNV</span>
-                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">{t('pill_mdsnv')}</span>
+                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">MDSNV 乳源奈米運輸載體</span>
                         </div>
                         <div>
-                          <span className="block text-xl sm:text-2xl font-black text-slate-900">MCU</span>
-                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">{t('pill_calcium')}</span>
+                          <span className="block text-xl sm:text-2xl font-black text-slate-900">活性鈣</span>
+                          <span className="text-[10px] sm:text-xs text-slate-500 font-bold">活性鈣 MCU 啟動點火開關</span>
                         </div>
                       </div>
                     </div>
@@ -956,19 +261,19 @@
                           </svg>
 
                           <div className="absolute top-2 right-4 text-[10px] text-amber-600 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 flex items-center gap-1 animate-[bounce_4s_infinite]">
-                            <i data-lucide="zap" className="w-2.5 h-2.5"></i> {t('mcu_ignited')}
+                            <i data-lucide="zap" className="w-2.5 h-2.5"></i> MCU 啟動點火
                           </div>
                           <div className="absolute bottom-2 left-4 text-[10px] text-cyan-600 font-bold bg-cyan-400/10 px-2 py-0.5 rounded border border-cyan-400/20 flex items-center gap-1">
-                            <i data-lucide="shield" className="w-2.5 h-2.5"></i> {t('mdsnv_protect')}
+                            <i data-lucide="shield" className="w-2.5 h-2.5"></i> MDSNV 奈米防護
                           </div>
                         </div>
 
                         <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
                           <div className="flex items-center gap-2">
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-                            <span className="font-bold text-slate-800">{t('product_name')}</span>
+                            <span className="font-bold text-slate-800">活「粒」生活口嚼片</span>
                           </div>
-                          <span className="text-emerald-600 font-bold">{t('bio_rate')}</span>
+                          <span className="text-emerald-600 font-bold">99.7% 生物利用率</span>
                         </div>
                       </div>
                     </div>
@@ -977,12 +282,16 @@
                 </div>
               </section>
 
-              {/* Science Section */}
+              {}
               <section id="science" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-                  <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('sci_title_sub')}</span>
-                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('sci_title')}</h2>
-                  <p className="text-slate-600 font-medium">{t('sci_desc')}</p>
+                  <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">TECHNOLOGY TRIPLE PILLARS</span>
+                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+                    保持年輕科技術三柱 — 保持健康的「技術武器庫」
+                  </h2>
+                  <p className="text-slate-600 font-medium">
+                    告訴你一個秘密 精準點出頂級科技力量。
+                  </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
@@ -992,14 +301,14 @@
                       <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="zap" className="w-6 h-6"></i>
                       </div>
-                      <span className="text-xs text-emerald-600 font-bold block mb-2 uppercase tracking-wider">{t('sci_p1_sub')}</span>
-                      <h3 className="text-xl font-bold text-slate-900 mb-4">{t('sci_p1_title')}</h3>
-                      <blockquote className="border-l-2 border-emerald-500/40 pl-3 italic text-sm text-slate-600 mb-4">{t('sci_p1_quote')}</blockquote>
-                      <p className="text-xs text-slate-500 leading-relaxed">{t('sci_p1_desc')}</p>
+                      <span className="text-xs text-emerald-600 font-bold block mb-2 uppercase tracking-wider">PILLAR 01 · 燃料效能恢復</span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">QuMA 粒線體的充電站</h3>
+                      <blockquote className="border-l-2 border-emerald-500/40 pl-3 italic text-sm text-slate-600 mb-4">「QuMA 是讓粒線體重新開始做事的開關。」</blockquote>
+                      <p className="text-xs text-slate-500 leading-relaxed">以輔酶 Q10 的進化形態搭配 NMN 前驅物質。大多數保健品補的是「原料」，QuMA 補的是「產能」，直接進入細胞發電廠，將舊機器翻新。</p>
                     </div>
                     <div className="mt-6 pt-4 border-t border-slate-150 bg-emerald-50/30 p-3 rounded-xl border border-emerald-500/10">
-                      <span className="text-[10px] text-emerald-600 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
-                      <p className="text-[11px] text-slate-700 font-medium">{t('sci_p1_weapon')}</p>
+                      <span className="text-[10px] text-emerald-600 uppercase font-bold block mb-1">話術武器</span>
+                      <p className="text-[11px] text-slate-700 font-medium">「普通 Q10 進到腸道大部分被擋在外面。QuMA 讓成分能真正進入細胞工作——你之前吃的是門外的，我們讓你進門了。」</p>
                     </div>
                   </div>
 
@@ -1009,14 +318,14 @@
                       <div className="w-12 h-12 rounded-2xl bg-cyan-50 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="dna" className="w-6 h-6"></i>
                       </div>
-                      <span className="text-xs text-cyan-600 font-bold block mb-2 uppercase tracking-wider">{t('sci_p2_sub')}</span>
-                      <h3 className="text-xl font-bold text-slate-900 mb-4">{t('sci_p2_title')}</h3>
-                      <blockquote className="border-l-2 border-cyan-500/40 pl-3 italic text-sm text-slate-600 mb-4">{t('sci_p2_quote')}</blockquote>
-                      <p className="text-xs text-slate-500 leading-relaxed">{t('sci_p2_desc')}</p>
+                      <span className="text-xs text-cyan-600 font-bold block mb-2 uppercase tracking-wider">PILLAR 02 · 燕窩酸精準遞送</span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">MDSNV 燕窩酸奈米運輸車</h3>
+                      <blockquote className="border-l-2 border-cyan-500/40 pl-3 italic text-sm text-slate-600 mb-4">「燕窩酸不是新成分，MDSNV 是讓它真正到達目的地的新方法。」</blockquote>
+                      <p className="text-xs text-slate-500 leading-relaxed">燕窩酸極易被胃酸破壞。MDSNV（乳源驅動燕窩酸奈米載體）用天然奈米囊泡將其包裹，如同母乳傳遞營養給嬰兒的方式，穿過消化道直達需要它的地方。</p>
                     </div>
                     <div className="mt-6 pt-4 border-t border-slate-150 bg-cyan-50/30 p-3 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-cyan-600 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
-                      <p className="text-[11px] text-slate-700 font-medium">{t('sci_p2_weapon')}</p>
+                      <span className="text-[10px] text-cyan-600 uppercase font-bold block mb-1">話術武器</span>
+                      <p className="text-[11px] text-slate-700 font-medium">「傳統燕窩吸收率很低。MDSNV 是把燕窩酸裝進奈米等級運輸艙，讓身體真的能用到它——等於你買了燕窩，終於讓它發揮效果了。」</p>
                     </div>
                   </div>
 
@@ -1026,44 +335,44 @@
                       <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-500 mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="flame" className="w-6 h-6"></i>
                       </div>
-                      <span className="text-xs text-amber-600 font-bold block mb-2 uppercase tracking-wider">{t('sci_p3_sub')}</span>
-                      <h3 className="text-xl font-bold text-slate-900 mb-4">{t('sci_p3_title')}</h3>
-                      <blockquote className="border-l-2 border-amber-500/40 pl-3 italic text-sm text-slate-600 mb-4">{t('sci_p3_quote')}</blockquote>
-                      <p className="text-xs text-slate-500 leading-relaxed">{t('sci_p3_desc')}</p>
+                      <span className="text-xs text-amber-600 font-bold block mb-2 uppercase tracking-wider">PILLAR 03 · MCU 點火啟動</span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">活性鈣 × 粒線體點火</h3>
+                      <blockquote className="border-l-2 border-amber-500/40 pl-3 italic text-sm text-slate-600 mb-4">「鈣不只是補骨頭的，它是讓粒線體啟動發電的鑰匙。」</blockquote>
+                      <p className="text-xs text-slate-500 leading-relaxed">鈣離子通過 MCU 直接刺激 ATP 合成酶。鈣離子不足發電系統就無法運轉。我們採用活性鈣，吸收率高碳酸鈣 40–50%，精準引爆細胞能量。</p>
                     </div>
                     <div className="mt-6 pt-4 border-t border-slate-150 bg-amber-50/30 p-3 rounded-xl border border-amber-500/10">
-                      <span className="text-[10px] text-amber-600 uppercase font-bold block mb-1">{t('weapon_tag')}</span>
-                      <p className="text-[11px] text-slate-700 font-medium">{t('sci_p3_weapon')}</p>
+                      <span className="text-[10px] text-amber-600 uppercase font-bold block mb-1">話術武器</span>
+                      <p className="text-[11px] text-slate-700 font-medium">「別人的鈣是補骨頭的，我們的鈣是幫細胞充電點火的。而且我們用活性鈣，吸收率比一般鈣高將近一半，進得去才有用。」</p>
                     </div>
                   </div>
                 </div>
               </section>
 
-              {/* Lab Section */}
+              {}
               <section id="lab" className="py-20 bg-white border-b border-slate-100 relative">
                 <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-100/50 rounded-full blur-3xl pointer-events-none" />
                 <div className="max-w-7xl mx-auto px-6">
                   <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-                    <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-600 inline-block">{t('lab_tag')}</span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('lab_title')}</h2>
-                    <p className="text-slate-600 font-medium">{t('lab_desc')}</p>
+                    <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-600 inline-block">LAB & SIMULATOR</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">MitoActive 細胞能量互動實驗室 v1.0</h2>
+                    <p className="text-slate-600 font-medium">調動技術三柱的關鍵變數，親自體驗「活性鈣點火 ➔ QuMA 發電 ➔ MDSNV 保護」三者如何交織出最強的細胞長壽能量。</p>
                   </div>
 
                   <div className="grid lg:grid-cols-12 gap-8 bg-slate-50 p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-md">
                     <div className="lg:col-span-5 space-y-8">
                       <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
                         <i data-lucide="sliders" className="w-5 h-5 text-emerald-500"></i>
-                        <h3 className="text-lg font-bold text-slate-800">{t('lab_ctrl_title')}</h3>
+                        <h3 className="text-lg font-bold text-slate-800">調節技術柱與生活變數</h3>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
                           <span className="font-bold text-slate-700 flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-                            {t('lab_param_calcium')}
+                            活性鈣濃度 (MCU 點火開關)
                           </span>
                           <span className={`font-bold ${mcuActive ? 'text-amber-600' : 'text-slate-400'}`}>
-                            {mcuActive ? t('lab_param_calcium_active') : t('lab_param_calcium_inactive')}
+                            {mcuActive ? '⚡ 粒線體點火已開啟' : '❌ 未達點火閾值 (MCU 關閉)'}
                           </span>
                         </div>
                         <input 
@@ -1071,14 +380,14 @@
                           onChange={(e) => setCalciumLevel(Number(e.target.value))}
                           className="w-full accent-amber-500 bg-slate-200 rounded-lg appearance-none h-2 cursor-pointer"
                         />
-                        <p className="text-[11px] text-slate-500 font-medium">{t('lab_param_calcium_tip')}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">當數值超過 40%，MCU 點火通道開啟，將顯著加成 QuMA 的發電效率。</p>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
                           <span className="font-bold text-slate-700 flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                            {t('lab_param_quma')}
+                            QuMA 輔酶/NMN 電子流 (發電原料)
                           </span>
                           <span className="font-bold text-emerald-600">{qumaLevel}%</span>
                         </div>
@@ -1087,14 +396,14 @@
                           onChange={(e) => setQumaLevel(Number(e.target.value))}
                           className="w-full accent-emerald-500 bg-slate-200 rounded-lg appearance-none h-2 cursor-pointer"
                         />
-                        <p className="text-[11px] text-slate-500 font-medium">{t('lab_param_quma_tip')}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">決定粒線體電子傳遞鏈（ETC）運作的基本原料。機器越新，產能越強。</p>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
                           <span className="font-bold text-slate-700 flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
-                            {t('lab_param_mdsnv')}
+                            MDSNV 燕窩酸防禦力 (保護屏障)
                           </span>
                           <span className="font-bold text-cyan-600">{mdsnvLevel}%</span>
                         </div>
@@ -1103,13 +412,13 @@
                           onChange={(e) => setMdsnvLevel(Number(e.target.value))}
                           className="w-full accent-cyan-500 bg-slate-200 rounded-lg appearance-none h-2 cursor-pointer"
                         />
-                        <p className="text-[11px] text-slate-500 font-medium">{t('lab_param_mdsnv_tip')}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">減少自由基（ROS）和胃酸對能量單位的耗損，建立奈米層次的細胞膜保護盾。</p>
                       </div>
 
                       <div className="p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between shadow-sm">
                         <div className="space-y-1">
-                          <span className="font-bold text-sm text-slate-800 block">{t('lab_lifestyle')}</span>
-                          <p className="text-xs text-slate-500">{t('lab_lifestyle_desc')}</p>
+                          <span className="font-bold text-sm text-slate-800 block">規律有氧運動 & 黃金睡眠</span>
+                          <p className="text-xs text-slate-500">刺激全新肌肉線粒體合成，掃除代謝廢物</p>
                         </div>
                         <button 
                           onClick={() => setLifestyleActive(!lifestyleActive)}
@@ -1121,7 +430,7 @@
                     </div>
 
                     <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[350px] shadow-sm">
-                      <span className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-4">{t('lab_sim_state')}</span>
+                      <span className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-4">Mito 模擬器活化狀態</span>
                       <div className="relative w-48 h-48 flex items-center justify-center">
                         <div className={`absolute w-44 h-44 rounded-full border border-dashed transition-all duration-1000 ${atpScore > 80 ? 'border-emerald-400/60 animate-[spin_10s_linear_infinite]' : 'border-slate-200 animate-[spin_30s_linear_infinite]'}`} />
                         <div className={`absolute w-36 h-36 rounded-full border border-dashed transition-all duration-1000 ${protectionRate > 60 ? 'border-cyan-400/60 animate-[spin_15s_linear_infinite_reverse]' : 'border-slate-200 animate-[spin_40s_linear_infinite_reverse]'}`} />
@@ -1141,9 +450,9 @@
                       </div>
 
                       <div className="mt-4 text-center space-y-1">
-                        <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{t('lab_synergy_tag')}</span>
+                        <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">三柱協同動態</span>
                         <p className={`text-sm font-black ${atpScore > 80 ? 'text-emerald-600' : atpScore > 40 ? 'text-cyan-600' : 'text-slate-500'}`}>
-                          {atpScore > 80 ? t('lab_synergy_high') : atpScore > 40 ? t('lab_synergy_mid') : t('lab_synergy_low')}
+                          {atpScore > 80 ? '🚀 三柱協同·全速發電中' : atpScore > 40 ? '⚡ 設備就緒·引擎等待點火' : '⚠️ 起步功率偏低·細胞沒電'}
                         </p>
                       </div>
                     </div>
@@ -1151,7 +460,7 @@
                     <div className="lg:col-span-3 flex flex-col justify-between gap-6">
                       <div className="space-y-6">
                         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                          <span className="text-xs text-slate-550 block font-bold">{t('lab_data_atp')}</span>
+                          <span className="text-xs text-slate-550 block font-bold">整體細胞 ATP 能量</span>
                           <div className="flex items-baseline gap-1 mt-1">
                             <span className="text-3xl font-black text-slate-800">{atpScore}</span>
                             <span className="text-xs text-emerald-600 font-extrabold">%</span>
@@ -1162,7 +471,7 @@
                         </div>
 
                         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                          <span className="text-xs text-slate-550 block font-bold">{t('lab_data_mdsnv')}</span>
+                          <span className="text-xs text-slate-550 block font-bold">MDSNV 奈米防禦厚度</span>
                           <div className="flex items-baseline gap-1 mt-1">
                             <span className="text-3xl font-black text-slate-800">{protectionRate}</span>
                             <span className="text-xs text-cyan-600 font-extrabold">%</span>
@@ -1174,7 +483,7 @@
 
                         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-slate-550 block font-bold">{t('lab_data_aging')}</span>
+                            <span className="text-xs text-slate-550 block font-bold">預估細胞衰老速率</span>
                             <i data-lucide="trending-up" className="w-4 h-4 text-rose-500 animate-pulse"></i>
                           </div>
                           <div className="flex items-baseline gap-1 mt-1">
@@ -1185,38 +494,38 @@
                       </div>
 
                       <div className="p-3.5 rounded-xl bg-white border border-slate-200 text-[11px] text-slate-600 shadow-sm">
-                        <span className="text-slate-800 font-black block mb-1">{t('lab_expert_tip')}</span>
-                        {t('lab_expert_desc')}
+                        <span className="text-slate-800 font-black block mb-1">💡 專家提示</span>
+                        鈣離子濃度未達點火標籤（&lt;40%），即使 QuMA 再高發電效率也只有 60%。這就是活性鈣作為 MCU 發電開關的重要之處。
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
 
-              {/* Academy Section */}
+              {}
               <section id="academy" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="flex flex-col xl:flex-row items-start xl:items-end justify-between gap-6 mb-12">
                   <div className="space-y-4 max-w-2xl">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs text-emerald-600 font-bold">
                       <i data-lucide="book-open" className="w-3.5 h-3.5"></i>
-                      <span>{t('academy_tag')}</span>
+                      <span>活「粒」生活 智能銷售賦能中心 v1.0</span>
                     </div>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('academy_title')}</h2>
-                    <p className="text-slate-600 font-medium">{t('academy_desc')}</p>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">MitoActive 疑問實戰沙盒</h2>
+                    <p className="text-slate-600 font-medium">本章節供 MitoActive 內部業務人員教育訓練與實戰對答查詢。請點選下方分頁，調閱話術武器、我需要他與情緒地圖。</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
                     <button onClick={() => setAcademyTab('manifesto')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'manifesto' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
-                      <i data-lucide="sparkles" className="w-4 h-4"></i>{t('academy_tab_brand')}
+                      <i data-lucide="sparkles" className="w-4 h-4"></i>品牌信仰
                     </button>
                     <button onClick={() => setAcademyTab('emotions')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'emotions' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
-                      <i data-lucide="heart" className="w-4 h-4"></i>{t('academy_tab_emotion')}
+                      <i data-lucide="heart" className="w-4 h-4"></i>情緒地圖
                     </button>
                     <button onClick={() => setAcademyTab('scripts')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'scripts' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
-                      <i data-lucide="message-square" className="w-4 h-4"></i>{t('academy_tab_scripts')}
+                      <i data-lucide="message-square" className="w-4 h-4"></i>疑問解答
                     </button>
                     <button onClick={() => setAcademyTab('objections')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${academyTab === 'objections' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
-                      <i data-lucide="alert-triangle" className="w-4 h-4"></i>{t('academy_tab_objections')}
+                      <i data-lucide="alert-triangle" className="w-4 h-4"></i>我需要他
                     </button>
                   </div>
                 </div>
@@ -1226,67 +535,39 @@
                     <div className="grid md:grid-cols-12 gap-8 items-center">
                       <div className="md:col-span-7 space-y-6">
                         <span className="text-xs text-emerald-600 font-bold uppercase tracking-widest block">SECTION 01 · BRAND MANIFESTO</span>
-                        {lang === 'zh-TW' || lang === 'zh-CN' ? (
-                          <React.Fragment>
-                            <h3 className="text-2xl font-black text-slate-900">「粒線體就是你的青春引擎」</h3>
-                            <p className="text-sm text-slate-700 leading-relaxed font-medium">你知道人為什麼會變老嗎？不是因為時間，時間只是個計數器。</p>
-                            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                              真正讓你變老的，是你體內 <span className="text-slate-900 font-bold">37 兆個細胞</span>，開始「懶得做事」了。細胞為什麼懶？因為它沒電。每一個細胞裡，有幾百到幾千個叫做粒線體的小東西。
-                            </p>
-                          </React.Fragment>
-                        ) : lang === 'en' ? (
-                          <React.Fragment>
-                            <h3 className="text-2xl font-black text-slate-900">"Mitochondria is your youth engine"</h3>
-                            <p className="text-sm text-slate-700 leading-relaxed font-medium">Do you know why people age? It is not because of time. Time is just a counter.</p>
-                            <p className="text-sm text-slate-650 leading-relaxed font-medium">
-                              What truly makes you old is that <span className="text-slate-900 font-bold">37 trillion cells</span> in your body begin to slow down. Why? Because they lack power. Inside every cell, there are hundreds of small factories called mitochondria.
-                            </p>
-                          </React.Fragment>
-                        ) : lang === 'ja' ? (
-                          <React.Fragment>
-                            <h3 className="text-2xl font-black text-slate-900">「ミトコンドリアはあなたの若さの原動力です」</h3>
-                            <p className="text-sm text-slate-700 leading-relaxed font-medium">なぜ人は老いるのか、ご存知ですか？時間のせいではありません。時間はただのカウンターです。</p>
-                            <p className="text-sm text-slate-650 leading-relaxed font-medium">
-                              真の老いとは、体内の<span className="text-slate-900 font-bold">37兆個の細胞</span>が稼働をサボり始めることです。なぜサボるのか？電力が足りないからです。一つ一つの細胞内には、数千もの「ミトコンドリア」という小さな発電所があります。
-                            </p>
-                          </React.Fragment>
-                        ) : (
-                          <React.Fragment>
-                            <h3 className="text-2xl font-black text-slate-900">"ไมโตคอนเดรียคือเครื่องยนต์แห่งความเยาว์วัยของคุณ"</h3>
-                            <p className="text-sm text-slate-700 leading-relaxed font-medium">คุณรู้ไหมว่าทำไมมนุษย์เราถึงแก่ตัวลง? ไม่ใช่เพราะกาลเวลา เวลาเป็นแค่ตัวนับเลขเท่านั้น</p>
-                            <p className="text-sm text-slate-650 leading-relaxed font-medium">
-                              สิ่งชราภาพที่แท้จริงเกิดจาก <span className="text-slate-900 font-bold">37 ล้านล้านเซลล์</span> ในร่างกายของคุณเริ่มขี้เกียจทำงานเพราะแบตเตอรี่หมด ในแต่ละเซลล์มีโรงไฟฟ้าขนาดเล็กหลายร้อยแห่งเรียกว่าไมโตคอนเดรีย
-                            </p>
-                          </React.Fragment>
-                        )}
+                        <h3 className="text-2xl font-black text-slate-900">「粒線體就是你的青春引擎」</h3>
+                        <p className="text-sm text-slate-700 leading-relaxed font-medium">你知道人為什麼會變老嗎？不是因為時間，時間只是個計數器。</p>
+                        <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                          真正讓你變老的，是你體內 <span className="text-slate-900 font-bold">37 兆個細胞</span>，開始「懶得做事」了。細胞為什麼懶？因為它沒電。每一個細胞裡，有幾百到幾千個叫做粒線體的小東西。
+                        </p>
                         <div className="grid sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                           <div className="text-xs text-slate-600">
-                            <span className="text-emerald-600 font-bold block mb-1">⚡ Energy Blueprint</span>
-                            {lang === 'en' ? 'Whether you wake up feeling energetic or your skin recovers skin collagen, it all depends on mitochondrial output.' : lang === 'ja' ? '毎朝の目覚めの良さや、肌のコラーゲン修復能力は、すべてミトコンドリアの発電量に依存しています。' : lang === 'th' ? 'ไม่ว่าจะเป็นแรงพลังที่ลุกขึ้นในตอนเช้า หรือการสังเคราะห์คอลลาเจนใหม่ของผิว ล้วนขึ้นอยู่กับประสิทธิภาพไมโตคอนเดรียทั้งสิ้น' : '你早上起床有沒有力氣、皮膚膠原蛋白補不補得回來，全看粒線體產能。'}
+                            <span className="text-emerald-600 font-bold block mb-1">⚡ 朝氣能量起源</span>
+                            你早上起床有沒有力氣、皮膚膠原蛋白補不補得回來，全看粒線體產能。
                           </div>
                           <div className="text-xs text-slate-600">
-                            <span className="text-emerald-600 font-bold block mb-1">📉 Post-30 Signal</span>
-                            {lang === 'en' ? 'After 30, mitochondrial efficiency drops by 10% per decade. By 50, efficiency is less than half of your youth.' : lang === 'ja' ? '30歳を過ぎると、ミトコンドリアの発電効率は10年ごとに10%低下。50歳を迎える頃には、若い頃の半分以下に減少します。' : lang === 'th' ? 'หลังอายุ 30 ปี ประสิทธิภาพไมโตคอนเดรียจะลดลง 10% ทุกๆ ทศวรรษ เมื่อถึงอายุ 50 ปี พลังงานจะเหลือไม่ถึงครึ่งของวัยเยาว์' : '30 歲之後，粒線體的效能每十年下降 10%。到了 50 歲，產能只剩年輕時的一半不到。'}
+                            <span className="text-emerald-600 font-bold block mb-1">📉 30 歲後的警訊</span>
+                            30 歲之後，粒線體的效能每十年下降 10%。到了 50 歲，產能只剩年輕時的一半不到。
                           </div>
                         </div>
                         <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 text-sm text-emerald-700 italic font-semibold">
-                          {lang === 'en' ? '"You do not age because of years; you age because your cell engines gave up. We ignite them."' : lang === 'ja' ? '「老いは歳月のせいではなく、ミトコンドリアが諦めたからです。私たちはそれを再起動させます。」' : lang === 'th' ? '“คุณไม่ได้แก่เพราะอายุ แต่เป็นเพราะเซลล์คุณยอมจำนน เราจะปลุกพลังมันกลับมาเอง”' : '「你老不是因為歲月，是因為你的粒線體放棄了。我們讓它重新燃起來。」'}
+                          「你老不是因為歲月，是因為你的粒線體放棄了。我們讓它重新燃起來。」
                         </div>
                       </div>
                       <div className="md:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                         <span className="text-[11px] uppercase tracking-widest text-slate-500 font-black block">
-                          {lang === 'en' ? 'Rep Mindset Alignment' : lang === 'ja' ? 'セールスマインドセット' : lang === 'th' ? 'การจัดทัศนคติคนขาย' : '業務員心態校準'}
+                          業務員心態校準
                         </span>
                         <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                          {lang === 'en' ? '"You must believe it first, then clients will. They don’t just buy a product; they buy the absolute confidence in your eyes."' : lang === 'ja' ? '「あなたがまず製品を心から信じてこそ、お客様も信じてくれます。お客様は製品だけでなく、あなたの瞳にある揺るぎない確信を買うのです。」' : lang === 'th' ? '“คุณต้องเชื่อมั่นก่อน ลูกค้าถึงจะเชื่อมั่นตาม พวกเขาไม่ได้ซื้อแค่ผลิตภัณฑ์ แต่ซื้อความมั่นใจในสายตาของคุณ”' : '「你必須先相信它，客戶才會相信你。客戶買的不是產品，買的是你說這件事時，眼神裡有沒有那個確定感。」'}
+                          「你必須先相信它，客戶才會相信你。客戶買的不是產品，買的是你說這件事時，眼神裡有沒有那個確定感。」
                         </p>
                         <div className="flex items-center gap-3 pt-2">
                           <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
                             <i data-lucide="user-check" className="w-5 h-5"></i>
                           </div>
                           <div>
-                            <span className="text-xs font-bold text-slate-800 block">{lang === 'en' ? 'More Than Pitching' : lang === 'ja' ? '単なる販売ではない' : lang === 'th' ? 'ไม่ใช่แค่การเสนอขาย' : '非單純推銷'}</span>
-                            <span className="text-[10px] text-slate-500 font-medium">{lang === 'en' ? 'You are educating them on the true physical cause of their fatigue.' : lang === 'ja' ? '疲労の背後にある本当の科学的原因を、優しく伝えるアドバイザーです。' : lang === 'th' ? 'คุณกำลังบอกต้นเหตุทางกายภาพที่แท้จริงของความเหนื่อยล้าให้พวกเขา' : '你是告訴他們，疲憊背後有個真正的原因。'}</span>
+                            <span className="text-xs font-bold text-slate-800 block">非單純推銷</span>
+                            <span className="text-[10px] text-slate-500 font-medium">你是告訴他們，疲憊背後有個真正的原因。</span>
                           </div>
                         </div>
                       </div>
@@ -1296,13 +577,13 @@
                   {academyTab === 'emotions' && (
                     <div className="grid md:grid-cols-12 gap-8">
                       <div className="md:col-span-4 space-y-3">
-                        <span className="text-xs text-cyan-600 font-bold uppercase tracking-widest block mb-4">5 Emotional Gates</span>
+                        <span className="text-xs text-cyan-600 font-bold uppercase tracking-widest block mb-4">5大情緒入口</span>
                         {[
-                          { id: 'fatigue', label: lang === 'en' ? '1. Fatigue' : lang === 'ja' ? '1. 常に疲れる' : lang === 'th' ? '1. เหนื่อยล้าสะสม' : '入口一：【累】', subtitle: lang === 'en' ? 'Waking up tired after sleep' : lang === 'ja' ? '十分に寝ても朝から眠い' : lang === 'th' ? 'นอนเท่าไหร่ก็ไม่หายเหนื่อย' : '睡再飽起來也還是累' },
-                          { id: 'noEffect', label: lang === 'en' ? '2. No Effect' : lang === 'ja' ? '2. 効果が不明' : lang === 'th' ? '2. กินแล้วไม่เห็นผล' : '入口二：【補了沒感覺】', subtitle: lang === 'en' ? 'Tried multiple brands with no result' : lang === 'ja' ? '色々飲んだが効果を実感できない' : lang === 'th' ? 'ทานแบรนด์อื่นมาเยอะ ไม่รู้ดีจริงไหม' : '吃了好幾種，不知道有沒有用' },
-                          { id: 'skin', label: lang === 'en' ? '3. Skin & Glow' : lang === 'ja' ? '3. 肌のくすみ' : lang === 'th' ? '3. ผิวพรรณและออร่า' : '入口三：【皮膚、頭髮與狀態】', subtitle: lang === 'en' ? 'Skin feels dull looking in the mirror' : lang === 'ja' ? '鏡を見て表情が暗く見える' : lang === 'th' ? 'ส่องกระจกแล้วรู้สึกโทรมและหมองคล้ำ' : '最近照鏡子覺得整個人暗掉了' },
-                          { id: 'fog', label: lang === 'en' ? '4. Brain Fog' : lang === 'ja' ? '4. 物忘らし・脳の霧' : lang === 'th' ? '4. สมองล้า/คิดช้า' : '入口四：【記憶、反應、腦霧】', subtitle: lang === 'en' ? 'Forget what you wanted to say' : lang === 'ja' ? '言おうとしたことを忘れてしまう' : lang === 'th' ? 'พึ่งจะพูดไป ตะกี้ก็ลืมเสียแล้ว' : '剛才想說什麼，轉頭就忘記了' },
-                          { id: 'family', label: lang === 'en' ? '5. For Loved Ones' : lang === 'ja' ? '5. 家族への気配り' : lang === 'th' ? '5. มอบแด่คนที่รัก' : '入口五：【給家人的理由】', subtitle: lang === 'en' ? 'Fear parents feel offended by aging gift' : lang === 'ja' ? '老いを嫌がる両親への贈り方' : lang === 'th' ? 'อยากซื้อให้พ่อแม่ แต่กลัวท่านบ่น' : '想買給爸媽，又怕他們嫌老' }
+                          { id: 'fatigue', label: '入口一：【累】', subtitle: '睡再飽起來也還是累' },
+                          { id: 'noEffect', label: '入口二：【補了沒感覺】', subtitle: '吃了好幾種，不知道有沒有用' },
+                          { id: 'skin', label: '入口三：【皮膚、頭髮與狀態】', subtitle: '最近照鏡子覺得整個人暗掉了' },
+                          { id: 'fog', label: '入口四：【記憶、反應、腦霧】', subtitle: '剛才想說什麼，轉頭就忘記了' },
+                          { id: 'family', label: '入口五：【給家人的理由】', subtitle: '想買給爸媽，又怕他們嫌老' }
                         ].map(emo => (
                           <button
                             key={emo.id} onClick={() => setSelectedEmotion(emo.id)}
@@ -1315,36 +596,37 @@
                       </div>
 
                       <div className="md:col-span-8 bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
-                        {/* Render simple localized scripts directly inside */}
                         <div className="space-y-6">
                           <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
                             <i data-lucide="heart" className="w-5 h-5 text-cyan-500 animate-pulse"></i>
                             <h4 className="text-lg font-bold text-slate-800">
-                              {selectedEmotion === 'fatigue' ? t('lab_param_calcium_active') : selectedEmotion === 'noEffect' ? t('pill_quma') : selectedEmotion === 'skin' ? t('pill_mdsnv') : t('sol_title')}
+                              {selectedEmotion === 'fatigue' ? '入口一：【累】深度解析' : selectedEmotion === 'noEffect' ? '入口二：【補了沒感覺】深度解析' : selectedEmotion === 'skin' ? '入口三：【皮膚、狀態】深度解析' : selectedEmotion === 'fog' ? '入口四：【大腦疲累】深度解析' : '入口五：【給父母家人】深度解析'}
                             </h4>
                           </div>
                           
                           <div className="space-y-2 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                            <span className="text-[10px] text-cyan-600 font-bold uppercase">{t('weapon_tag')}</span>
+                            <span className="text-[10px] text-cyan-600 font-bold uppercase">你該這樣說 (破冰台詞)</span>
                             <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                              {lang === 'en' ? 
-                                '“Have you considered that the tiredness is not laziness, but your cells literally losing charge? Mitochondrial energy depletion cannot be solved by sleep — it needs correct raw triggers.”' : 
-                                lang === 'ja' ? 
-                                '「日々の疲れは怠慢ではなく、細胞自体のエネルギー枯渇が真の原因かもしれません。睡眠だけでは解決できない充電ロスに、直接のアプローチを。」' : 
-                                lang === 'th' ? 
-                                '“คุณเคยคิดไหมว่า อาการเหนื่อยล้าสะสมนี้ ไม่ใช่เพราะขี้เกียจ แต่เป็นเพราะเซลล์คุณกำลังแบตหมดกันแน่? การพักผ่อนชาร์จพลังไมโตคอนเดรียไม่ได้ด้วยการนอนอย่างเดียว”' :
-                                '「你有沒想過，那個累不是因為你懶，是因為你的細胞真的沒電了？粒線體的產能下降，不是靠睡覺可以補回來的——它需要的是讓它重新發電的材料。」'}
+                              {selectedEmotion === 'fatigue' ? '「你有沒想過，那個累不是因為你懶，是因為你的細胞真的沒電了？粒線體的產能下降，不是靠睡覺可以補回來的——它需要的是讓它重新發電的材料。」' : 
+                               selectedEmotion === 'noEffect' ? '「很多保健品的問題，不是成分不好，是根本沒辦法進到細胞裡工作。你喝的燕窩、吃的Q10，大部分在消化道就被消耗掉了，真正到達粒線體的少之又少。MitoActiveLife 解決的就是進去細胞發電的核心吸收率。」' : 
+                               selectedEmotion === 'skin' ? '「皮膚的光澤，不是靠外面塗的。它需要細胞自己有能力修復、更新。而細胞要修復，需要能量——粒線體要有電，它才有力氣工作。你現在補的是外面，我們補的是讓它從裡面亮起來的那個源頭。」' : 
+                               selectedEmotion === 'fog' ? '「大腦是全身耗能最高的器官，粒線體一旦沒力，第一個受影響的就是它。這不是失智的前兆，這是細胞電力不夠了的訊號。我們需要做的不是拼命吞化學合成，而是物理上幫大腦細胞充電。」' : 
+                               '「你可以這樣跟爸媽說——『這是幫身體補電的，不是補老人的，我自己每天都在吃。』因為 MitoActiveLife 本來就不是老人保健品，是給所有細胞在努力工作、用腦過度的人提供核心電力的。」'}
                             </p>
                           </div>
                           
                           <div className="text-xs text-slate-500 font-medium">
-                            <span className="text-slate-650 font-bold">🧠 Emotion Logic:</span>
-                            {lang === 'en' ? 'Shift self-blame ("I am getting lazy") to a solvable biological problem ("my cell engines need power").' : lang === 'ja' ? '「体力が衰えた自分」を責める気持ちを、「細胞レベルの電力不足」という解決可能な課題へと昇華させ、お客様との強い信頼関係を築きます。' : lang === 'th' ? 'เปลี่ยนความรู้สึกโทษตัวเองว่า “เราขี้เกียจลง” เป็นปัญหาทางชีววิทยาที่รักษาได้แทน เพื่อเปิดใจผู้ฟัง' : '把「自己體力變差」這個自我批評，轉化成「細胞能量不足」這個能被物理科學解決的問題。他們感覺被理解了，而不是被評判。'}
+                            <span className="text-slate-650 font-bold">🧠 情緒說服邏輯：</span>
+                            {selectedEmotion === 'fatigue' ? '把「自己體力變差」這個自我批評，轉化成「細胞能量不足」這個能被物理科學解決的問題。' : 
+                             selectedEmotion === 'noEffect' ? '不否定他們過去的選擇，而是幫他們找到「吃那麼多補品卻依然沒效果」的真實科學阻礙。' : 
+                             selectedEmotion === 'skin' ? '將外在狀態（暗沈、乾枯）的改變，連結到細胞能量與內部自我修補的核心邏輯。' : 
+                             selectedEmotion === 'fog' ? '解除客戶對於大腦退化、年齡漸增的心理恐懼，給予非常具體且主動的「補電」心理安全感。' : 
+                             '幫客戶同時解決購買阻力，以及轉贈給父母長輩時產生的「怕爸媽不認老」的微妙社交尷尬。'}
                           </div>
                         </div>
 
                         <div className="mt-4 pt-4 border-t border-slate-200 text-[11px] text-slate-500 font-medium">
-                          ⚠️ <span className="text-amber-600 font-bold">Mantra:</span> {lang === 'en' ? 'Don’t overcomplicate biology. Focus on how they feel. Science brings credibility; empathy closes the deal.' : lang === 'ja' ? '専門的なサイエンス用語だけで終わらせず、相手の「実感」に寄り添いましょう。知性が信頼を、心が決断をもたらします。' : lang === 'th' ? 'อย่าพูดแต่คำศัพท์แพทย์คุยเรื่องความรู้สึกก่อน วิทยาศาสตร์สร้างความมั่นใจ แต่อารมณ์คือตัวปิดการขาย' : '不要跟客戶一味聊「粒線體學術」，要跟客戶聊「感覺」。科學讓你有說話的底氣。情感讓他們決定掏錢包。'}
+                          ⚠️ <span className="text-amber-600 font-bold">溝通心法：</span> 不要跟客戶一味聊「粒線體學術」，要跟客戶聊「感覺」。科學讓你有說話的底氣。情感讓他們決定掏錢包。
                         </div>
                       </div>
                     </div>
@@ -1356,29 +638,62 @@
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <i data-lucide="sparkles" className="w-5 h-5 text-emerald-500"></i>
-                            <h4 className="text-base font-bold text-slate-800">3-Min Pitch (Icebreaker / Social / LINE)</h4>
+                            <h4 className="text-base font-bold text-slate-800">黃金三分鐘破冰話術 (陌生社交 / LINE 簡報 / 聚會對話)</h4>
                           </div>
                           <button 
-                            onClick={() => handleCopy(lang === 'en' ? `MitoActiveLife is designed specifically for mitochondrial age decline. Over age 45, energy production drops significantly. We combine Active Calcium Ignition, QuMA Coenzyme ATP synthesis, and MDSNV Nano protection. A full charging cycle for cells. Many feel waking freshness in 2 weeks. Interested in taking a try?` : lang === 'ja' ? `ミトアクティブライフは、45歳以降のミトコンドリアの機能低下に特化して設計されています。活性カルシウムの点火、QuMAコエンザイムによるATP合成、そしてMDSNVナノ保護膜を融合。細胞に完全な充電サイクルを提供し、多くの方が2週間以内に朝のスッキリ感を実感しています。一度試してみませんか？` : `MitoActiveLife is designed specifically for mitochondrial age decline. Over age 45, energy production drops significantly. We combine Active Calcium Ignition, QuMA Coenzyme ATP synthesis, and MDSNV Nano protection. A full charging cycle for cells. Many feel waking freshness in 2 weeks. Interested in taking a try?`, 'standard3m')}
+                            onClick={() => handleCopy(`「你有沒有這樣的感覺——補了很多東西，吃了很多保健品，但就是那個有活力的狀態回不來？或者睡再多還是累，皮膚保養做再多就是沒光澤？
+很多人的問題，不是補錯東西，是補的東西根本沒辦法進到細胞裡工作。你的細胞裡有個叫粒線體的東西，它是你全身能量的來源。45 歲之後，它的產能每年都在下降。你感覺到的那個累、那個暗、那個反應慢，其實是你的細胞沒電了的訊號。
+MitoActiveLife 做的事，是讓粒線體重新發電。我們有三個核心技術：QuMA 幫粒線體升級產電效能，MDSNV 用奈米技術讓燕窩酸真正進到細胞裡，活性鈣啟動粒線體的發電開關。三個加在一起，是一個讓細胞重新充電的系統——不是補材料，是補產能。
+很多客人吃了兩週之後說，早上起床有感覺到不一樣。你有沒有興趣試試看？我可以讓你先了解一下。」`, 'standard3m')}
                             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-slate-700 hover:text-emerald-600 transition-all shadow-sm animate-pulse"
                           >
                             {copiedText === 'standard3m' ? <i data-lucide="check" className="w-3.5 h-3.5 text-emerald-500"></i> : <i data-lucide="copy" className="w-3.5 h-3.5"></i>}
-                            {copiedText === 'standard3m' ? t('academy_copy_success') : t('academy_copy_btn')}
+                            {copiedText === 'standard3m' ? '已複製' : '一鍵複製話術'}
                           </button>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-4 text-xs font-semibold">
                           <div className="p-3 rounded-lg bg-white border border-slate-150 shadow-sm">
-                            <span className="text-emerald-600 font-black block mb-1">Min 1: Empathy</span>
-                            {lang === 'en' ? 'Waking up tired, dull skin despite standard skincare...' : lang === 'ja' ? '十分に寝ても朝から疲れが抜けず、スキンケアをしていても肌が暗く沈む...' : '睡再多還是累，皮膚擦再多還是沒光亮？'}
+                            <span className="text-emerald-600 font-black block mb-1">第一分鐘：共鳴破冰</span>
+                            「你有沒有這種感覺...睡再多還是累，皮膚擦再多還是沒光亮？」
                           </div>
                           <div className="p-3 rounded-lg bg-white border border-slate-150 shadow-sm">
-                            <span className="text-emerald-600 font-black block mb-1">Min 2: Decode Cause</span>
-                            {lang === 'en' ? 'It is a dead battery in cells. Post-45, cell output plummets annually.' : lang === 'ja' ? 'それは怠慢ではなく細胞のバッテリー切れ。45歳以降ミトコンドリア出力は毎年大幅に低下します。' : '這不是因為你懶，是細胞粒線體沒電了。45歲後它的效能每年都在大退步。'}
+                            <span className="text-emerald-600 font-black block mb-1">第二分鐘：揭密本質原因</span>
+                            「這不是因為你懶，是細胞粒線體沒電了。45歲後它的效能每年都在大退步。」
                           </div>
                           <div className="p-3 rounded-lg bg-white border border-slate-150 shadow-sm">
-                            <span className="text-emerald-600 font-black block mb-1">Min 3: Close & Charge</span>
-                            {lang === 'en' ? 'Active Calcium ignites, QuMA generates, MDSNV protects. Re-charge cell life!' : lang === 'ja' ? 'カルシウム点火、QuMA発電、MDSNV保護。ミトアクティブで細胞に活力をチャージ！' : 'MitoActive 三合一系統：活性鈣點火、QuMA發電、MDSNV保護。要不要試試看？'}
+                            <span className="text-emerald-600 font-black block mb-1">第三分鐘：點燃充電系統</span>
+                            「MitoActive 三合一系統：活性鈣點火、QuMA發電、MDSNV保護。要不要試試看？」
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                          <span className="text-[10px] text-cyan-600 font-bold block uppercase">場景：當客戶說「我已經在吃市售 Q10 了」</span>
+                          <p className="text-xs text-slate-500">
+                            「Q10 成分確實很好，但市售普通 Q10 是脂溶性的，進到腸道大部分被擋在外面，吸收率極低。
+                          </p>
+                          <p className="text-xs text-slate-700 font-semibold">
+                            我們配方裡的 QuMA 是進化形態，解決的就是進得去進不去的問題。加上活性鈣點火與 MDSNV 護航，讓營養不僅僅停留在門外，而是直接送入發電機工作，這就是為什麼許多人感受如此明顯。」
+                          </p>
+                        </div>
+
+                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] text-cyan-600 font-bold block uppercase flex items-center gap-1">
+                              <i data-lucide="smartphone" className="w-3.5 h-3.5"></i> LINE 社交圈分享短文
+                            </span>
+                            <button 
+                              onClick={() => handleCopy(`最近有一個非常驚艷的細胞長壽黑科技，專門針對 45 歲後身體和精力下坡的痛點。它不是一般的堆疊補充品，而是像一整套為細胞充電的閉環發電系統。好多朋友吃了兩週都反饋早起特別清爽。你有興趣了解它的「點火發電」原理嗎？`, 'lineShort')}
+                              className="text-[11px] text-slate-500 hover:text-emerald-600 font-bold flex items-center gap-1"
+                            >
+                              {copiedText === 'lineShort' ? <i data-lucide="check" className="w-3 h-3 text-emerald-500"></i> : <i data-lucide="copy" className="w-3 h-3"></i>}
+                              複製文字
+                            </button>
+                          </div>
+                          <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed font-semibold">
+                            「最近有一個非常驚艷的細胞長壽黑科技，專門針對 45 歲後身體和精力下坡的痛點。它不是一般的堆疊補充品，而是像一整套為細胞充電的閉環發電系統。好多朋友吃了兩週都反饋早起特別清爽。你有興趣了解它的「點火發電」原理嗎？」
                           </div>
                         </div>
                       </div>
@@ -1387,30 +702,30 @@
 
                   {academyTab === 'objections' && (
                     <div className="space-y-6">
-                      <span className="text-xs text-amber-600 font-bold uppercase tracking-widest block">{t('academy_tab_objections')} (Click cards to reveal responses)</span>
+                      <span className="text-xs text-amber-600 font-bold uppercase tracking-widest block">客戶拒絕的四大隱性心理拆招 (點擊卡片翻牌閱讀)</span>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
-                          { id: 'o1', client: lang === 'en' ? '"Let me think"' : lang === 'ja' ? '「少し考えます」' : lang === 'th' ? '“ขอคิดดูก่อนนะ”' : '「我再想想」', truth: lang === 'en' ? 'Insufficient value/safety.' : lang === 'ja' ? '購買理由や安全性がまだ不足している。' : '還沒有足夠的購買理由與安全感。', response: lang === 'en' ? 'Pinpoint worries and cycle back to the Fatigue gate.' : lang === 'ja' ? '懸念点を聞き出し、「疲れ」や「効果の実感」の入り口へ誘導する。' : '問他哪個地方還不夠清楚，重新回到「累」或「補了沒感覺」情緒入口。' },
-                          { id: 'o2', client: lang === 'en' ? '"Too Expensive"' : lang === 'ja' ? '「高すぎます」' : lang === 'th' ? '“ราคาแพงไปนิด”' : '「這太貴了」', truth: lang === 'en' ? 'Did not grasp technical value.' : lang === 'ja' ? '技術的な価値が伝わりきっていない。' : '還沒感受到這份技術能帶給他的具體價值。', response: lang === 'en' ? 'Pitch bioavailability: standard bird nest gets destroyed; MDSNV delivers perfectly.' : lang === 'ja' ? '通常のツバメの巣は胃酸で壊れますが、MDSNVナノ輸送カプセルは細胞まで届くことを強調。' : '使用「進得去 vs 進不去」建立價值對比：普通燕窩被胃酸破壞，我們的奈米車是買路費，保證送達細胞。' },
-                          { id: 'o3', client: lang === 'en' ? '"No Supplements"' : lang === 'ja' ? '「サプリは飲みません」' : lang === 'th' ? '“ไม่เคยทานอาหารเสริม”' : '「我不吃保健品」', truth: lang === 'en' ? 'Burned by useless chemicals.' : lang === 'ja' ? '無駄な化学サプリメントで失望した経験がある。' : '曾經買過一堆無感保健品，失去了信任感。', response: lang === 'en' ? 'Validate past failure. "Correct! Chemical supplements that cannot enter cells are waste. We are cellular absorption."' : lang === 'ja' ? '「その通りです！細胞に届かない製品は無駄です。私たちは生体利用率のテクノロジーです」と共感する。' : '從「補了沒感覺」的痛點切入，先認同他的經驗：「對！吃一堆進不去細胞的化學品，不吃也罷。我們的三柱是生物利用率吸收革命。」' },
-                          { id: 'o4', client: lang === 'en' ? '"I Feel Fine"' : lang === 'ja' ? '「まだ元気です」' : lang === 'th' ? '“ตอนนี้ยังแข็งแรงดี”' : '「我身體還好」', truth: lang === 'en' ? 'No sense of biological urgency.' : lang === 'ja' ? '衰えや老化に対する危機感がまだない。' : '沒有感受到衰退與老化的緊迫性。', response: lang === 'en' ? 'Defensive strategy: "Even if fine on the outside, mitochondria drop efficiency daily. Recharge before the drop."' : lang === 'ja' ? '「外見が元気でも、細胞内の発電能力は毎日低下しています。下り坂になる前にチャージを」と提案。' : '從「主動式防禦」框架切入：「現在外觀精神還好，不代表細胞內部的粒線體沒有在每天被氧化耗損。提前充飽電，是為了不起皺、不走下坡。」' }
+                          { id: 'o1', client: '「我再想想」', truth: '還沒有足夠的購買理由與安全感。', response: '不要強行推銷，詢問他哪個技術細節還不夠明白。重新退回「累」或「補了沒感覺」情緒入口。' },
+                          { id: 'o2', client: '「這太貴了」', truth: '未曾感受到這份複合技術能為他帶來的具體增益。', response: '使用「進得去細胞 vs 擋在細胞外」建立價值差：普通燕窩極易被胃酸耗損，而 MDSNV 奈米囊泡是直達細胞的保證，一分錢一分貨。' },
+                          { id: 'o3', client: '「我不吃保健品」', truth: '曾被市售無效的化學合成品消耗了信任感。', response: '認同他的觀點：「您說的對，吃一堆無法吸收的化學物質是在增加身體負擔。我們解決的就是生物利用率問題，是完全不同的物理機制。」' },
+                          { id: 'o4', client: '「我身體還好」', truth: '沒有感受到細胞功能隱性衰退的迫切感。', response: '採取主動式預防對談：「外觀精神好說明您保養得當。但細胞內的粒線體效能是在默默流失的。提早充飽電，是為了不起皺、不走下坡路。」' }
                         ].map(obj => (
                           <div 
                             key={obj.id} onClick={() => setFlippedObjection(flippedObjection === obj.id ? null : obj.id)}
                             className={`p-6 rounded-2xl border transition-all cursor-pointer min-h-[180px] flex flex-col justify-between shadow-sm hover:shadow-md ${flippedObjection === obj.id ? 'bg-emerald-50 border-emerald-300 text-slate-800' : 'bg-white border-slate-200 hover:border-slate-300'}`}
                           >
                             <div>
-                              <span className="text-[10px] text-slate-400 font-bold block mb-1">Objection</span>
+                              <span className="text-[10px] text-slate-400 font-bold block mb-1">客戶表面的話</span>
                               <h4 className="text-base font-bold text-slate-800 mb-2">{obj.client}</h4>
                             </div>
                             {flippedObjection === obj.id ? (
                               <div className="space-y-2 text-xs pt-2 border-t border-emerald-200">
-                                <span className="text-rose-600 font-bold block">🎯 Truth: {obj.truth}</span>
-                                <span className="text-slate-700 block font-medium"><strong className="text-emerald-700">Response: </strong>{obj.response}</span>
+                                <span className="text-rose-600 font-bold block">🎯 客戶真意：{obj.truth}</span>
+                                <span className="text-slate-700 block font-medium"><strong className="text-emerald-700">拆招方向：</strong>{obj.response}</span>
                               </div>
                             ) : (
                               <span className="text-[11px] text-amber-600 font-bold flex items-center gap-1 mt-4">
-                                <i data-lucide="help-circle" className="w-3.5 h-3.5"></i> Click to Flip & Solve
+                                <i data-lucide="help-circle" className="w-3.5 h-3.5"></i> 點擊卡片解構拆招法
                               </span>
                             )}
                           </div>
@@ -1421,49 +736,49 @@
                 </div>
               </section>
 
-              {/* Solutions Section */}
+              {}
               <section id="solutions" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-                  <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('sol_tag')}</span>
-                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('sol_title')}</h2>
-                  <p className="text-slate-650 font-medium">{t('sol_desc')}</p>
+                  <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">PRODUCT DESIGN & SYNERGY</span>
+                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900">MitoActiveLife 活「粒」生活口嚼片</h2>
+                  <p className="text-slate-650 font-medium">點火（活性鈣）➔ 發電（QuMA）➔ 保護（MDSNV）。這不是單一補充品，而是一套為 45 歲以上設計的細胞發電系統。</p>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-12 items-center bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-md">
                   <div className="lg:col-span-7 space-y-8">
                     <span className="text-xs text-emerald-600 font-bold block uppercase">SYNERGY CYCLE</span>
-                    <h3 className="text-2xl font-black text-slate-900">{t('sol_cycle_title')}</h3>
-                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{t('sol_cycle_desc')}</p>
+                    <h3 className="text-2xl font-black text-slate-900">「三層協同」不是加法，是高效循環</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">普通的保健品是把好東西堆疊在一起。而活「粒」生活的三種技術，在身體內部是一個閉環的增益系統：</p>
 
                     <div className="space-y-4">
                       <div className="flex items-start gap-4">
                         <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold shrink-0 text-xs shadow-sm">1</div>
                         <div>
-                          <h4 className="text-sm font-bold text-slate-800">{t('sol_cycle_1_title')}</h4>
-                          <p className="text-xs text-slate-500 mt-1 font-medium">{t('sol_cycle_1_desc')}</p>
+                          <h4 className="text-sm font-bold text-slate-800">點火 (活性鈣 - MCU 機制)</h4>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">吸收率提高 50% 的活性鈣，是粒線體產能引擎的鑰匙。如果沒有它按開關，粒線體就沒有啟動發電信號。</p>
                         </div>
                       </div>
 
                       <div className="flex items-start gap-4">
                         <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold shrink-0 text-xs shadow-sm">2</div>
                         <div>
-                          <h4 className="text-sm font-bold text-slate-800">{t('sol_cycle_2_title')}</h4>
-                          <p className="text-xs text-slate-500 mt-1 font-medium">{t('sol_cycle_2_desc')}</p>
+                          <h4 className="text-sm font-bold text-slate-800">發電 (QuMA 粒線體機能複合體)</h4>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">以輔酶 Q10 的進化形態為主力，直接修護與支援電子傳遞鏈（ETC），提升細胞的產能功率。</p>
                         </div>
                       </div>
 
                       <div className="flex items-start gap-4">
                         <div className="w-8 h-8 rounded-lg bg-cyan-100 flex items-center justify-center text-cyan-600 font-bold shrink-0 text-xs shadow-sm">3</div>
                         <div>
-                          <h4 className="text-sm font-bold text-slate-800">{t('sol_cycle_3_title')}</h4>
-                          <p className="text-xs text-slate-500 mt-1 font-medium">{t('sol_cycle_3_desc')}</p>
+                          <h4 className="text-sm font-bold text-slate-800">保護 (MDSNV 燕窩酸奈米載體)</h4>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">保護大腦神經與細胞膜，同時免受自由基（ROS）侵擾。發電系統更穩定，鈣的點火信號就更有效率，形成自我增幅。</p>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="lg:col-span-5 bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-6 shadow-inner">
-                    <span className="text-xs text-slate-500 font-bold block uppercase">{t('sol_chew_title')}</span>
+                    <span className="text-xs text-slate-500 font-bold block uppercase">劑型物理考量 — 口嚼片設計</span>
                     
                     <div className="relative flex justify-center py-4">
                       <svg viewBox="0 0 100 100" className="w-24 h-24 text-emerald-500 animate-[spin_30s_linear_infinite]">
@@ -1474,26 +789,26 @@
 
                     <div className="space-y-4">
                       <div className="p-3.5 bg-white rounded-xl border border-slate-150 shadow-sm">
-                        <span className="text-xs font-bold text-slate-800 block">{t('sol_chew_1_title')}</span>
-                        <span className="text-[11px] text-slate-500 block mt-1 font-medium">{t('sol_chew_1_desc')}</span>
+                        <span className="text-xs font-bold text-slate-800 block">第一、吸收起點提前</span>
+                        <span className="text-[11px] text-slate-500 block mt-1 font-medium">從口腔黏膜開始進行吸收，繞過部分腸道首關效應，讓消化退化的 45 歲以上族群吸收更快。</span>
                       </div>
 
                       <div className="p-3.5 bg-white rounded-xl border border-slate-150 shadow-sm">
-                        <span className="text-xs font-bold text-slate-800 block">{t('sol_chew_2_title')}</span>
-                        <span className="text-[11px] text-slate-500 block mt-1 font-medium">{t('sol_chew_2_desc')}</span>
+                        <span className="text-xs font-bold text-slate-800 block">第二、服用依從性高</span>
+                        <span className="text-[11px] text-slate-500 block mt-1 font-medium">不需要配水吞，可隨時放入口中咀嚼，提升「順手吃」的頻率，有效降低忘記服用的痛點。</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
 
-              {/* Team Section */}
+              {}
               <section id="team" className="py-20 max-w-7xl mx-auto px-6 border-b border-slate-100">
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
                   <div className="space-y-4 max-w-2xl">
-                    <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('team_tag')}</span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">{t('team_title')}</h2>
-                    <p className="text-slate-650 font-medium">{t('team_desc')}</p>
+                    <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">OUR LEADERSHIP</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">科研智慧與企業運營的完美結合</h2>
+                    <p className="text-slate-650 font-medium">MitoActiveLife 匯集了全球頂尖的細胞生物學家、抗衰老臨床醫學領袖與具備數十年跨國生技運作經驗的商業精英。</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -1502,7 +817,7 @@
                         key={tabId} onClick={() => setActiveTab(tabId)}
                         className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${activeTab === tabId ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/10' : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-sm'}`}
                       >
-                        {tabId === 'all' ? t('team_tab_all') : tabId === 'exec' ? t('team_tab_exec') : t('team_tab_science')}
+                        {tabId === 'all' ? '全體團隊成員' : tabId === 'exec' ? '執行領袖' : '科學顧問'}
                       </button>
                     ))}
                   </div>
@@ -1531,7 +846,7 @@
                         </div>
                       </div>
                       <div className="p-5 pt-0 border-t border-slate-100 mt-3 flex items-center justify-between text-[11px] text-emerald-600 font-bold">
-                        <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">{t('team_read_more')} <i data-lucide="chevron-right" className="w-3.5 h-3.5"></i></span>
+                        <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">閱讀完整履歷與願景 <i data-lucide="chevron-right" className="w-3.5 h-3.5"></i></span>
                         <span className="w-7 h-7 rounded-full bg-slate-50 border border-slate-150 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors shadow-sm">
                           <i data-lucide="linkedin" className="w-3.5 h-3.5"></i>
                         </span>
@@ -1541,7 +856,7 @@
                 </div>
               </section>
 
-              {/* Modal */}
+              {}
               {selectedLeader && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
                   <div onClick={() => setSelectedLeader(null)} className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" />
@@ -1584,27 +899,27 @@
                 </div>
               )}
 
-              {/* Contact Section */}
+              {}
               <section id="contact" className="py-20 max-w-7xl mx-auto px-6">
                 <div className="grid lg:grid-cols-12 gap-12 bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 relative overflow-hidden shadow-lg">
                   <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-emerald-100/50 rounded-full blur-3xl pointer-events-none" />
                   <div className="lg:col-span-5 space-y-6">
-                    <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">{t('contact_tag')}</span>
-                    <h2 className="text-3xl font-black text-slate-900">{t('contact_title')}</h2>
-                    <p className="text-slate-600 text-sm leading-relaxed font-medium">{t('contact_desc')}</p>
+                    <span className="text-xs font-extrabold tracking-widest text-emerald-600 uppercase">INTERNAL USE ONLY</span>
+                    <h2 className="text-3xl font-black text-slate-900">開啟您的細胞活化之旅</h2>
+                    <p className="text-slate-600 text-sm leading-relaxed font-medium">對活「粒」生活專利成分、活性鈣MCU發電通路，或是如何運用文稿話術進行客戶破冰有進一步疑問？歡迎遞交內部支援諮詢。</p>
                     <div className="space-y-4 pt-4">
                       <div className="flex items-center gap-4 text-sm text-slate-700">
                         <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-150 flex items-center justify-center text-emerald-500 shadow-sm"><i data-lucide="globe" className="w-5 h-5"></i></div>
                         <div>
-                          <span className="block text-xs text-slate-400 font-bold">{t('contact_office')}</span>
-                          <span className="font-bold text-slate-800">{t('contact_office_loc')}</span>
+                          <span className="block text-xs text-slate-400 font-bold">全球營運總部</span>
+                          <span className="font-bold text-slate-800">美國德克薩斯州達拉斯 (Dallas, TX)</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-slate-700">
                         <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-150 flex items-center justify-center text-emerald-500 shadow-sm"><i data-lucide="award" className="w-5 h-5"></i></div>
                         <div>
-                          <span className="block text-xs text-slate-400 font-bold">{t('contact_lab')}</span>
-                          <span className="font-bold text-slate-800">{t('contact_lab_loc')}</span>
+                          <span className="block text-xs text-slate-400 font-bold">科學實驗研發中心</span>
+                          <span className="font-bold text-slate-800">瑞士巴塞爾 (Basel, Switzerland)</span>
                         </div>
                       </div>
                     </div>
@@ -1614,33 +929,33 @@
                     <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); }}>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_name')}</label>
-                          <input type="text" placeholder={t('contact_form_name_placeholder')} className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
+                          <label className="block text-xs font-bold text-slate-500 mb-2">姓名</label>
+                          <input type="text" placeholder="例如：林業務" className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_email')}</label>
+                          <label className="block text-xs font-bold text-slate-500 mb-2">內部聯絡電子郵件</label>
                           <input type="email" placeholder="name@mitoactivelife.com" className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_category')}</label>
+                        <label className="block text-xs font-bold text-slate-500 mb-2">諮詢範疇</label>
                         <select className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-700 focus:outline-none transition-colors shadow-sm font-semibold">
-                          <option>{t('contact_form_cat1')}</option>
-                          <option>{t('contact_form_cat2')}</option>
-                          <option>{t('contact_form_cat3')}</option>
+                          <option>技術三柱科學細節索取</option>
+                          <option>MDSNV 與 QuMA 吸收率臨床白皮書</option>
+                          <option>經銷通路合作培訓支援</option>
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-500 mb-2">{t('contact_form_detail')}</label>
-                        <textarea rows={4} placeholder={t('contact_form_detail_placeholder')} className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
+                        <label className="block text-xs font-bold text-slate-500 mb-2">備註詳情</label>
+                        <textarea rows={4} placeholder="請輸入您希望得到的內部培訓支援或學術文獻需求..." className="w-full px-4 py-3 bg-white border border-slate-200 focus:border-emerald-500 rounded-xl text-sm text-slate-800 focus:outline-none transition-colors shadow-sm font-semibold" />
                       </div>
-                      <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-white text-sm font-bold shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all hover:scale-[1.01] active:scale-95">{t('contact_form_submit')}</button>
+                      <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-white text-sm font-bold shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all hover:scale-[1.01] active:scale-95">遞交內部協助申請</button>
                     </form>
                   </div>
                 </div>
               </section>
 
-              {/* Footer */}
+              {/* 頁腳 Footer */}
               <footer className="bg-white border-t border-slate-200/80 py-12">
                 <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
                   <div className="space-y-4">
@@ -1648,27 +963,27 @@
                       <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm"><i data-lucide="dna" className="w-4 h-4 text-white"></i></div>
                       <span className="text-lg font-black text-slate-900">MitoActiveLife</span>
                     </div>
-                    <p className="text-xs text-slate-500 leading-relaxed font-semibold">{t('footer_copyright')}</p>
+                    <p className="text-xs text-slate-500 leading-relaxed font-semibold">MitoActiveLife 活「粒」生活 活性鈣 × QuMA 粒線體機能 × MDSNV 燕窩酸奈米遞送。內部業務用途，請勿外流，2026 年 5 月版。</p>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">{t('nav_solutions')}</h4>
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">複合系統</h4>
                     <ul className="space-y-2 text-xs text-slate-600 font-bold">
-                      <li>{t('sol_cycle_1_title')}</li>
-                      <li>{t('sol_cycle_2_title')}</li>
-                      <li>{t('sol_cycle_3_title')}</li>
+                      <li>點火 (活性鈣 - MCU 機制)</li>
+                      <li>發電 (QuMA 粒線體機能複合體)</li>
+                      <li>保護 (MDSNV 燕窩酸奈米載體)</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">{t('hero_btn_academy')}</h4>
+                    <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">智能銷售賦能中心</h4>
                     <ul className="space-y-2 text-xs text-slate-600 font-bold">
-                      <li>{t('academy_tab_brand')}</li>
-                      <li>{t('academy_tab_emotion')}</li>
-                      <li>{t('academy_tab_scripts')}</li>
+                      <li>品牌信仰</li>
+                      <li>情緒地圖</li>
+                      <li>疑問解答</li>
                     </ul>
                   </div>
                   <div>
                     <h4 className="text-xs uppercase tracking-widest text-slate-400 font-extrabold mb-4">MitoActiveLife</h4>
-                    <p className="text-[10px] text-slate-500 leading-relaxed font-bold">{t('footer_decl')}</p>
+                    <p className="text-[10px] text-slate-500 leading-relaxed font-bold">* 業務技術文稿 v1.0。僅供內部培訓使用。</p>
                     <div className="flex gap-4 mt-4"><span className="text-xs text-slate-400 font-bold">© 2026 MitoActiveLife.</span></div>
                   </div>
                 </div>
